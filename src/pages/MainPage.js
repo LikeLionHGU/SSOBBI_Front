@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import Calendar from "react-calendar";
-import "../styles/Calender.css";
+import Calender from "../components/MainPage/Calender";
 
 const Title = styled.p`
   color: ${(props) => props.theme.colors.MAINCOLOR};
@@ -10,7 +9,7 @@ function MainPage() {
   return (
     <>
       <Title>SSOBBI</Title>
-      <Calendar />
+      <Calender />
     </>
   );
 }
