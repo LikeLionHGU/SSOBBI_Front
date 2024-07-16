@@ -42,7 +42,9 @@ function Calender() {
   const [data, setData] = useState(null);
   const handleDateChange = (e) => {
     attendDay.map((itm) =>
-      itm.date === moment(e).format("YYYY-MM-DD") ? setData(itm.category) : null
+      itm.date === moment(e).format("YYYY-MM-DD")
+        ? setData(itm.category)
+        : setData("")
     );
   };
   return (
