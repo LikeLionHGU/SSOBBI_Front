@@ -30,6 +30,7 @@ const themeColors = {
     COLOR90: "#19844A",
     COLOR100: "#0D6234",
     COLORDark: "000804",
+    COLORGray: "F2F6F4",
   },
 };
 
