@@ -19,7 +19,17 @@ const router = createBrowserRouter([
 
 const themeColors = {
   colors: {
-    MAINCOLOR: "#e23910",
+    COLOR10: "#F0FFF7",
+    COLOR20: "#D0FFE5",
+    COLOR30: "#AFFFD4",
+    COLOR40: "#8FFFC2",
+    COLOR50: "#6FFFB1",
+    COLOR60: "#57EA9B",
+    COLOR70: "#3FC87E",
+    COLOR80: "#2AA663",
+    COLOR90: "#19844A",
+    COLOR100: "#0D6234",
+    COLORDark: "000804",
   },
 };
 

@@ -14,6 +14,7 @@ const dayData = {
 
 const Title = styled.p`
   color: ${(props) => props.theme.colors.MAINCOLOR};
+  font-family: SUITBold;
 `;
 
 function MainPage() {
