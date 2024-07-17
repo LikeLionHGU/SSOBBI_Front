@@ -48,7 +48,7 @@ function Calender() {
     );
   };
   return (
-    <>
+    <div>
       <Calendar
         onChange={handleDateChange}
         formatDay={(locale, date) => moment(date).format("D")} // 일 제거 숫자만 보이게
@@ -77,7 +77,7 @@ function Calender() {
         }}
       />
       <p>카테고리 출력 : {data}</p>
-    </>
+    </div>
   );
 }
 

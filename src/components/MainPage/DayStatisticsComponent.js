@@ -8,7 +8,7 @@ const Title = styled.p`
 `;
 
 const Box = styled.div`
-  width: 350px;
+  width: 300px;
   height: 250px;
   margin: 20px;
   border: 1px black solid;
