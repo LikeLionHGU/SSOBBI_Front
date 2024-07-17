@@ -32,14 +32,17 @@ function ConsumptionIndexComponent() {
                 if (e.relatedTarget === select) isSelectTag = true;
               }
 
-              if (e.relatedTarget === null || !isSelectTag) setIsFocus(false);
+              if (e.relatedTarget === null || !isSelectTag) {
+                setIsFocus(false);
+                setInputValue("");
+              }
             }}
             value={inputValue}
           ></StyledInput>
-          {(inputValue || isFocus) && (
+          {isFocus && (
             <select id="search" size="4" onChange={handleSelectChange}>
               {isFocus &&
-                !inputValue && // 포커스 되있을때만
+                !inputValue && // 포커스 돼있을때만
                 optionData.map((itm) => (
                   <option key={itm} value={itm}>
                     {itm}
