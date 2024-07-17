@@ -4,11 +4,12 @@ import GaugeComponent from "react-gauge-component";
 import { Horizontal } from "../../styles/CommunalStyle";
 
 const Title = styled.p`
-  color: ${(props) => props.theme.colors.MAINCOLOR};
+  color: ${(props) => props.theme.colors.COLOR100};
+  font-family: "SUITThin";
 `;
 
 const Box = styled.div`
-  width: 300px;
+  width: 250px;
   height: 250px;
   margin: 20px;
   border: 1px black solid;

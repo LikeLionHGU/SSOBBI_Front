@@ -18,7 +18,7 @@ const Title = styled.p`
 `;
 
 const Box = styled.div`
-  width: 300px;
+  width: 250px;
   height: 250px;
   margin: 20px;
   border: 1px black solid;
