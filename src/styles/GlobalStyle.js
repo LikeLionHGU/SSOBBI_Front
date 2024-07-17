@@ -9,7 +9,7 @@ export const GlobalStyle = createGlobalStyle`
         flex-direction: column;
         align-items: center;
         width: 100vw;
-        min-height: 100vh;
+        height: 100vh;
     }
     /* @font-face {
         font-family: "AUTHENTICSans60";
