@@ -5,6 +5,7 @@ import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "./styles/GlobalStyle";
 import MainPage from "./pages/MainPage";
 import CreatePage from "./pages/CreatePage";
+import KakaoLoginRedirect from "./pages/KakaoLoginRedirect";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
   {
     path: "/create",
     element: <CreatePage />,
+  },
+  {
+    path: "/login/oauth/kakao",
+    element: <KakaoLoginRedirect />,
   },
 ]);
 
@@ -29,8 +34,9 @@ const themeColors = {
     COLOR80: "#2AA663",
     COLOR90: "#19844A",
     COLOR100: "#0D6234",
-    COLORDark: "000804",
-    COLORGray: "F2F6F4",
+    COLORBlack: "#001E0E",
+    COLORDark: "#000804",
+    COLORGray: "#F2F6F4",
   },
 };
 
