@@ -27,8 +27,7 @@ function EmotionIndexComponent() {
   return (
     <div>
       <p>오늘의 감정을 입력해주시오</p>
-      <p className="textCount">{content.length}자</p>
-      <p className="textTotal">/50자</p>
+      <p className="textCount">{content.length}자 / 50자</p>
       <StyledTextarea
         id="content"
         maxLength="50"
