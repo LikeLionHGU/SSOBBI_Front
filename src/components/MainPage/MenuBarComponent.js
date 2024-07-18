@@ -10,7 +10,7 @@ import { IoLogOutOutline } from "react-icons/io5";
 
 const Menu = styled.div`
   background-color: ${(props) => props.theme.colors.COLOR70};
-  width: 130px;
+  width: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,21 +32,24 @@ const Icon = styled.div`
   margin-top: 30px;
   margin-bottom: 30px;
   font-size: 20px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50% 0px 0px 50%;
+  width: 60px;
+  margin-left: 18px;
+  padding-left: -20px;
+  padding-right: 18px;
+  height: 50px;
+  border-radius: 48% 0px 0px 48%;
   background-color: ${(props) => (props.active ? "#fff" : "transparent")};
-  color: ${(props) => (props.active ? props.theme.colors.COLOR70 : "inherit")};
+  color: ${(props) => (props.active ? props.theme.colors.COLOR80 : "#fff")};
   cursor: pointer;
 
   &:hover {
     background-color: #fff;
-    color: ${(props) => props.theme.colors.COLOR70};
+    color: ${(props) => props.theme.colors.COLOR80};
   }
 `;
 
 const MenuBarComponent = () => {
-  const [activeIcon, setActiveIcon] = useState(null);
+  const [activeIcon, setActiveIcon] = useState("home");
   const handleIconClick = (icon) => {
     setActiveIcon(icon);
   };
@@ -62,6 +65,7 @@ const MenuBarComponent = () => {
         </StyledLink>
       </Icon>
       <Icon
+        style={{ fontSize: "24px" }}
         active={activeIcon === "profile"}
         onClick={() => handleIconClick("profile")}
       >
@@ -89,7 +93,7 @@ const MenuBarComponent = () => {
         active={activeIcon === "note"}
         onClick={() => handleIconClick("note")}
       >
-        <StyledLink href="/">
+        <StyledLink to="/create">
           <PiNotePencilFill />
         </StyledLink>
       </Icon>

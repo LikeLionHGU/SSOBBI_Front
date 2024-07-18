@@ -4,15 +4,19 @@ import GaugeComponent from "react-gauge-component";
 import { Horizontal } from "../../styles/CommunalStyle";
 
 const Title = styled.p`
-  color: ${(props) => props.theme.colors.COLOR100};
-  font-family: "SUITThin";
+  color: ${(props) => props.theme.colors.COLORBlack};
+  font-family: "SUITLight";
+  font-size: 20px;
 `;
 
 const Box = styled.div`
-  width: 250px;
-  height: 250px;
-  margin: 20px;
-  border: 1px black solid;
+  font-family: "SUITLight";
+  font-size: 18px;
+  width: 260px;
+  height: 192px;
+  margin-right: 20px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -22,31 +26,33 @@ const Box = styled.div`
 function DayStatisticsComponent({ happy }) {
   return (
     <>
-      <Title>SSOBBI 오늘의 기록</Title>
+      <Title>
+        한나님의 <span style={{ fontWeight: "800" }}>오늘의 기록 </span>
+      </Title>
       <Horizontal>
         <Box>
-          행복지수
+          오늘의 행복지수
           <GaugeComponent
             arc={{
               subArcs: [
                 {
                   limit: 20,
-                  color: "#EA4228",
+                  color: "#D0FFE5",
                   showTick: true,
                 },
                 {
                   limit: 50,
-                  color: "#F58B19",
+                  color: "#8FFFC2",
                   showTick: true,
                 },
                 {
                   limit: 70,
-                  color: "#F5CD19",
+                  color: "#57EA9B",
                   showTick: true,
                 },
                 {
                   limit: 100,
-                  color: "#5BE12C",
+                  color: "#2AA663",
                   showTick: true,
                 },
               ],
@@ -56,9 +62,21 @@ function DayStatisticsComponent({ happy }) {
         </Box>
         <Box>
           오늘 과소비 건수
-          <p style={{ fontSize: "30px", fontWeight: "bold" }}>1 건</p>
+          <p style={{ fontSize: "30px", fontWeight: "bold" }}>
+            <span
+              style={{
+                fontSize: "55px",
+                fontFamily: "SUITExtraBold",
+                fontWeight: "bold",
+                color: "#19844A",
+              }}
+            >
+              1
+            </span>
+            {"   "}건
+          </p>
         </Box>
-        <Box></Box>
+        <Box>오늘 과소비 항목</Box>
       </Horizontal>
     </>
   );
