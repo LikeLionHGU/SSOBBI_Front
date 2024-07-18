@@ -3,6 +3,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import Chart from "react-apexcharts";
 import Switch from "react-switch";
+import GaugeComponent from "react-gauge-component";
 
 import { Horizontal, NoCenterHorizontal } from "../../styles/CommunalStyle";
 
@@ -32,6 +33,7 @@ const Box = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  background-color: #fcfffe;
 `;
 
 const options = {
@@ -54,7 +56,7 @@ const options = {
   ],
 };
 
-function WeekMonthStstisticsComponent() {
+function WeekMonthStstisticsComponent({ whappy, mhappy }) {
   const [isMonthly, setIsMonthly] = useState(false);
   const weeklySeries = [44, 55, 41, 17, 15]; // 주간 데이터
   const monthlySeries = [10, 60, 50, 30, 50]; // 월간 데이터
@@ -70,11 +72,13 @@ function WeekMonthStstisticsComponent() {
       <NoCenterHorizontal>
         {isMonthly ? (
           <Title>
-            한나님의 <span style={{ fontWeight: "800" }}>월간 기록 </span>
+            한나님의{" "}
+            <span style={{ fontFamily: "SUITMedium" }}>월간 기록 </span>
           </Title>
         ) : (
           <Title>
-            한나님의 <span style={{ fontWeight: "800" }}>주간 기록 </span>
+            한나님의{" "}
+            <span style={{ fontFamily: "SUITMedium" }}>주간 기록 </span>
           </Title>
         )}
         <ToggleContainer>
@@ -116,7 +120,35 @@ function WeekMonthStstisticsComponent() {
         </ToggleContainer>
       </NoCenterHorizontal>
       <Horizontal>
-        <Box></Box>
+        <Box>
+          <GaugeComponent
+            arc={{
+              subArcs: [
+                {
+                  limit: 20,
+                  color: "#D0FFE5",
+                  showTick: true,
+                },
+                {
+                  limit: 50,
+                  color: "#8FFFC2",
+                  showTick: true,
+                },
+                {
+                  limit: 70,
+                  color: "#57EA9B",
+                  showTick: true,
+                },
+                {
+                  limit: 100,
+                  color: "#2AA663",
+                  showTick: true,
+                },
+              ],
+            }}
+            value={isMonthly ? mhappy : whappy}
+          />
+        </Box>
         <Box>
           {isMonthly ? "이번달 과소비 건수" : "이번주 과소비 건수"}
           <p style={{ fontSize: "30px", fontWeight: "bold" }}>

@@ -8,20 +8,30 @@ import {
   Horizontal,
   Vertical,
   NoCenterHorizontal,
+  NoCenterVertical,
 } from "../styles/CommunalStyle";
 
 import LogoImg from "../imgs/Logo.png";
 
 const dayData = {
-  happy: 74,
+  happy: 24,
   cost: 250,
 };
 
+const staticData = {
+  whappy: 52,
+  wcost: 250,
+  mhappy: 94,
+  mcost: 250,
+};
 const Title = styled.p`
   color: ${(props) => props.theme.colors.COLORBlack};
-  font-family: "SUITExtraBold";
+  font-family: "RowdiesBold";
+  font-weight: 700;
+  font-style: normal;
   font-size: 28px;
   margin: 0;
+  margin-top: 10px;
 `;
 const Logo = styled.img`
   width: 35px;
@@ -35,19 +45,32 @@ const Box = styled.div`
   margin-top: 36px;
   border-radius: 20px;
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fcfffe;
 `;
 
 function MainPage() {
   return (
     <>
-      <Horizontal style={{ height: "100%" }}>
+      <Horizontal style={{ height: "100vh", overflowY: "hidden" }}>
         <MenuBarComponent />
-        <Vertical>
-          <NoCenterHorizontal style={{ alignItems: "flex-start" }}>
+        <NoCenterVertical
+          style={{
+            height: "100vh",
+            justifyContent: "flex-start",
+            marginTop: "40px",
+          }}
+        >
+          <NoCenterHorizontal>
             <Horizontal
               style={{
                 justifyContent: "flex-start",
                 marginLeft: "25px",
+                marginBottom: "35px",
+                marginTop: "30px",
               }}
             >
               <Logo src={LogoImg} />
@@ -64,12 +87,15 @@ function MainPage() {
               }}
             >
               <DayStatisticsComponent happy={dayData.happy} />
-              <WeekMonthStstisticsComponent />
-              <Box />
+              <Box>오늘의 일기랄까</Box>
+              <WeekMonthStstisticsComponent
+                whappy={staticData.whappy}
+                mhappy={staticData.mhappy}
+              />
             </Vertical>
             <CalenderComponent />
           </Horizontal>
-        </Vertical>
+        </NoCenterVertical>
       </Horizontal>
     </>
   );

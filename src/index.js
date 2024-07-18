@@ -4,6 +4,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "./styles/GlobalStyle";
+import LandingPage from "./pages/LandingPage";
 import MainPage from "./pages/MainPage";
 import CreatePage from "./pages/CreatePage";
 import KakaoLoginRedirect from "./pages/KakaoLoginRedirect";
@@ -11,10 +12,14 @@ import KakaoLoginRedirect from "./pages/KakaoLoginRedirect";
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <LandingPage />,
+  },
+  {
+    path: "/ssobbi",
     element: <MainPage />,
   },
   {
-    path: "/create",
+    path: "/ssobbi/create",
     element: <CreatePage />,
   },
   {
@@ -44,11 +49,11 @@ const themeColors = {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <RecoilRoot>
-    <React.StrictMode>
-      <GlobalStyle />
-      <ThemeProvider theme={themeColors}>
-        <RouterProvider router={router} />
-      </ThemeProvider>
-    </React.StrictMode>
+    {/* <React.StrictMode> */}
+    <GlobalStyle />
+    <ThemeProvider theme={themeColors}>
+      <RouterProvider router={router} />
+    </ThemeProvider>
+    {/* </React.StrictMode> */}
   </RecoilRoot>
 );

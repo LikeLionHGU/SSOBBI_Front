@@ -21,13 +21,14 @@ const Box = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  background-color: #fcfffe;
 `;
 
 function DayStatisticsComponent({ happy }) {
   return (
     <>
       <Title>
-        한나님의 <span style={{ fontWeight: "800" }}>오늘의 기록 </span>
+        한나님의 <span style={{ fontFamily: "SUITMedium" }}>오늘의 기록 </span>
       </Title>
       <Horizontal>
         <Box>
