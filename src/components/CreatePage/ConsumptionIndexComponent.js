@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Horizontal } from "../../styles/CommunalStyle";
 import styled from "styled-components";
 import { priceInputState } from "../../store/atom";
@@ -43,6 +43,7 @@ function ConsumptionIndexComponent(props) {
   const [priceInput, setPriceInput] = useState(null); // 가격 inputValue useState
   const [isFocus, setIsFocus] = useState(false); // 카테고리 focus 관리
   const setIsPriceEnter = useSetRecoilState(priceInputState); // 가격 입력 유무 관리 recoil
+  const categoryRef = useRef("");
   const priceRef = useRef("");
   function handleSelectChange(e) {
     setCategoryInput(e.target.value);
@@ -62,12 +63,18 @@ function ConsumptionIndexComponent(props) {
     }
   }
 
+  useEffect(() => {
+    if (props.focus === true) categoryRef.current.focus();
+  }, []);
+
   return (
     <div>
       <Horizontal>
         <Vertical>
           <CategoryInput
             id="category"
+            ref={categoryRef}
+            autocomplete="off"
             onChange={(e) => setCategoryInput(e.target.value)}
             onFocus={() => setIsFocus(true)}
             onBlur={(e) => {
