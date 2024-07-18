@@ -14,7 +14,6 @@ const InputWrapper = styled.div`
 `;
 
 const StyledSpan = styled.span`
-  font-size: "55px";
   font-family: "SUITLight";
   font-weight: 400;
   font-size: 12px;
