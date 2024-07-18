@@ -5,6 +5,8 @@ import ConsumptionIndexComponent from "../components/CreatePage/ConsumptionIndex
 import { priceInputState } from "../store/atom";
 import { useRecoilState } from "recoil";
 import { useState } from "react";
+import MenuBarComponent from "../components/MainPage/MenuBarComponent";
+import { Horizontal, Vertical } from "../styles/CommunalStyle";
 
 const Title = styled.p`
   color: ${(props) => props.theme.colors.MAINCOLOR};
@@ -27,18 +29,20 @@ function CreatePage() {
     ]);
   }
   return (
-    <>
-      <Title>SSOBBI Create</Title>
-      <HappinessIndexComponent />
-      <EmotionIndexComponent />
-      <div>
-        <p>
-          OO님의 <strong>오늘 소비를 입력해주세요</strong>
-        </p>
-        {inputCmpnt}
-        {isPriceEnter && <button onClick={handleBtnChange}>추가</button>}
-      </div>
-    </>
+    <Horizontal style={{ height: "100%" }}>
+      <MenuBarComponent />
+      <Vertical>
+        <HappinessIndexComponent />
+        <EmotionIndexComponent />
+        <div>
+          <p>
+            OO님의 <strong>오늘 소비를 입력해주세요</strong>
+          </p>
+          {inputCmpnt}
+          {isPriceEnter && <button onClick={handleBtnChange}>추가</button>}
+        </div>
+      </Vertical>
+    </Horizontal>
   );
 }
 
