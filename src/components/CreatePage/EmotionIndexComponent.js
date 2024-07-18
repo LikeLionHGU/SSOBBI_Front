@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+const TextCount = styled.p`
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+  color: gray;
+`;
 const StyledTextarea = styled.textarea`
-  width: 200px;
+  width: 700px;
   height: 100px;
   resize: none;
   border: 1px solid ${(props) => (props.isOver ? "red" : "black")};
@@ -26,15 +32,20 @@ function EmotionIndexComponent() {
   };
   return (
     <div>
-      <p>오늘의 감정을 입력해주시오</p>
-      <p className="textCount">{content.length}자 / 50자</p>
-      <StyledTextarea
-        id="content"
-        maxLength="50"
-        onChange={handleInputChange}
-        value={content}
-        isOver={isOver}
-      ></StyledTextarea>
+      <p>
+        OO님의 <strong>행복 지수에 가장 큰 영향을 준 사건은 무엇인가요</strong>
+        (그 순간을 구체적으로 작성해주세요)
+      </p>
+      <div style={{ position: "relative" }}>
+        <StyledTextarea
+          id="content"
+          maxLength="50"
+          onChange={handleInputChange}
+          value={content}
+          isOver={isOver}
+        ></StyledTextarea>
+        <TextCount className="textCount">{content.length}자 / 50자</TextCount>
+      </div>
     </div>
   );
 }
