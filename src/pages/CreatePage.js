@@ -19,7 +19,10 @@ function CreatePage() {
     setIsPriceEnter(false);
     setInputCmpnt((prev) => [
       ...prev,
-      <ConsumptionIndexComponent key={prev.length} />,
+      <ConsumptionIndexComponent
+        key={prev.length}
+        handleBtnChange={handleBtnChange}
+      />,
     ]);
   }
   return (
