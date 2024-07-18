@@ -11,18 +11,20 @@ const StyledTextarea = styled.textarea`
   width: 700px;
   height: 100px;
   resize: none;
-  border: 1px solid ${(props) => (props.isOver ? "red" : "black")};
   &:focus {
     outline: none;
-    border: 1px solid black;
   }
+  box-shadow: 0px 12px 34px 0px rgba(0, 0, 0, 0.08),
+    0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
+  border: none;
+  border-radius: 10px;
 `;
 
 function EmotionIndexComponent() {
   const [content, setContent] = useState("");
   const [isOver, setIsOver] = useState(false);
   const handleInputChange = (e) => {
-    if (e.target.value.length <= "50") {
+    if (e.target.value.length <= "200") {
       setContent(e.target.value);
       setIsOver(false);
     } else {
@@ -39,12 +41,12 @@ function EmotionIndexComponent() {
       <div style={{ position: "relative" }}>
         <StyledTextarea
           id="content"
-          maxLength="50"
+          maxLength="200"
           onChange={handleInputChange}
           value={content}
           isOver={isOver}
         ></StyledTextarea>
-        <TextCount className="textCount">{content.length}자 / 50자</TextCount>
+        <TextCount className="textCount">{content.length}/200</TextCount>
       </div>
     </div>
   );

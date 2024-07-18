@@ -4,7 +4,8 @@ import styled from "styled-components";
 const InputWrapper = styled.div`
   width: 100%;
   height: 40px;
-  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 12px 34px 0px rgba(0, 0, 0, 0.08),
+    0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
   border-radius: 10px;
   display: flex;
   align-items: center;
