@@ -13,7 +13,7 @@ const Title = styled.p`
 function CreatePage() {
   const [isPriceEnter, setIsPriceEnter] = useRecoilState(priceInputState);
   const [inputCmpnt, setInputCmpnt] = useState([
-    <ConsumptionIndexComponent key={0} />,
+    <ConsumptionIndexComponent key={0} handleBtnChange={handleBtnChange} />,
   ]);
   function handleBtnChange() {
     setIsPriceEnter(false);

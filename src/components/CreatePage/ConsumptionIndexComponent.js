@@ -12,11 +12,11 @@ const StyledInput = styled.input`
 
 const optionData = ["식비", "교통비", "의류"];
 
-function ConsumptionIndexComponent() {
-  const [categoryInput, setCategoryInput] = useState(null);
-  const [priceInput, setPriceInput] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
-  const setIsPriceEnter = useSetRecoilState(priceInputState);
+function ConsumptionIndexComponent(props) {
+  const [categoryInput, setCategoryInput] = useState(null); // 카테고리 inputValue useState
+  const [priceInput, setPriceInput] = useState(null); // 가격 inputValue useState
+  const [isFocus, setIsFocus] = useState(false); // 카테고리 focus 관리
+  const setIsPriceEnter = useSetRecoilState(priceInputState); // 가격 입력 유무 관리 recoil
   const priceRef = useRef("");
   function handleSelectChange(e) {
     setCategoryInput(e.target.value);
@@ -28,13 +28,20 @@ function ConsumptionIndexComponent() {
     // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
     const onlyNumber = value.replace(/[^0-9]/g, "");
     setPriceInput(onlyNumber);
-    setIsPriceEnter(priceInput ? true : false);
+    setIsPriceEnter(onlyNumber ? true : false);
   }
+  function activeEnter(e) {
+    if (e.key === "Enter") {
+      props.handleBtnChange();
+    }
+  }
+
   return (
     <div>
       <Horizontal>
         <Vertical>
           <StyledInput
+            ref={props.categoryRef}
             onChange={(e) => setCategoryInput(e.target.value)}
             onFocus={() => setIsFocus(true)}
             onBlur={(e) => {
@@ -47,7 +54,12 @@ function ConsumptionIndexComponent() {
 
               if (e.relatedTarget === null || !isSelectTag) {
                 setIsFocus(false);
-                setCategoryInput("");
+
+                var isOptionData = false;
+                optionData.map((itm) => {
+                  if (categoryInput === itm) isOptionData = true;
+                });
+                if (!isOptionData) setCategoryInput("");
               }
             }}
             value={categoryInput}
@@ -79,6 +91,8 @@ function ConsumptionIndexComponent() {
           ref={priceRef}
           onChange={handlePriceInputChange}
           value={priceInput}
+          autocomplete="off"
+          onKeyDown={activeEnter}
         ></StyledInput>
       </Horizontal>
     </div>
