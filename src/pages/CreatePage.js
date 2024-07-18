@@ -18,10 +18,11 @@ function CreatePage() {
   function handleBtnChange() {
     setIsPriceEnter(false);
     setInputCmpnt((prev) => [
-      ...prev,
+      ...prev.map((itm) => ({ ...itm, focus: false })),
       <ConsumptionIndexComponent
         key={prev.length}
         handleBtnChange={handleBtnChange}
+        focus={true}
       />,
     ]);
   }
