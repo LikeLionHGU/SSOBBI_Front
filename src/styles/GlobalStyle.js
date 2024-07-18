@@ -20,6 +20,7 @@ export const GlobalStyle = createGlobalStyle`
         align-items: center;
         width: 100vw;
         height: 100vh;
+        background-color: #fcfffe;
     }
     @font-face {
         font-family: "SUITBold";

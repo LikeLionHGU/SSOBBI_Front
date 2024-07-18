@@ -1,18 +1,59 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import React from "react";
+import styled, { css } from "styled-components";
+import { UserTokenState } from "../../store/atom";
+import { useSetRecoilState } from "recoil";
+import useDetectClose from "../hooks/useDetectClose";
 import { SlArrowUp, SlArrowDown } from "react-icons/sl";
 import LogoImg from "../../imgs/Logo.png";
 
-const Menu = styled.div`
+const DropdownContainer = styled.div`
+  position: relative;
+  text-align: center;
   width: 250px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
 `;
 
+const Menu = styled.div`
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  width: 130px;
+  text-align: center;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -20px);
+  transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+  z-index: 9;
+
+  ${({ isDropped }) =>
+    isDropped &&
+    css`
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, 0);
+      left: 50%;
+    `};
+`;
+
+const Ul = styled.ul`
+  & > li {
+    margin-bottom: 10px;
+  }
+
+  & > li:first-of-type {
+    margin-top: 10px;
+  }
+
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+`;
 const Horizontal = styled.div`
   display: flex;
   align-items: center;
@@ -27,46 +68,44 @@ const Logo = styled.img`
   border-radius: 50%;
   margin-right: 10px;
 `;
-
-const Li = styled.li`
-  list-style: none;
-  border-bottom: 1px gray solid;
-  margin-top: 10px;
-`;
-
 const Icon = styled.div`
   margin-left: 10px;
   margin-top: 5px;
 `;
+const Li = styled.li``;
+
+const LinkWrapper = styled.a`
+  font-size: 16px;
+  text-decoration: none;
+  color: black;
+`;
 
 const DropDownComponent = () => {
-  const [view, setView] = useState(false);
+  const [myPageIsOpen, myPageRef, myPageHandler] = useDetectClose(false);
+  const setUserToken = useSetRecoilState(UserTokenState);
+
+  const logoutClickHandler = () => {
+    setUserToken(null);
+    setUserToken({ isLoggedIn: false });
+  };
+
   return (
-    <>
-      <Menu>
-        <ul
-          onClick={() => {
-            setView(!view);
-          }}
-          style={{ marginTop: 0 }}
-        >
-          <Horizontal>
-            <Logo src={LogoImg} />
-            이한나 <Icon>{view ? <SlArrowUp /> : <SlArrowDown />}</Icon>
-          </Horizontal>
-          {view && (
-            <>
-              <Li>
-                <Link to="/">마이페이지</Link>
-              </Li>
-              <Li>
-                <Link to="/">로그아웃</Link>
-              </Li>
-            </>
-          )}
-        </ul>
+    <DropdownContainer>
+      <Horizontal onClick={myPageHandler} ref={myPageRef}>
+        <Logo src={LogoImg} />
+        이한나 <Icon>{myPageIsOpen ? <SlArrowUp /> : <SlArrowDown />}</Icon>
+      </Horizontal>
+      <Menu isDropped={myPageIsOpen}>
+        <Ul>
+          <Li>
+            <LinkWrapper href="/ssobbi">마이페이지</LinkWrapper>
+          </Li>
+          <Li onClick={logoutClickHandler}>
+            <LinkWrapper href="/">로그아웃</LinkWrapper>
+          </Li>
+        </Ul>
       </Menu>
-    </>
+    </DropdownContainer>
   );
 };
 

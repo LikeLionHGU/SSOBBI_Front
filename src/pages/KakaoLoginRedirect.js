@@ -23,8 +23,9 @@ const KakaoLoginRedirect = () => {
           console.log(response.data);
           if (response.data.accessToken) {
             setUserToken(response.data.accessToken);
+            setUserToken({ isLoggedIn: true });
+            navigate("/ssobbi");
           }
-          navigate("/ssobbi", { isLoggedIn: true });
         })
         .catch((error) => {
           // 오류 시 처리

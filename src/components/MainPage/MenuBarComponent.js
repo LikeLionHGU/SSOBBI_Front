@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { UserTokenState } from "../../store/atom";
 import styled from "styled-components";
 import { FaHouseChimney } from "react-icons/fa6";
 import { IoPersonCircleOutline } from "react-icons/io5";
@@ -10,14 +12,14 @@ import { IoLogOutOutline } from "react-icons/io5";
 
 const Menu = styled.div`
   background-color: ${(props) => props.theme.colors.COLOR70};
-  width: 100px;
+  width: 85px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100%;
   border-radius: 20px 20px 0 0;
-  margin-top: 40px;
+  margin-top: 80px;
 `;
 
 const StyledLink = styled(Link)`
@@ -51,6 +53,13 @@ const Icon = styled.div`
 
 const MenuBarComponent = () => {
   const [activeIcon, setActiveIcon] = useState("home");
+  const setUserToken = useSetRecoilState(UserTokenState);
+
+  const logoutClickHandler = () => {
+    setUserToken(null);
+    setUserToken({ isLoggedIn: false });
+    handleIconClick("logout");
+  };
   const handleIconClick = (icon) => {
     setActiveIcon(icon);
   };
@@ -94,16 +103,16 @@ const MenuBarComponent = () => {
         active={activeIcon === "note"}
         onClick={() => handleIconClick("note")}
       >
-        <StyledLink to="/create">
+        <StyledLink to="/ssobbi/create">
           <PiNotePencilFill />
         </StyledLink>
       </Icon>
       <Icon
         active={activeIcon === "logout"}
-        onClick={() => handleIconClick("logout")}
+        onClick={logoutClickHandler}
         style={{ marginTop: "auto", marginBottom: "60px" }}
       >
-        <StyledLink href="/">
+        <StyledLink to="/">
           <IoLogOutOutline />
         </StyledLink>
       </Icon>

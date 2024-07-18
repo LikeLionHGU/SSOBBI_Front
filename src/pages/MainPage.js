@@ -14,10 +14,16 @@ import {
 import LogoImg from "../imgs/Logo.png";
 
 const dayData = {
-  happy: 74,
+  happy: 24,
   cost: 250,
 };
 
+const staticData = {
+  whappy: 52,
+  wcost: 250,
+  mhappy: 94,
+  mcost: 250,
+};
 const Title = styled.p`
   color: ${(props) => props.theme.colors.COLORBlack};
   font-family: "RowdiesBold";
@@ -43,6 +49,7 @@ const Box = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-color: #fcfffe;
 `;
 
 function MainPage() {
@@ -62,7 +69,8 @@ function MainPage() {
               style={{
                 justifyContent: "flex-start",
                 marginLeft: "25px",
-                marginBottom: "43px",
+                marginBottom: "35px",
+                marginTop: "30px",
               }}
             >
               <Logo src={LogoImg} />
@@ -80,7 +88,10 @@ function MainPage() {
             >
               <DayStatisticsComponent happy={dayData.happy} />
               <Box>오늘의 일기랄까</Box>
-              <WeekMonthStstisticsComponent />
+              <WeekMonthStstisticsComponent
+                whappy={staticData.whappy}
+                mhappy={staticData.mhappy}
+              />
             </Vertical>
             <CalenderComponent />
           </Horizontal>
