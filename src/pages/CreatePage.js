@@ -28,6 +28,9 @@ function CreatePage() {
       <HappinessIndexComponent />
       <EmotionIndexComponent />
       <div>
+        <p>
+          OO님의 <strong>오늘 소비를 입력해주세요</strong>
+        </p>
         {inputCmpnt}
         {isPriceEnter && <button onClick={handleBtnChange}>추가</button>}
       </div>

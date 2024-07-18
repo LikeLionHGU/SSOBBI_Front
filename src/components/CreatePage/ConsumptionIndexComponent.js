@@ -1,13 +1,39 @@
 import React, { useState, useRef } from "react";
-import { Vertical, Horizontal } from "../../styles/CommunalStyle";
+import { Horizontal } from "../../styles/CommunalStyle";
 import styled from "styled-components";
 import { priceInputState } from "../../store/atom";
 import { useSetRecoilState } from "recoil";
 
-const StyledInput = styled.input`
+const CategoryInput = styled.input`
   &:focus {
     outline: none;
   }
+  width: 100px;
+  height: 50px;
+  text-align: center;
+  border-radius: 10px;
+  border: 1bx solid black;
+`;
+
+const PriceInput = styled.input`
+  &:focus {
+    outline: none;
+  }
+  &::placeholder {
+    text-align: left;
+  }
+  text-align: center;
+  width: 250px;
+  height: 50px;
+  border-radius: 10px;
+  border: 1bx solid black;
+`;
+
+const Vertical = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 const optionData = ["식비", "교통비", "의류"];
@@ -40,8 +66,8 @@ function ConsumptionIndexComponent(props) {
     <div>
       <Horizontal>
         <Vertical>
-          <StyledInput
-            ref={props.categoryRef}
+          <CategoryInput
+            id="category"
             onChange={(e) => setCategoryInput(e.target.value)}
             onFocus={() => setIsFocus(true)}
             onBlur={(e) => {
@@ -63,7 +89,7 @@ function ConsumptionIndexComponent(props) {
               }
             }}
             value={categoryInput}
-          ></StyledInput>
+          ></CategoryInput>
           {isFocus && (
             <select id="search" size="4" onChange={handleSelectChange}>
               {isFocus &&
@@ -86,14 +112,15 @@ function ConsumptionIndexComponent(props) {
             </select>
           )}
         </Vertical>
-        <StyledInput
+        <PriceInput
           id="priceInput"
           ref={priceRef}
           onChange={handlePriceInputChange}
           value={priceInput}
           autocomplete="off"
           onKeyDown={activeEnter}
-        ></StyledInput>
+          placeholder="금액"
+        ></PriceInput>
       </Horizontal>
     </div>
   );
