@@ -70,11 +70,13 @@ function WeekMonthStstisticsComponent() {
       <NoCenterHorizontal>
         {isMonthly ? (
           <Title>
-            한나님의 <span style={{ fontWeight: "800" }}>월간 기록 </span>
+            한나님의{" "}
+            <span style={{ fontFamily: "SUITMedium" }}>월간 기록 </span>
           </Title>
         ) : (
           <Title>
-            한나님의 <span style={{ fontWeight: "800" }}>주간 기록 </span>
+            한나님의{" "}
+            <span style={{ fontFamily: "SUITMedium" }}>주간 기록 </span>
           </Title>
         )}
         <ToggleContainer>

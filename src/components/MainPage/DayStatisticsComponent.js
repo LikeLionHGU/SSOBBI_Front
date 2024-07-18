@@ -27,7 +27,7 @@ function DayStatisticsComponent({ happy }) {
   return (
     <>
       <Title>
-        한나님의 <span style={{ fontWeight: "800" }}>오늘의 기록 </span>
+        한나님의 <span style={{ fontFamily: "SUITMedium" }}>오늘의 기록 </span>
       </Title>
       <Horizontal>
         <Box>

@@ -15,8 +15,9 @@ const Menu = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100%;
-  border-radius: 20px;
+  height: 100%;
+  border-radius: 20px 20px 0 0;
+  margin-top: 40px;
 `;
 
 const StyledLink = styled(Link)`
@@ -29,8 +30,8 @@ const Icon = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 21px;
+  margin-bottom: 21px;
   font-size: 20px;
   width: 60px;
   margin-left: 18px;
@@ -58,7 +59,7 @@ const MenuBarComponent = () => {
       <Icon
         active={activeIcon === "home"}
         onClick={() => handleIconClick("home")}
-        style={{ marginTop: "60px" }}
+        style={{ marginTop: "100px" }}
       >
         <StyledLink href="/">
           <FaHouseChimney />
@@ -100,7 +101,7 @@ const MenuBarComponent = () => {
       <Icon
         active={activeIcon === "logout"}
         onClick={() => handleIconClick("logout")}
-        style={{ marginTop: "auto" }}
+        style={{ marginTop: "auto", marginBottom: "60px" }}
       >
         <StyledLink href="/">
           <IoLogOutOutline />

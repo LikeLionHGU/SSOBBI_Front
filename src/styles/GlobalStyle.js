@@ -8,13 +8,14 @@ import SUITMedium from "../fonts/SUIT-Medium.ttf";
 import SUITRegular from "../fonts/SUIT-Regular.ttf";
 import SUITSemiBold from "../fonts/SUIT-SemiBold.ttf";
 import SUITThin from "../fonts/SUIT-Thin.ttf";
+import RowdiesBold from "../fonts/Rowdies-Bold.ttf";
 
 export const GlobalStyle = createGlobalStyle`
     body, html {
         margin: 0;
         padding: 0;
         display: flex;
-        justify-content: center;
+        /* justify-content: center; */
         flex-direction: column;
         align-items: center;
         width: 100vw;
@@ -65,5 +66,9 @@ export const GlobalStyle = createGlobalStyle`
         font-display: swap;
         src: url("SUITThin"), url(${SUITThin}) format('woff2'),
     }
-
+    @font-face {
+        font-family: "RowdiesBold";
+        font-display: swap;
+        src: url("RowdiesBold"), url(${RowdiesBold}) format('woff2'),
+    }
 `;

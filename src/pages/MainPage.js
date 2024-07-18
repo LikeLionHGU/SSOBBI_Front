@@ -8,6 +8,7 @@ import {
   Horizontal,
   Vertical,
   NoCenterHorizontal,
+  NoCenterVertical,
 } from "../styles/CommunalStyle";
 
 import LogoImg from "../imgs/Logo.png";
@@ -19,9 +20,12 @@ const dayData = {
 
 const Title = styled.p`
   color: ${(props) => props.theme.colors.COLORBlack};
-  font-family: "SUITExtraBold";
+  font-family: "RowdiesBold";
+  font-weight: 700;
+  font-style: normal;
   font-size: 28px;
   margin: 0;
+  margin-top: 10px;
 `;
 const Logo = styled.img`
   width: 35px;
@@ -35,19 +39,30 @@ const Box = styled.div`
   margin-top: 36px;
   border-radius: 20px;
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 function MainPage() {
   return (
     <>
-      <Horizontal style={{ height: "100%" }}>
+      <Horizontal style={{ height: "100vh", overflowY: "hidden" }}>
         <MenuBarComponent />
-        <Vertical>
-          <NoCenterHorizontal style={{ alignItems: "flex-start" }}>
+        <NoCenterVertical
+          style={{
+            height: "100vh",
+            justifyContent: "flex-start",
+            marginTop: "40px",
+          }}
+        >
+          <NoCenterHorizontal>
             <Horizontal
               style={{
                 justifyContent: "flex-start",
                 marginLeft: "25px",
+                marginBottom: "43px",
               }}
             >
               <Logo src={LogoImg} />
@@ -64,12 +79,12 @@ function MainPage() {
               }}
             >
               <DayStatisticsComponent happy={dayData.happy} />
+              <Box>오늘의 일기랄까</Box>
               <WeekMonthStstisticsComponent />
-              <Box />
             </Vertical>
             <CalenderComponent />
           </Horizontal>
-        </Vertical>
+        </NoCenterVertical>
       </Horizontal>
     </>
   );

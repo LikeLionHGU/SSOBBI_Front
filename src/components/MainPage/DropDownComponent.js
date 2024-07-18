@@ -41,34 +41,32 @@ const Icon = styled.div`
 
 const DropDownComponent = () => {
   const [view, setView] = useState(false);
-  const handleLoginClick = () => {
-    window.location.href = process.env.REACT_APP_KAKAO_URL;
-  };
-
   return (
-    <Menu>
-      <ul
-        onClick={() => {
-          setView(!view);
-        }}
-        style={{ marginTop: 0 }}
-      >
-        <Horizontal>
-          <Logo src={LogoImg} onClick={handleLoginClick} />
-          로그인 <Icon>{view ? <SlArrowUp /> : <SlArrowDown />}</Icon>
-        </Horizontal>
-        {view && (
-          <>
-            <Li>
-              <Link to="/">마이페이지</Link>
-            </Li>
-            <Li>
-              <Link to="/">로그아웃</Link>
-            </Li>
-          </>
-        )}
-      </ul>
-    </Menu>
+    <>
+      <Menu>
+        <ul
+          onClick={() => {
+            setView(!view);
+          }}
+          style={{ marginTop: 0 }}
+        >
+          <Horizontal>
+            <Logo src={LogoImg} />
+            이한나 <Icon>{view ? <SlArrowUp /> : <SlArrowDown />}</Icon>
+          </Horizontal>
+          {view && (
+            <>
+              <Li>
+                <Link to="/">마이페이지</Link>
+              </Li>
+              <Li>
+                <Link to="/">로그아웃</Link>
+              </Li>
+            </>
+          )}
+        </ul>
+      </Menu>
+    </>
   );
 };
 
