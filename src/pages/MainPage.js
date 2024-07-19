@@ -56,7 +56,7 @@ function MainPage() {
   return (
     <>
       <Horizontal style={{ height: "100vh", overflowY: "hidden" }}>
-        <MenuBarComponent />
+        <MenuBarComponent menu={"home"} />
         <NoCenterVertical
           style={{
             height: "100vh",

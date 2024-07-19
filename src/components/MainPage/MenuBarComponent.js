@@ -51,8 +51,8 @@ const Icon = styled.div`
   }
 `;
 
-const MenuBarComponent = () => {
-  const [activeIcon, setActiveIcon] = useState("home");
+const MenuBarComponent = ({ menu }) => {
+  const [activeIcon, setActiveIcon] = useState(menu);
   const setUserToken = useSetRecoilState(UserTokenState);
 
   const logoutClickHandler = () => {

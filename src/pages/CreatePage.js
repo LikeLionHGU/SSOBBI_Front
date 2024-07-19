@@ -50,7 +50,7 @@ function CreatePage() {
   }
   return (
     <Horizontal style={{ height: "100%" }}>
-      <MenuBarComponent />
+      <MenuBarComponent menu={"note"} />
       <Vertical>
         <HappinessIndexComponent />
         <EmotionIndexComponent />
