@@ -7,6 +7,7 @@ import { GlobalStyle } from "./styles/GlobalStyle";
 import LandingPage from "./pages/LandingPage";
 import MainPage from "./pages/MainPage";
 import CreatePage from "./pages/CreatePage";
+import CalenderPage from "./pages/CalenderPage";
 import KakaoLoginRedirect from "./pages/KakaoLoginRedirect";
 
 const router = createBrowserRouter([
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: "/ssobbi/create",
     element: <CreatePage />,
+  },
+  {
+    path: "/ssobbi/calender",
+    element: <CalenderPage />,
   },
   {
     path: "/login/oauth/kakao",
