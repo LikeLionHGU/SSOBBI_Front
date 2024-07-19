@@ -5,9 +5,31 @@ import ConsumptionIndexComponent from "../components/CreatePage/ConsumptionIndex
 import { priceInputState } from "../store/atom";
 import { useRecoilState } from "recoil";
 import { useState } from "react";
+import MenuBarComponent from "../components/MainPage/MenuBarComponent";
+import { Horizontal, Vertical } from "../styles/CommunalStyle";
+import AddBtnImg from "../imgs/AddBtnImg.svg";
 
-const Title = styled.p`
-  color: ${(props) => props.theme.colors.MAINCOLOR};
+const BtnInputWrapper = styled.div`
+  display: flex;
+  align-items: flex-end;
+`;
+
+const AddBtn = styled.button`
+  width: 60px;
+  height: 60px;
+  border-radius: 20px;
+  border: 1px solid #2aa663;
+  background: #fff;
+  box-shadow: 0px 12px 34px 0px rgba(0, 0, 0, 0.08),
+    0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
+  cursor: pointer;
+  margin-left: 16px;
+  &:hover {
+  }
+`;
+
+const AddImg = styled.img`
+  width: 16px;
 `;
 
 function CreatePage() {
@@ -27,18 +49,26 @@ function CreatePage() {
     ]);
   }
   return (
-    <>
-      <Title>SSOBBI Create</Title>
-      <HappinessIndexComponent />
-      <EmotionIndexComponent />
-      <div>
-        <p>
-          OO님의 <strong>오늘 소비를 입력해주세요</strong>
-        </p>
-        {inputCmpnt}
-        {isPriceEnter && <button onClick={handleBtnChange}>추가</button>}
-      </div>
-    </>
+    <Horizontal style={{ height: "100%" }}>
+      <MenuBarComponent />
+      <Vertical>
+        <HappinessIndexComponent />
+        <EmotionIndexComponent />
+        <div>
+          <p style={{ marginTop: "16px" }}>
+            OO님의 <strong>오늘 소비를 입력해주세요</strong>
+          </p>
+          <BtnInputWrapper>
+            <div>{inputCmpnt}</div>
+            {isPriceEnter && (
+              <AddBtn onClick={handleBtnChange}>
+                <AddImg src={AddBtnImg} alt="AddBtn" />
+              </AddBtn>
+            )}
+          </BtnInputWrapper>
+        </div>
+      </Vertical>
+    </Horizontal>
   );
 }
 
