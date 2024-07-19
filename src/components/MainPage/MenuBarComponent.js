@@ -51,8 +51,8 @@ const Icon = styled.div`
   }
 `;
 
-const MenuBarComponent = () => {
-  const [activeIcon, setActiveIcon] = useState("home");
+const MenuBarComponent = ({ menu }) => {
+  const [activeIcon, setActiveIcon] = useState(menu);
   const setUserToken = useSetRecoilState(UserTokenState);
 
   const logoutClickHandler = () => {
@@ -70,7 +70,7 @@ const MenuBarComponent = () => {
         onClick={() => handleIconClick("home")}
         style={{ marginTop: "100px" }}
       >
-        <StyledLink href="/">
+        <StyledLink to="/ssobbi">
           <FaHouseChimney />
         </StyledLink>
       </Icon>
@@ -79,7 +79,7 @@ const MenuBarComponent = () => {
         active={activeIcon === "profile"}
         onClick={() => handleIconClick("profile")}
       >
-        <StyledLink href="/">
+        <StyledLink to="/">
           <IoPersonCircleOutline />
         </StyledLink>
       </Icon>
@@ -87,7 +87,7 @@ const MenuBarComponent = () => {
         active={activeIcon === "calendar"}
         onClick={() => handleIconClick("calendar")}
       >
-        <StyledLink href="/">
+        <StyledLink to="/ssobbi/calender">
           <FaRegCalendarCheck />
         </StyledLink>
       </Icon>
