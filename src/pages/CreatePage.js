@@ -2,7 +2,12 @@ import styled from "styled-components";
 import HappinessIndexComponent from "../components/CreatePage/HappinessIndexComponent";
 import EmotionIndexComponent from "../components/CreatePage/EmotionIndexComponent";
 import ConsumptionIndexComponent from "../components/CreatePage/ConsumptionIndexComponent";
-import { priceInputState, consumptionIndexState } from "../store/atom";
+import {
+  priceInputState,
+  happinessIndexState,
+  importantIncidentState,
+  consumptionIndexState,
+} from "../store/atom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
 import MenuBarComponent from "../components/MainPage/MenuBarComponent";
@@ -34,8 +39,18 @@ const AddImg = styled.img`
 
 function CreatePage() {
   const [isPriceEnter, setIsPriceEnter] = useRecoilState(priceInputState);
+  const happinessIndex = useRecoilValue(happinessIndexState);
+  const importantIncident = useRecoilValue(importantIncidentState);
   const consumptionIndex = useRecoilValue(consumptionIndexState);
   const [inputCmpnt, setInputCmpnt] = useState(null); //inputComponent
+  function writeBtnClick() {
+    const data = {
+      happinessIndex: happinessIndex,
+      importantIncident: importantIncident,
+      consumptionIndex: consumptionIndex,
+    };
+    console.log(data);
+  }
   function handleBtnChange() {
     setIsPriceEnter(false);
     setInputCmpnt((prev) => [
@@ -64,7 +79,7 @@ function CreatePage() {
         cmp
       )
     );
-  }, []);
+  }, []); // 화면 처음 렌더링 될 때 기본 데이터 불러와서 화면에 띄우기, 이후 백엔드 api와 연결할 때 코드 똑같이 복사
   return (
     <Horizontal style={{ height: "100%" }}>
       <MenuBarComponent />
@@ -84,7 +99,7 @@ function CreatePage() {
             )}
           </BtnInputWrapper>
         </div>
-        <button>기록하기</button>
+        <button onClick={writeBtnClick}>기록하기</button>
       </Vertical>
     </Horizontal>
   );

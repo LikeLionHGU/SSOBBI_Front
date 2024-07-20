@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Horizontal } from "../../styles/CommunalStyle";
 import styled from "styled-components";
-import { priceInputState } from "../../store/atom";
+import { priceInputState, consumptionIndexState } from "../../store/atom";
 import { useSetRecoilState } from "recoil";
-import { consumptionIndexState } from "../../store/atom";
 
 const CategoryInput = styled.input`
   &:focus {
@@ -76,8 +75,8 @@ const Vertical = styled.div`
 const optionData = ["식비", "교통비", "의류", "문화", "취미", "악기"];
 
 function ConsumptionIndexComponent(props) {
-  const [categoryInput, setCategoryInput] = useState(null); // 카테고리 inputValue useState
-  const [priceInput, setPriceInput] = useState(null); // 가격 inputValue useState
+  const [categoryInput, setCategoryInput] = useState(props.category); // 카테고리 inputValue useState
+  const [priceInput, setPriceInput] = useState(props.consumption); // 가격 inputValue useState
   const [isFocus, setIsFocus] = useState(false); // 카테고리 focus 관리
   const setIsPriceEnter = useSetRecoilState(priceInputState); // 가격 입력 유무 관리 recoil
   const categoryRef = useRef("");
@@ -90,32 +89,36 @@ function ConsumptionIndexComponent(props) {
     priceRef.current.focus();
   }
 
-  const handleInputsChange = useCallback(() => {
+  function handleInputsChange() {
     const id = props.id;
-    const categoryValue = categoryInput;
-    const priceValue = priceInput;
 
     setConsumptionIndex((prev) => {
       const updatedConsumption = prev.map((item) => {
         if (item.id === id) {
-          return { ...item, category: categoryValue, consumption: priceValue };
+          return {
+            ...item,
+            category: categoryInput,
+            consumption: priceInput,
+          };
         }
         return item;
       });
+
+      console.log(updatedConsumption);
 
       // id에 해당하는 객체가 없을 경우 새 객체를 추가합니다.
       const exists = prev.some((item) => item.id === id);
       if (!exists) {
         updatedConsumption.push({
           id: id,
-          category: categoryValue,
-          consumption: priceValue,
+          category: categoryInput,
+          consumption: priceInput,
         });
       }
 
-      return [...prev, { updatedConsumption }];
+      return updatedConsumption;
     });
-  }, [categoryInput, priceInput, props.id, setConsumptionIndex]);
+  }
 
   function handlePriceInputChange(e) {
     const { value } = e.target;
@@ -137,14 +140,7 @@ function ConsumptionIndexComponent(props) {
 
   useEffect(() => {
     handleInputsChange();
-  }, [categoryInput, priceInput, handleInputsChange]);
-
-  useEffect(() => {
-    if (props.category !== undefined) {
-      setCategoryInput(props.category);
-      setPriceInput(props.consumption);
-    }
-  }, []);
+  }, [categoryInput, priceInput]);
 
   return (
     <Horizontal style={{ marginTop: "16px" }}>

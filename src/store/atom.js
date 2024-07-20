@@ -38,5 +38,10 @@ export const consumptionIndexState = atom({
       category: "식비",
       consumption: "30,000",
     },
+    {
+      id: "1",
+      category: "교통비",
+      consumption: "3,000",
+    },
   ],
 });
