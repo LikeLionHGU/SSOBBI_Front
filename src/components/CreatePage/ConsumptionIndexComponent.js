@@ -1,8 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Horizontal } from "../../styles/CommunalStyle";
 import styled from "styled-components";
 import { priceInputState } from "../../store/atom";
 import { useSetRecoilState } from "recoil";
+import { consumptionIndexState } from "../../store/atom";
 
 const CategoryInput = styled.input`
   &:focus {
@@ -81,11 +82,41 @@ function ConsumptionIndexComponent(props) {
   const setIsPriceEnter = useSetRecoilState(priceInputState); // 가격 입력 유무 관리 recoil
   const categoryRef = useRef("");
   const priceRef = useRef("");
+  const setConsumptionIndex = useSetRecoilState(consumptionIndexState);
+
   function handleSelectChange(e) {
     setCategoryInput(e.target.value);
     setIsFocus(false);
     priceRef.current.focus();
   }
+
+  const handleInputsChange = useCallback(() => {
+    const id = props.id;
+    const categoryValue = categoryInput;
+    const priceValue = priceInput;
+
+    setConsumptionIndex((prev) => {
+      const updatedConsumption = prev.map((item) => {
+        if (item.id === id) {
+          return { ...item, category: categoryValue, consumption: priceValue };
+        }
+        return item;
+      });
+
+      // id에 해당하는 객체가 없을 경우 새 객체를 추가합니다.
+      const exists = prev.some((item) => item.id === id);
+      if (!exists) {
+        updatedConsumption.push({
+          id: id,
+          category: categoryValue,
+          consumption: priceValue,
+        });
+      }
+
+      return [...prev, { updatedConsumption }];
+    });
+  }, [categoryInput, priceInput, props.id, setConsumptionIndex]);
+
   function handlePriceInputChange(e) {
     const { value } = e.target;
     // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
@@ -102,6 +133,17 @@ function ConsumptionIndexComponent(props) {
 
   useEffect(() => {
     if (props.focus === true) categoryRef.current.focus();
+  }, [props.focus]);
+
+  useEffect(() => {
+    handleInputsChange();
+  }, [categoryInput, priceInput, handleInputsChange]);
+
+  useEffect(() => {
+    if (props.category !== undefined) {
+      setCategoryInput(props.category);
+      setPriceInput(props.consumption);
+    }
   }, []);
 
   return (

@@ -2,9 +2,9 @@ import styled from "styled-components";
 import HappinessIndexComponent from "../components/CreatePage/HappinessIndexComponent";
 import EmotionIndexComponent from "../components/CreatePage/EmotionIndexComponent";
 import ConsumptionIndexComponent from "../components/CreatePage/ConsumptionIndexComponent";
-import { priceInputState } from "../store/atom";
-import { useRecoilState } from "recoil";
-import { useState } from "react";
+import { priceInputState, consumptionIndexState } from "../store/atom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { useEffect, useState } from "react";
 import MenuBarComponent from "../components/MainPage/MenuBarComponent";
 import { Horizontal, Vertical } from "../styles/CommunalStyle";
 import AddBtnImg from "../imgs/AddBtnImg.svg";
@@ -34,20 +34,37 @@ const AddImg = styled.img`
 
 function CreatePage() {
   const [isPriceEnter, setIsPriceEnter] = useRecoilState(priceInputState);
-  const [inputCmpnt, setInputCmpnt] = useState([
-    <ConsumptionIndexComponent key={0} handleBtnChange={handleBtnChange} />,
-  ]);
+  const consumptionIndex = useRecoilValue(consumptionIndexState);
+  const [inputCmpnt, setInputCmpnt] = useState(null); //inputComponent
   function handleBtnChange() {
     setIsPriceEnter(false);
     setInputCmpnt((prev) => [
       ...prev.map((itm) => ({ ...itm, focus: false })),
       <ConsumptionIndexComponent
-        key={prev.length}
+        id={prev.length}
         handleBtnChange={handleBtnChange}
         focus={true}
       />,
     ]);
   }
+  useEffect(() => {
+    const cmp = consumptionIndex.map((item) => (
+      <ConsumptionIndexComponent
+        key={item.id}
+        id={item.id}
+        category={item.category}
+        consumption={item.consumption}
+        handleBtnChange={handleBtnChange}
+      />
+    ));
+    setInputCmpnt(
+      consumptionIndex.length === 0 ? (
+        <ConsumptionIndexComponent id={0} handleBtnChange={handleBtnChange} />
+      ) : (
+        cmp
+      )
+    );
+  }, []);
   return (
     <Horizontal style={{ height: "100%" }}>
       <MenuBarComponent />
@@ -67,6 +84,7 @@ function CreatePage() {
             )}
           </BtnInputWrapper>
         </div>
+        <button>기록하기</button>
       </Vertical>
     </Horizontal>
   );

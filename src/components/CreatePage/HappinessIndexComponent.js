@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
+import { happinessIndexState } from "../../store/atom";
+import { useRecoilState } from "recoil";
 
 const InputWrapper = styled.div`
   width: 100%;
@@ -50,10 +52,8 @@ const StyledInput = styled.input`
 `;
 
 function HappinessIndexComponent() {
-  const [happiness, setHappiness] = useState(null);
-  const handleInputChange = (e) => {
-    setHappiness(e.target.value);
-  };
+  const [happinessIndex, setHappinessIndex] =
+    useRecoilState(happinessIndexState); // 행복 지수 관리 recoil
   return (
     <div>
       <p>
@@ -64,8 +64,8 @@ function HappinessIndexComponent() {
           type="range"
           min="0"
           max="100"
-          onChange={handleInputChange}
-          value={happiness}
+          onChange={(e) => setHappinessIndex(e.target.value)}
+          value={happinessIndex}
         />
         <div
           style={{
