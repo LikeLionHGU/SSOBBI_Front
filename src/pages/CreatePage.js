@@ -2,9 +2,14 @@ import styled from "styled-components";
 import HappinessIndexComponent from "../components/CreatePage/HappinessIndexComponent";
 import EmotionIndexComponent from "../components/CreatePage/EmotionIndexComponent";
 import ConsumptionIndexComponent from "../components/CreatePage/ConsumptionIndexComponent";
-import { priceInputState } from "../store/atom";
-import { useRecoilState } from "recoil";
-import { useState } from "react";
+import {
+  priceInputState,
+  happinessIndexState,
+  importantIncidentState,
+  consumptionIndexState,
+} from "../store/atom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { useEffect, useState } from "react";
 import MenuBarComponent from "../components/MainPage/MenuBarComponent";
 import { Horizontal, Vertical } from "../styles/CommunalStyle";
 import AddBtnImg from "../imgs/AddBtnImg.svg";
@@ -34,20 +39,38 @@ const AddImg = styled.img`
 
 function CreatePage() {
   const [isPriceEnter, setIsPriceEnter] = useRecoilState(priceInputState);
-  const [inputCmpnt, setInputCmpnt] = useState([
-    <ConsumptionIndexComponent key={0} handleBtnChange={handleBtnChange} />,
-  ]);
-  function handleBtnChange() {
+  const happinessIndex = useRecoilValue(happinessIndexState);
+  const importantIncident = useRecoilValue(importantIncidentState);
+  const consumptionIndex = useRecoilValue(consumptionIndexState);
+  const [inputCmpnt, setInputCmpnt] = useState(null); //inputComponent
+  function writeBtnClick() {
+    const data = {
+      happinessIndex: happinessIndex,
+      importantIncident: importantIncident,
+      consumptionIndex: consumptionIndex,
+    };
+    console.log(data);
+  }
+  function handleAddBtnClick() {
     setIsPriceEnter(false);
     setInputCmpnt((prev) => [
-      ...prev.map((itm) => ({ ...itm, focus: false })),
-      <ConsumptionIndexComponent
-        key={prev.length}
-        handleBtnChange={handleBtnChange}
-        focus={true}
-      />,
+      ...prev.map((itm) => ({ ...itm, focus: false, isLast: false })),
+      { key: prev.length, id: prev.length, focus: true, isLast: true },
     ]);
   }
+  useEffect(() => {
+    const existData = consumptionIndex.map((itm, idx, arr) => ({
+      key: itm.id,
+      id: itm.id,
+      category: itm.category,
+      consumption: itm.consumption,
+      focus: false,
+      isLast: idx === arr.length - 1,
+    }));
+    const newData = [{ key: "0", id: "0" }];
+
+    setInputCmpnt(consumptionIndex.length === 0 ? newData : existData);
+  }, []); // 화면 처음 렌더링 될 때 기본 데이터 불러와서 화면에 띄우기, 이후 백엔드 api와 연결할 때 코드 똑같이 복사
   return (
     <Horizontal style={{ height: "100%" }}>
       <MenuBarComponent menu={"note"} />
@@ -59,14 +82,28 @@ function CreatePage() {
             OO님의 <strong>오늘 소비를 입력해주세요</strong>
           </p>
           <BtnInputWrapper>
-            <div>{inputCmpnt}</div>
+            <div>
+              {inputCmpnt &&
+                inputCmpnt.map((item) => (
+                  <ConsumptionIndexComponent
+                    key={item.id}
+                    id={item.id}
+                    category={item.category}
+                    consumption={item.consumption}
+                    handleAddBtnClick={handleAddBtnClick}
+                    focus={item.focus}
+                    isLast={item.isLast}
+                  />
+                ))}
+            </div>
             {isPriceEnter && (
-              <AddBtn onClick={handleBtnChange}>
+              <AddBtn onClick={handleAddBtnClick}>
                 <AddImg src={AddBtnImg} alt="AddBtn" />
               </AddBtn>
             )}
           </BtnInputWrapper>
         </div>
+        <button onClick={writeBtnClick}>기록하기</button>
       </Vertical>
     </Horizontal>
   );

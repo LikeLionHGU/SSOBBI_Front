@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Horizontal } from "../../styles/CommunalStyle";
 import styled from "styled-components";
-import { priceInputState } from "../../store/atom";
+import { priceInputState, consumptionIndexState } from "../../store/atom";
 import { useSetRecoilState } from "recoil";
 
 const CategoryInput = styled.input`
@@ -75,34 +75,72 @@ const Vertical = styled.div`
 const optionData = ["식비", "교통비", "의류", "문화", "취미", "악기"];
 
 function ConsumptionIndexComponent(props) {
-  const [categoryInput, setCategoryInput] = useState(null); // 카테고리 inputValue useState
-  const [priceInput, setPriceInput] = useState(null); // 가격 inputValue useState
+  const [categoryInput, setCategoryInput] = useState(props.category); // 카테고리 inputValue useState
+  const [priceInput, setPriceInput] = useState(props.consumption); // 가격 inputValue useState
   const [isFocus, setIsFocus] = useState(false); // 카테고리 focus 관리
   const setIsPriceEnter = useSetRecoilState(priceInputState); // 가격 입력 유무 관리 recoil
   const categoryRef = useRef("");
   const priceRef = useRef("");
+  const setConsumptionIndex = useSetRecoilState(consumptionIndexState);
+
   function handleSelectChange(e) {
     setCategoryInput(e.target.value);
     setIsFocus(false);
     priceRef.current.focus();
   }
+
+  const handleInputsChange = useCallback(() => {
+    const id = props.id;
+
+    setConsumptionIndex((prev) => {
+      const updatedConsumption = prev.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            category: categoryInput,
+            consumption: priceInput,
+          };
+        }
+        return item;
+      });
+
+      // id에 해당하는 객체가 없을 경우 새 객체를 추가
+      const exists = prev.some((item) => item.id === id);
+      if (!exists) {
+        updatedConsumption.push({
+          id: id,
+          category: categoryInput,
+          consumption: priceInput,
+        });
+      }
+
+      return updatedConsumption;
+    });
+  }, [categoryInput, priceInput, props.id, setConsumptionIndex]);
+
   function handlePriceInputChange(e) {
     const { value } = e.target;
     // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
     const onlyNumber = value.replace(/[^0-9]/g, "");
     const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
-    setPriceInput(formattedNumber);
+    setPriceInput(formattedNumber === "0" ? "" : formattedNumber);
     setIsPriceEnter(onlyNumber ? true : false);
   }
   function activeEnter(e) {
     if (e.key === "Enter") {
-      props.handleBtnChange();
+      props.handleAddBtnClick();
     }
   }
 
   useEffect(() => {
+    setIsPriceEnter(props.consumption ? true : false);
     if (props.focus === true) categoryRef.current.focus();
-  }, []);
+  }, [props.focus, props.consumption, setIsPriceEnter]);
+  // 맨 처음 렌더링될때 포커스 맞추기 + 소비 이미 있으면 + 버튼 띄우기
+
+  useEffect(() => {
+    handleInputsChange();
+  }, [categoryInput, priceInput, handleInputsChange]);
 
   return (
     <Horizontal style={{ marginTop: "16px" }}>
@@ -164,6 +202,7 @@ function ConsumptionIndexComponent(props) {
         onKeyDown={activeEnter}
         placeholder="금액"
       ></PriceInput>
+      {props.isLast === false && <button>빼기</button>}
     </Horizontal>
   );
 }

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { importantIncidentState } from "../../store/atom";
+import { useRecoilState } from "recoil";
 
 const TextCount = styled.p`
   position: absolute;
@@ -21,11 +23,13 @@ const StyledTextarea = styled.textarea`
 `;
 
 function EmotionIndexComponent() {
-  const [content, setContent] = useState("");
+  const [importantIncident, setImportantIncident] = useRecoilState(
+    importantIncidentState
+  ); // 기록 페이지 데이터 관리 recoil
   const [isOver, setIsOver] = useState(false);
   const handleInputChange = (e) => {
     if (e.target.value.length <= "200") {
-      setContent(e.target.value);
+      setImportantIncident(e.target.value);
       setIsOver(false);
     } else {
       setIsOver(true);
@@ -43,10 +47,12 @@ function EmotionIndexComponent() {
           id="content"
           maxLength="200"
           onChange={handleInputChange}
-          value={content}
+          value={importantIncident}
           isOver={isOver}
         ></StyledTextarea>
-        <TextCount className="textCount">{content.length}/200</TextCount>
+        <TextCount className="textCount">
+          {importantIncident.length}/200
+        </TextCount>
       </div>
     </div>
   );
