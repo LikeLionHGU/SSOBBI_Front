@@ -44,4 +44,8 @@ export const consumptionIndexState = atom({
       consumption: "3,000",
     },
   ],
+  
+export const UserTokenState = atom({
+  key: "userToken",
+  default: { isLoggedIn: false },
 });

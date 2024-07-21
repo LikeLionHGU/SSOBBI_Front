@@ -1,14 +1,17 @@
+import React, { useState } from "react";
 import styled from "styled-components";
+import moment from "moment";
 import DropDownComponent from "../components/MainPage/DropDownComponent";
-import CalenderComponent from "../components/MainPage/CalenderComponent";
-import DayStatisticsComponent from "../components/MainPage/DayStatisticsComponent";
-import WeekMonthStstisticsComponent from "../components/MainPage/WeekMonthStstisticsComponent";
 import MenuBarComponent from "../components/MainPage/MenuBarComponent";
+import CalenderComponent from "../components/CalenderPage/CalenderComponent";
+import WeekComponent from "../components/CalenderPage/WeekComponent";
+import MonthComponent from "../components/CalenderPage/MonthComponent";
 import {
   Horizontal,
   Vertical,
   NoCenterHorizontal,
   NoCenterVertical,
+  Box20,
 } from "../styles/CommunalStyle";
 
 import LogoImg from "../imgs/Logo.png";
@@ -40,7 +43,7 @@ const Logo = styled.img`
 `;
 
 const Box = styled.div`
-  width: 820px;
+  width: 560px;
   height: 113px;
   margin-top: 36px;
   border-radius: 20px;
@@ -52,11 +55,21 @@ const Box = styled.div`
   background-color: #fcfffe;
 `;
 
-function MainPage() {
+function CalenderPage() {
+  const [selectedMonth, setSelectedMonth] = useState(moment().format("M"));
+
+  const handleMonthChange = (month) => {
+    setSelectedMonth(month);
+  };
   return (
     <>
-      <Horizontal style={{ height: "100vh", overflowY: "hidden" }}>
-        <MenuBarComponent menu={"home"} />
+      <Horizontal
+        style={{
+          height: "100vh",
+          overflowY: "hidden",
+        }}
+      >
+        <MenuBarComponent menu={"calendar"} />
         <NoCenterVertical
           style={{
             height: "100vh",
@@ -82,18 +95,18 @@ function MainPage() {
             <Vertical
               style={{
                 alignItems: "flex-start",
-                marginLeft: "30px",
+                marginLeft: "80px",
                 marginRight: "50px",
+                marginTop: "80px",
               }}
             >
-              <DayStatisticsComponent happy={dayData.happy} />
-              <Box>오늘의 일기랄까</Box>
-              <WeekMonthStstisticsComponent
-                whappy={staticData.whappy}
-                mhappy={staticData.mhappy}
-              />
+              <WeekComponent happy={76} />
+              <Box20 />
+              <Box20 />
+              <MonthComponent happy={90} month={selectedMonth} />
+              <Box>{selectedMonth}월의 과소비 키워드</Box>
             </Vertical>
-            <CalenderComponent />
+            <CalenderComponent onMonthChange={handleMonthChange} />
           </Horizontal>
         </NoCenterVertical>
       </Horizontal>
@@ -101,4 +114,4 @@ function MainPage() {
   );
 }
 
-export default MainPage;
+export default CalenderPage;

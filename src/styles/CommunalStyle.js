@@ -44,3 +44,7 @@ export const NoCenterVertical = styled.div`
   justify-content: center;
   width: 100%;
 `;
+
+export const Box20 = styled.div`
+  margin-bottom: 20px;
+`;

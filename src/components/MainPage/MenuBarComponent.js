@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { UserTokenState } from "../../store/atom";
 import styled from "styled-components";
 import { FaHouseChimney } from "react-icons/fa6";
 import { IoPersonCircleOutline } from "react-icons/io5";
@@ -10,13 +12,14 @@ import { IoLogOutOutline } from "react-icons/io5";
 
 const Menu = styled.div`
   background-color: ${(props) => props.theme.colors.COLOR70};
-  width: 100px;
+  width: 85px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100%;
-  border-radius: 20px;
+  height: 100%;
+  border-radius: 20px 20px 0 0;
+  margin-top: 80px;
 `;
 
 const StyledLink = styled(Link)`
@@ -29,8 +32,8 @@ const Icon = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 21px;
+  margin-bottom: 21px;
   font-size: 20px;
   width: 60px;
   margin-left: 18px;
@@ -48,8 +51,15 @@ const Icon = styled.div`
   }
 `;
 
-const MenuBarComponent = () => {
-  const [activeIcon, setActiveIcon] = useState("home");
+const MenuBarComponent = ({ menu }) => {
+  const [activeIcon, setActiveIcon] = useState(menu);
+  const setUserToken = useSetRecoilState(UserTokenState);
+
+  const logoutClickHandler = () => {
+    setUserToken(null);
+    setUserToken({ isLoggedIn: false });
+    handleIconClick("logout");
+  };
   const handleIconClick = (icon) => {
     setActiveIcon(icon);
   };
@@ -58,9 +68,9 @@ const MenuBarComponent = () => {
       <Icon
         active={activeIcon === "home"}
         onClick={() => handleIconClick("home")}
-        style={{ marginTop: "60px" }}
+        style={{ marginTop: "100px" }}
       >
-        <StyledLink href="/">
+        <StyledLink to="/ssobbi">
           <FaHouseChimney />
         </StyledLink>
       </Icon>
@@ -69,7 +79,7 @@ const MenuBarComponent = () => {
         active={activeIcon === "profile"}
         onClick={() => handleIconClick("profile")}
       >
-        <StyledLink href="/">
+        <StyledLink to="/">
           <IoPersonCircleOutline />
         </StyledLink>
       </Icon>
@@ -77,7 +87,7 @@ const MenuBarComponent = () => {
         active={activeIcon === "calendar"}
         onClick={() => handleIconClick("calendar")}
       >
-        <StyledLink href="/">
+        <StyledLink to="/ssobbi/calender">
           <FaRegCalendarCheck />
         </StyledLink>
       </Icon>
@@ -93,16 +103,16 @@ const MenuBarComponent = () => {
         active={activeIcon === "note"}
         onClick={() => handleIconClick("note")}
       >
-        <StyledLink to="/create">
+        <StyledLink to="/ssobbi/create">
           <PiNotePencilFill />
         </StyledLink>
       </Icon>
       <Icon
         active={activeIcon === "logout"}
-        onClick={() => handleIconClick("logout")}
-        style={{ marginTop: "auto" }}
+        onClick={logoutClickHandler}
+        style={{ marginTop: "auto", marginBottom: "60px" }}
       >
-        <StyledLink href="/">
+        <StyledLink to="/">
           <IoLogOutOutline />
         </StyledLink>
       </Icon>

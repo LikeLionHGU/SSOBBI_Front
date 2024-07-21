@@ -73,7 +73,7 @@ function CreatePage() {
   }, []); // 화면 처음 렌더링 될 때 기본 데이터 불러와서 화면에 띄우기, 이후 백엔드 api와 연결할 때 코드 똑같이 복사
   return (
     <Horizontal style={{ height: "100%" }}>
-      <MenuBarComponent />
+      <MenuBarComponent menu={"note"} />
       <Vertical>
         <HappinessIndexComponent />
         <EmotionIndexComponent />

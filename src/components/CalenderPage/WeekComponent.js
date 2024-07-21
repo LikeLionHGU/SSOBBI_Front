@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import GaugeComponent from "react-gauge-component";
 
-import { Horizontal } from "../../styles/CommunalStyle";
+import { NoCenterHorizontal } from "../../styles/CommunalStyle";
 
 const Title = styled.p`
   color: ${(props) => props.theme.colors.COLORBlack};
@@ -14,7 +14,7 @@ const Box = styled.div`
   font-size: 18px;
   width: 260px;
   height: 192px;
-  margin-right: 20px;
+  margin-right: 40px;
   border-radius: 20px;
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -24,15 +24,15 @@ const Box = styled.div`
   background-color: #fcfffe;
 `;
 
-function DayStatisticsComponent({ happy }) {
+function WeekComponent({ happy }) {
   return (
     <>
-      <Title>
+      {/* <Title>
         한나님의 <span style={{ fontFamily: "SUITMedium" }}>오늘의 기록 </span>
-      </Title>
-      <Horizontal>
+      </Title> */}
+      <NoCenterHorizontal>
         <Box>
-          오늘의 행복지수
+          주간 행복지수
           <GaugeComponent
             arc={{
               subArcs: [
@@ -62,7 +62,7 @@ function DayStatisticsComponent({ happy }) {
           />
         </Box>
         <Box>
-          오늘 과소비 건수
+          주간 과소비 수
           <p style={{ fontSize: "30px", fontWeight: "bold" }}>
             <span
               style={{
@@ -77,10 +77,9 @@ function DayStatisticsComponent({ happy }) {
             {"   "}건
           </p>
         </Box>
-        <Box>오늘 과소비 항목</Box>
-      </Horizontal>
+      </NoCenterHorizontal>
     </>
   );
 }
 
-export default DayStatisticsComponent;
+export default WeekComponent;
