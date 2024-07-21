@@ -131,6 +131,9 @@ function ConsumptionIndexComponent(props) {
       props.handleAddBtnClick();
     }
   }
+  function handleRmvBtnClick() {
+    setConsumptionIndex((prev) => prev.filter((item) => item.id !== props.id));
+  }
 
   useEffect(() => {
     setIsPriceEnter(props.consumption ? true : false);
@@ -143,7 +146,7 @@ function ConsumptionIndexComponent(props) {
   }, [categoryInput, priceInput, handleInputsChange]);
 
   return (
-    <Horizontal style={{ marginTop: "16px" }}>
+    <Horizontal style={{ marginTop: "16px", justifyContent: "flex-start" }}>
       <Vertical>
         <CategoryInput
           id="category"
@@ -202,7 +205,9 @@ function ConsumptionIndexComponent(props) {
         onKeyDown={activeEnter}
         placeholder="금액"
       ></PriceInput>
-      {props.isLast === false && <button>빼기</button>}
+      {props.isLast === false && (
+        <button onClick={handleRmvBtnClick}>빼기</button>
+      )}
     </Horizontal>
   );
 }

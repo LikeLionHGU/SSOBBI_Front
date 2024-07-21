@@ -17,6 +17,7 @@ import AddBtnImg from "../imgs/AddBtnImg.svg";
 const BtnInputWrapper = styled.div`
   display: flex;
   align-items: flex-end;
+  justify-content: flex-start;
 `;
 
 const AddBtn = styled.button`
@@ -43,6 +44,7 @@ function CreatePage() {
   const importantIncident = useRecoilValue(importantIncidentState);
   const consumptionIndex = useRecoilValue(consumptionIndexState);
   const [inputCmpnt, setInputCmpnt] = useState(null); //inputComponent
+  const [keyCounter, setKeyCounter] = useState(consumptionIndex.length + 1); // id 1씩 증가시키기 위한 useState
   function writeBtnClick() {
     const data = {
       happinessIndex: happinessIndex,
@@ -55,8 +57,10 @@ function CreatePage() {
     setIsPriceEnter(false);
     setInputCmpnt((prev) => [
       ...prev.map((itm) => ({ ...itm, focus: false, isLast: false })),
-      { key: prev.length, id: prev.length, focus: true, isLast: true },
+      { key: keyCounter + 1, id: keyCounter + 1, focus: true, isLast: true },
     ]);
+    setKeyCounter((prev) => prev + 1);
+    console.log(inputCmpnt);
   }
   useEffect(() => {
     const existData = consumptionIndex.map((itm, idx, arr) => ({
@@ -67,10 +71,10 @@ function CreatePage() {
       focus: false,
       isLast: idx === arr.length - 1,
     }));
-    const newData = [{ key: "0", id: "0" }];
+    const newData = [{ key: "1", id: "1" }];
 
     setInputCmpnt(consumptionIndex.length === 0 ? newData : existData);
-  }, []); // 화면 처음 렌더링 될 때 기본 데이터 불러와서 화면에 띄우기, 이후 백엔드 api와 연결할 때 코드 똑같이 복사
+  }, [consumptionIndex]); // 화면 처음 렌더링 될 때 기본 데이터 불러와서 화면에 띄우기, 이후 백엔드 api와 연결할 때 코드 똑같이 복사
   return (
     <Horizontal style={{ height: "100%" }}>
       <MenuBarComponent menu={"note"} />
@@ -82,7 +86,7 @@ function CreatePage() {
             OO님의 <strong>오늘 소비를 입력해주세요</strong>
           </p>
           <BtnInputWrapper>
-            <div>
+            <Vertical>
               {inputCmpnt &&
                 inputCmpnt.map((item) => (
                   <ConsumptionIndexComponent
@@ -95,7 +99,7 @@ function CreatePage() {
                     isLast={item.isLast}
                   />
                 ))}
-            </div>
+            </Vertical>
             {isPriceEnter && (
               <AddBtn onClick={handleAddBtnClick}>
                 <AddImg src={AddBtnImg} alt="AddBtn" />

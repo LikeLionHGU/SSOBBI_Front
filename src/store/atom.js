@@ -33,18 +33,19 @@ export const importantIncidentState = atom({
 export const consumptionIndexState = atom({
   key: "consumptionIndex",
   default: [
-    {
-      id: "0",
-      category: "식비",
-      consumption: "30,000",
-    },
-    {
-      id: "1",
-      category: "교통비",
-      consumption: "3,000",
-    },
+    // {
+    //   id: "1",
+    //   category: "식비",
+    //   consumption: "30,000",
+    // },
+    // {
+    //   id: "2",
+    //   category: "교통비",
+    //   consumption: "3,000",
+    // },
   ],
-  
+});
+
 export const UserTokenState = atom({
   key: "userToken",
   default: { isLoggedIn: false },
