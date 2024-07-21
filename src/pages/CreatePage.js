@@ -51,34 +51,25 @@ function CreatePage() {
     };
     console.log(data);
   }
-  function handleBtnChange() {
+  function handleAddBtnClick() {
     setIsPriceEnter(false);
     setInputCmpnt((prev) => [
-      ...prev.map((itm) => ({ ...itm, focus: false })),
-      <ConsumptionIndexComponent
-        id={prev.length}
-        handleBtnChange={handleBtnChange}
-        focus={true}
-      />,
+      ...prev.map((itm) => ({ ...itm, focus: false, isLast: false })),
+      { key: prev.length, id: prev.length, focus: true, isLast: true },
     ]);
   }
   useEffect(() => {
-    const cmp = consumptionIndex.map((item) => (
-      <ConsumptionIndexComponent
-        key={item.id}
-        id={item.id}
-        category={item.category}
-        consumption={item.consumption}
-        handleBtnChange={handleBtnChange}
-      />
-    ));
-    setInputCmpnt(
-      consumptionIndex.length === 0 ? (
-        <ConsumptionIndexComponent id={0} handleBtnChange={handleBtnChange} />
-      ) : (
-        cmp
-      )
-    );
+    const existData = consumptionIndex.map((itm, idx, arr) => ({
+      key: itm.id,
+      id: itm.id,
+      category: itm.category,
+      consumption: itm.consumption,
+      focus: false,
+      isLast: idx === arr.length - 1,
+    }));
+    const newData = [{ key: "0", id: "0" }];
+
+    setInputCmpnt(consumptionIndex.length === 0 ? newData : existData);
   }, []); // 화면 처음 렌더링 될 때 기본 데이터 불러와서 화면에 띄우기, 이후 백엔드 api와 연결할 때 코드 똑같이 복사
   return (
     <Horizontal style={{ height: "100%" }}>
@@ -91,9 +82,22 @@ function CreatePage() {
             OO님의 <strong>오늘 소비를 입력해주세요</strong>
           </p>
           <BtnInputWrapper>
-            <div>{inputCmpnt}</div>
+            <div>
+              {inputCmpnt &&
+                inputCmpnt.map((item) => (
+                  <ConsumptionIndexComponent
+                    key={item.id}
+                    id={item.id}
+                    category={item.category}
+                    consumption={item.consumption}
+                    handleAddBtnClick={handleAddBtnClick}
+                    focus={item.focus}
+                    isLast={item.isLast}
+                  />
+                ))}
+            </div>
             {isPriceEnter && (
-              <AddBtn onClick={handleBtnChange}>
+              <AddBtn onClick={handleAddBtnClick}>
                 <AddImg src={AddBtnImg} alt="AddBtn" />
               </AddBtn>
             )}

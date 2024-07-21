@@ -89,7 +89,7 @@ function ConsumptionIndexComponent(props) {
     priceRef.current.focus();
   }
 
-  function handleInputsChange() {
+  const handleInputsChange = useCallback(() => {
     const id = props.id;
 
     setConsumptionIndex((prev) => {
@@ -104,9 +104,7 @@ function ConsumptionIndexComponent(props) {
         return item;
       });
 
-      console.log(updatedConsumption);
-
-      // id에 해당하는 객체가 없을 경우 새 객체를 추가합니다.
+      // id에 해당하는 객체가 없을 경우 새 객체를 추가
       const exists = prev.some((item) => item.id === id);
       if (!exists) {
         updatedConsumption.push({
@@ -118,29 +116,31 @@ function ConsumptionIndexComponent(props) {
 
       return updatedConsumption;
     });
-  }
+  }, [categoryInput, priceInput, props.id, setConsumptionIndex]);
 
   function handlePriceInputChange(e) {
     const { value } = e.target;
     // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
     const onlyNumber = value.replace(/[^0-9]/g, "");
     const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
-    setPriceInput(formattedNumber);
+    setPriceInput(formattedNumber === "0" ? "" : formattedNumber);
     setIsPriceEnter(onlyNumber ? true : false);
   }
   function activeEnter(e) {
     if (e.key === "Enter") {
-      props.handleBtnChange();
+      props.handleAddBtnClick();
     }
   }
 
   useEffect(() => {
+    setIsPriceEnter(props.consumption ? true : false);
     if (props.focus === true) categoryRef.current.focus();
-  }, [props.focus]);
+  }, [props.focus, props.consumption, setIsPriceEnter]);
+  // 맨 처음 렌더링될때 포커스 맞추기 + 소비 이미 있으면 + 버튼 띄우기
 
   useEffect(() => {
     handleInputsChange();
-  }, [categoryInput, priceInput]);
+  }, [categoryInput, priceInput, handleInputsChange]);
 
   return (
     <Horizontal style={{ marginTop: "16px" }}>
@@ -202,6 +202,7 @@ function ConsumptionIndexComponent(props) {
         onKeyDown={activeEnter}
         placeholder="금액"
       ></PriceInput>
+      {props.isLast === false && <button>빼기</button>}
     </Horizontal>
   );
 }
