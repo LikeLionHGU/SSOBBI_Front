@@ -1,10 +1,5 @@
 import { atom } from "recoil";
 
-export const priceInputState = atom({
-  key: "priceInput",
-  default: false,
-});
-
 export const emotionComsumptionDataState = atom({
   key: "emotionConsumptionData",
   default: {

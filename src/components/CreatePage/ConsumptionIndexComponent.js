@@ -69,7 +69,8 @@ const ManageBtn = styled.button`
   width: 60px;
   height: 60px;
   border-radius: 20px;
-  border: 1px solid #2aa663;
+  border: 1px solid
+    ${(props) => (props.id === "addBtn" ? "#2AA663" : "#939393")};
   background: #fff;
   box-shadow: 0px 12px 34px 0px rgba(0, 0, 0, 0.08),
     0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
@@ -226,12 +227,12 @@ function ConsumptionIndexComponent(props) {
         placeholder="금액"
       ></PriceInput>
       {props.isLast === false && (
-        <ManageBtn onClick={handleRmvBtnClick}>
+        <ManageBtn onClick={handleRmvBtnClick} id="rmvBtn">
           <img src={RmvBtnImg} alt="removeImg" id="rmvBtn" />
         </ManageBtn>
       )}
       {props.isLast === true && isPriceEnter === true && (
-        <ManageBtn onClick={props.handleAddBtnClick}>
+        <ManageBtn onClick={props.handleAddBtnClick} id="addBtn">
           <img src={AddBtnImg} alt="addImg" id="addBtn" />
         </ManageBtn>
       )}

@@ -3,16 +3,14 @@ import HappinessIndexComponent from "../components/CreatePage/HappinessIndexComp
 import EmotionIndexComponent from "../components/CreatePage/EmotionIndexComponent";
 import ConsumptionIndexComponent from "../components/CreatePage/ConsumptionIndexComponent";
 import {
-  priceInputState,
   happinessIndexState,
   importantIncidentState,
   consumptionIndexState,
 } from "../store/atom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
 import MenuBarComponent from "../components/MainPage/MenuBarComponent";
 import { Horizontal, Vertical } from "../styles/CommunalStyle";
-import AddBtnImg from "../imgs/AddBtnImg.svg";
 
 const BtnInputWrapper = styled.div`
   display: flex;
@@ -20,26 +18,24 @@ const BtnInputWrapper = styled.div`
   justify-content: flex-start;
 `;
 
-const AddBtn = styled.button`
-  width: 60px;
-  height: 60px;
-  border-radius: 20px;
-  border: 1px solid #2aa663;
-  background: #fff;
-  box-shadow: 0px 12px 34px 0px rgba(0, 0, 0, 0.08),
-    0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
+const SubmitBtn = styled.button`
+  position: fixed;
+  display: flex;
+  padding: 14px 19px;
+  align-items: center;
+  left: 80%; /*부모의 50%*/
+  bottom: 500px;
+  background-color: white;
+  border-radius: 24px;
+  transform: translateX(-50%);
+  color: black;
+  font-size: 14px;
+  font-weight: 600;
+  gap: 8px;
   cursor: pointer;
-  margin-left: 16px;
-  &:hover {
-  }
-`;
-
-const AddImg = styled.img`
-  width: 16px;
 `;
 
 function CreatePage() {
-  const [isPriceEnter, setIsPriceEnter] = useRecoilState(priceInputState);
   const happinessIndex = useRecoilValue(happinessIndexState);
   const importantIncident = useRecoilValue(importantIncidentState);
   const consumptionIndex = useRecoilValue(consumptionIndexState);
@@ -54,7 +50,6 @@ function CreatePage() {
     console.log(data);
   }
   function handleAddBtnClick() {
-    setIsPriceEnter(false);
     setInputCmpnt((prev) => [
       ...prev.map((itm) => ({ ...itm, focus: false, isLast: false })),
       { key: keyCounter + 1, id: keyCounter + 1, focus: true, isLast: true },
@@ -100,14 +95,9 @@ function CreatePage() {
                   />
                 ))}
             </Vertical>
-            {isPriceEnter && (
-              <AddBtn onClick={handleAddBtnClick}>
-                <AddImg src={AddBtnImg} alt="AddBtn" />
-              </AddBtn>
-            )}
           </BtnInputWrapper>
         </div>
-        <button onClick={writeBtnClick}>기록하기</button>
+        <SubmitBtn onClick={writeBtnClick}>기록하기</SubmitBtn>
       </Vertical>
     </Horizontal>
   );
