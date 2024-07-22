@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Horizontal } from "../../styles/CommunalStyle";
 import styled from "styled-components";
-import { priceInputState, consumptionIndexState } from "../../store/atom";
+import { consumptionIndexState } from "../../store/atom";
 import { useSetRecoilState } from "recoil";
+import AddBtnImg from "../../imgs/AddBtnImg.svg";
+import RmvBtnImg from "../../imgs/RemoveBtnImg.svg";
 
 const CategoryInput = styled.input`
   &:focus {
@@ -63,6 +65,25 @@ const PriceInput = styled.input`
   }
 `;
 
+const ManageBtn = styled.button`
+  width: 60px;
+  height: 60px;
+  border-radius: 20px;
+  border: 1px solid
+    ${(props) => (props.id === "addBtn" ? "#2AA663" : "#939393")};
+  background: #fff;
+  box-shadow: 0px 12px 34px 0px rgba(0, 0, 0, 0.08),
+    0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
+  cursor: pointer;
+  margin-left: 16px;
+  &:hover {
+  }
+
+  > img {
+    width: 16px;
+  }
+`;
+
 const Vertical = styled.div`
   display: flex;
   flex-direction: column;
@@ -78,7 +99,7 @@ function ConsumptionIndexComponent(props) {
   const [categoryInput, setCategoryInput] = useState(props.category); // 카테고리 inputValue useState
   const [priceInput, setPriceInput] = useState(props.consumption); // 가격 inputValue useState
   const [isFocus, setIsFocus] = useState(false); // 카테고리 focus 관리
-  const setIsPriceEnter = useSetRecoilState(priceInputState); // 가격 입력 유무 관리 recoil
+  const [isPriceEnter, setIsPriceEnter] = useState(false); // 가격 입력 유무 관리 recoil
   const categoryRef = useRef("");
   const priceRef = useRef("");
   const setConsumptionIndex = useSetRecoilState(consumptionIndexState);
@@ -131,6 +152,9 @@ function ConsumptionIndexComponent(props) {
       props.handleAddBtnClick();
     }
   }
+  function handleRmvBtnClick() {
+    setConsumptionIndex((prev) => prev.filter((item) => item.id !== props.id));
+  }
 
   useEffect(() => {
     setIsPriceEnter(props.consumption ? true : false);
@@ -143,7 +167,7 @@ function ConsumptionIndexComponent(props) {
   }, [categoryInput, priceInput, handleInputsChange]);
 
   return (
-    <Horizontal style={{ marginTop: "16px" }}>
+    <Horizontal style={{ marginTop: "16px", justifyContent: "flex-start" }}>
       <Vertical>
         <CategoryInput
           id="category"
@@ -202,7 +226,16 @@ function ConsumptionIndexComponent(props) {
         onKeyDown={activeEnter}
         placeholder="금액"
       ></PriceInput>
-      {props.isLast === false && <button>빼기</button>}
+      {props.isLast === false && (
+        <ManageBtn onClick={handleRmvBtnClick} id="rmvBtn">
+          <img src={RmvBtnImg} alt="removeImg" id="rmvBtn" />
+        </ManageBtn>
+      )}
+      {props.isLast === true && isPriceEnter === true && (
+        <ManageBtn onClick={props.handleAddBtnClick} id="addBtn">
+          <img src={AddBtnImg} alt="addImg" id="addBtn" />
+        </ManageBtn>
+      )}
     </Horizontal>
   );
 }
