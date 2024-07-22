@@ -42,7 +42,7 @@ const Logo = styled.img`
 const Box = styled.div`
   width: 820px;
   height: 113px;
-  margin-top: 36px;
+  margin-top: 50px;
   border-radius: 20px;
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
   display: flex;
