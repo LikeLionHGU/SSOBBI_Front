@@ -11,6 +11,7 @@ import { useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
 import MenuBarComponent from "../components/MainPage/MenuBarComponent";
 import { Horizontal, Vertical } from "../styles/CommunalStyle";
+import CalenderComponent from "../components/CreatePage/CalenderComponent";
 
 const BtnInputWrapper = styled.div`
   display: flex;
@@ -23,8 +24,8 @@ const SubmitBtn = styled.button`
   display: flex;
   padding: 14px 19px;
   align-items: center;
-  left: 80%; /*부모의 50%*/
-  bottom: 500px;
+  left: 65%; /*부모의 50%*/
+  bottom: 400px;
   background-color: white;
   border-radius: 24px;
   transform: translateX(-50%);
@@ -71,9 +72,16 @@ function CreatePage() {
     setInputCmpnt(consumptionIndex.length === 0 ? newData : existData);
   }, [consumptionIndex]); // 화면 처음 렌더링 될 때 기본 데이터 불러와서 화면에 띄우기, 이후 백엔드 api와 연결할 때 코드 똑같이 복사
   return (
-    <Horizontal style={{ height: "100%" }}>
+    <Horizontal style={{ height: "100vh", alignItems: "flex-start" }}>
       <MenuBarComponent menu={"note"} />
-      <Vertical>
+      <Vertical
+        style={{
+          justifyContent: "flex-start",
+          alignItems: "flex-start",
+          marginLeft: "33px",
+        }}
+      >
+        <div style={{ height: "158px" }} />
         <HappinessIndexComponent />
         <EmotionIndexComponent />
         <div>
@@ -99,6 +107,7 @@ function CreatePage() {
         </div>
         <SubmitBtn onClick={writeBtnClick}>기록하기</SubmitBtn>
       </Vertical>
+      <CalenderComponent />
     </Horizontal>
   );
 }

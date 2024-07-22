@@ -10,8 +10,8 @@ const TextCount = styled.p`
   color: gray;
 `;
 const StyledTextarea = styled.textarea`
-  width: 700px;
-  height: 100px;
+  width: 803px;
+  height: 142px;
   resize: none;
   &:focus {
     outline: none;
@@ -37,7 +37,7 @@ function EmotionIndexComponent() {
     }
   };
   return (
-    <div>
+    <div style={{ marginBottom: "44px" }}>
       <p>
         OO님의 <strong>행복 지수에 가장 큰 영향을 준 사건은 무엇인가요</strong>
         (그 순간을 구체적으로 작성해주세요)
@@ -48,7 +48,7 @@ function EmotionIndexComponent() {
           maxLength="200"
           onChange={handleInputChange}
           value={importantIncident}
-          isOver={isOver}
+          // isOver={isOver}
         ></StyledTextarea>
         <TextCount className="textCount">
           {importantIncident.length}/200

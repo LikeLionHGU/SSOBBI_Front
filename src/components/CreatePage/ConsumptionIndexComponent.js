@@ -172,7 +172,7 @@ function ConsumptionIndexComponent(props) {
         <CategoryInput
           id="category"
           ref={categoryRef}
-          autocomplete="off"
+          autoComplete="off"
           placeholder="카테고리"
           onChange={(e) => setCategoryInput(e.target.value)}
           onFocus={() => setIsFocus(true)}
@@ -222,7 +222,7 @@ function ConsumptionIndexComponent(props) {
         ref={priceRef}
         onChange={handlePriceInputChange}
         value={priceInput}
-        autocomplete="off"
+        autoComplete="off"
         onKeyDown={activeEnter}
         placeholder="금액"
       ></PriceInput>
