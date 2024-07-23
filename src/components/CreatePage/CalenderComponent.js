@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { format } from "date-fns";
 
 const StyledDot = styled.div`
-  background-color: blue;
+  background-color: #2aa663;
   border-radius: 50%;
   width: 0.3rem;
   height: 0.3rem;

@@ -8,6 +8,7 @@
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 }
+
 .react-calendar-2 {
   width: 520px;
   height: 500px;
@@ -135,10 +136,11 @@
   position: relative;
 }
 
-.react-calendar__tile--now:enabled:hover,
+/* .react-calendar__tile--now:enabled:hover,
 .react-calendar__tile--now:enabled:focus {
   background: #ffffa9;
-}
+} */
+/* "오늘" hover css */
 
 .react-calendar__tile--hasActive {
   background: #76baff;
@@ -150,13 +152,13 @@
 }
 
 .react-calendar__tile--active {
-  background: #006edc;
-  color: white;
+  background: #e6e6e6;
+  color: black;
 }
 
 .react-calendar__tile--active:enabled:hover,
 .react-calendar__tile--active:enabled:focus {
-  background: #1087ff;
+  background: #e6e6e6;
 }
 
 .react-calendar--selectRange .react-calendar__tile--hover {
