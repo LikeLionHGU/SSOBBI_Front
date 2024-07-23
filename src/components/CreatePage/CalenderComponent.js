@@ -28,6 +28,13 @@ const StyledToday = styled.div`
   color: white;
 `;
 
+const CalenderWrapper = styled.div`
+  height: 100vh;
+  background-color: #f2f6f4;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+`;
+
 function Calender() {
   const today = new Date();
   const attendDay = [
@@ -55,7 +62,7 @@ function Calender() {
     return format(date, "EEE", { locale });
   }; // 캘린더 요일 형식 영어로 바꾸기
   return (
-    <div>
+    <CalenderWrapper>
       <Calendar
         formatShortWeekday={shortWeekdayFormat}
         onChange={handleDateChange}
@@ -83,8 +90,8 @@ function Calender() {
           return <>{html}</>;
         }}
       />
-      <>카테고리 출력 : {data}</>
-    </div>
+      {/* <p>카테고리 출력 : {data}</p> */}
+    </CalenderWrapper>
   );
 }
 

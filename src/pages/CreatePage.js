@@ -10,7 +10,11 @@ import {
 import { useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
 import MenuBarComponent from "../components/MainPage/MenuBarComponent";
-import { Horizontal, Vertical } from "../styles/CommunalStyle";
+import {
+  Horizontal,
+  Vertical,
+  NoCenterVertical,
+} from "../styles/CommunalStyle";
 import CalenderComponent from "../components/CreatePage/CalenderComponent";
 
 const BtnInputWrapper = styled.div`
@@ -24,16 +28,23 @@ const SubmitBtn = styled.button`
   display: flex;
   padding: 14px 19px;
   align-items: center;
-  left: 65%; /*부모의 50%*/
-  bottom: 400px;
-  background-color: white;
+  right: 28%; /*부모의 50%*/
+  bottom: 10%;
+  background-color: #2aa663;
   border-radius: 24px;
+  border: none;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
   transform: translateX(-50%);
-  color: black;
+  color: white;
   font-size: 14px;
   font-weight: 600;
   gap: 8px;
   cursor: pointer;
+  &:hover {
+    box-shadow: 0 0 0 1px transparent, 0 0 0 4px transparent,
+      0 6px 16px rgba(0, 0, 0, 0.12) !important; /*그림자가 세개지만 마지막것만 표시된다.*/
+    transform: translateX(-50%) scale(1.04);
+  }
 `;
 
 function CreatePage() {
@@ -107,7 +118,10 @@ function CreatePage() {
         </div>
         <SubmitBtn onClick={writeBtnClick}>기록하기</SubmitBtn>
       </Vertical>
-      <CalenderComponent />
+      <NoCenterVertical style={{ marginLeft: "56px" }}>
+        <div style={{ height: "158px" }} />
+        <CalenderComponent />
+      </NoCenterVertical>
     </Horizontal>
   );
 }

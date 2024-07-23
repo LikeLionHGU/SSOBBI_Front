@@ -5,6 +5,8 @@
   border: none;
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.125em;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 .react-calendar-2 {
   width: 520px;
