@@ -17,7 +17,7 @@ export const emotionComsumptionDataState = atom({
 
 export const happinessIndexState = atom({
   key: "happinessIndex",
-  default: null,
+  default: 0,
 });
 
 export const importantIncidentState = atom({

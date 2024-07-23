@@ -4,8 +4,8 @@ import { happinessIndexState } from "../../store/atom";
 import { useRecoilState } from "recoil";
 
 const InputWrapper = styled.div`
-  width: 100%;
-  height: 40px;
+  width: 533px;
+  height: 71px;
   box-shadow: 0px 12px 34px 0px rgba(0, 0, 0, 0.08),
     0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
   border-radius: 10px;
@@ -26,7 +26,7 @@ const StyledInput = styled.input`
   -webkit-appearance: none; /* Remove default styling */
   appearance: none;
   width: 90%; /* Full width */
-  height: 5px; /* Height of the slider */
+  height: 7px; /* Height of the slider */
   background: linear-gradient(
     to right,
     rgba(184, 255, 217, 1),
@@ -55,7 +55,7 @@ function HappinessIndexComponent() {
   const [happinessIndex, setHappinessIndex] =
     useRecoilState(happinessIndexState); // 행복 지수 관리 recoil
   return (
-    <div>
+    <div style={{ marginBottom: "44px" }}>
       <p>
         OO님의 <strong>오늘 행복 지수를 알고 싶어요</strong>
       </p>
