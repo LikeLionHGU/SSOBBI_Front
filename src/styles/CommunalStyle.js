@@ -21,7 +21,6 @@ export const NoCenterHorizontal = styled.div`
   align-items: center;
   width: 100%;
 `;
-
 export const Vertical = styled.div`
   //세로 정렬
   display: flex;
