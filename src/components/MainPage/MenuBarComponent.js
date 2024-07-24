@@ -79,7 +79,7 @@ const MenuBarComponent = ({ menu }) => {
         active={activeIcon === "profile"}
         onClick={() => handleIconClick("profile")}
       >
-        <StyledLink to="/">
+        <StyledLink to="/ssobbi">
           <IoPersonCircleOutline />
         </StyledLink>
       </Icon>
@@ -95,7 +95,7 @@ const MenuBarComponent = ({ menu }) => {
         active={activeIcon === "target"}
         onClick={() => handleIconClick("target")}
       >
-        <StyledLink href="/">
+        <StyledLink to="/ssobbi">
           <TbTargetArrow />
         </StyledLink>
       </Icon>

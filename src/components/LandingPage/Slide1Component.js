@@ -17,11 +17,6 @@ const SSOBBI = styled.span`
   margin-left: 10px;
   margin-right: 10px;
 `;
-// const Logo = styled.img`
-//   width: 35px;
-//   height: 35px;
-//   margin-right: 15px;
-// `;
 const Text = styled.p`
   color: ${(props) => props.theme.colors.COLORBlack};
   font-family: "SUITLight";
