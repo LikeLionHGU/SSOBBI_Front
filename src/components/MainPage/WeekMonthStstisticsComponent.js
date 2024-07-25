@@ -75,7 +75,7 @@ function WeekMonthStstisticsComponent({ whappy, mhappy }) {
   const [isMonthly, setIsMonthly] = useState(false);
   const weeklySeries = [44, 55, 41, 17, 15]; // 주간 데이터
   const monthlySeries = [10, 60, 50, 30, 50]; // 월간 데이터
-  const circles = [
+  const circledatas = [
     {
       size: "80px",
       bcolor: "#ACFFD2",
@@ -212,7 +212,7 @@ function WeekMonthStstisticsComponent({ whappy, mhappy }) {
             <Chart options={options} series={series} type="donut" />
           </div> */}
           <Horizontal>
-            {circles.map((item, index) => (
+            {circledatas.map((item, index) => (
               <CircleBox
                 key={index}
                 color={item.bcolor}
