@@ -9,6 +9,7 @@ import MainPage from "./pages/MainPage";
 import CreatePage from "./pages/CreatePage";
 import CalenderPage from "./pages/CalenderPage";
 import KakaoLoginRedirect from "./pages/KakaoLoginRedirect";
+import IncomePage from "./pages/IncomePage";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: "/login/oauth/kakao",
     element: <KakaoLoginRedirect />,
+  },
+  {
+    path: "/ssobbi/income",
+    element: <IncomePage />,
   },
 ]);
 

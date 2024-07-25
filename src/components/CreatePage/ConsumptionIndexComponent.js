@@ -45,9 +45,6 @@ const StyledOption = styled.option`
 `;
 
 const PriceInput = styled.input`
-  &:focus {
-    outline: none;
-  }
   &::placeholder {
     text-align: left;
     padding-left: 24px;

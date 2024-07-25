@@ -79,7 +79,7 @@ const MenuBarComponent = ({ menu }) => {
         active={activeIcon === "profile"}
         onClick={() => handleIconClick("profile")}
       >
-        <StyledLink to="/ssobbi">
+        <StyledLink to="/ssobbi/income">
           <IoPersonCircleOutline />
         </StyledLink>
       </Icon>
