@@ -14,7 +14,7 @@ const Box = styled.div`
   font-size: 18px;
   width: 260px;
   height: 192px;
-  margin-right: 20px;
+  margin-right: 25px;
   border-radius: 20px;
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
   display: flex;
