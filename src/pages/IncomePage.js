@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import IncomeInputComponent from "../components/IncomePage/IncomeInputComponent";
 import TargetAmountComponent from "../components/IncomePage/TargetAmountComponent";
+import ModalComponent from "../components/IncomePage/ModalComponent";
 import { Vertical } from "../styles/CommunalStyle";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import AlarmQuestionComponent from "../components/IncomePage/AlarmQuestionComponent";
+import EnterPhoneNumComponent from "../components/IncomePage/EnterPhoneNumComponent";
 
 const AllWrapper = styled.div`
   width: 1440px;
@@ -12,9 +15,9 @@ const AllWrapper = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: flex-start;
-  margin-left: 198px;
+  padding-left: 198px;
   justify-content: flex-start;
-  margin-top: 158px;
+  padding-top: 158px;
 `;
 
 const StyledBtn = styled.button`
@@ -31,6 +34,7 @@ const StyledBtn = styled.button`
   margin-left: 224px;
   font-family: "SUITLight";
   /* font-size: 20px; */
+  cursor: pointer;
 `;
 
 // input and button wrapper
@@ -49,10 +53,22 @@ const Title = styled.p`
 `;
 
 function IncomePage() {
-  const [targetAmount, setTargetAmount] = useState(null);
+  const [targetAmount, setTargetAmount] = useState(null); // 월간수입을 토대로 목표금액 설정 -> 백엔드와 연결
+  const [modalPage, setModalPage] = useState(null);
   const navigate = useNavigate();
+  function handleBtnClick() {
+    setModalPage(1);
+  }
   return (
     <AllWrapper>
+      {modalPage > 0 && (
+        <ModalComponent closeModal={() => setModalPage(0)}>
+          {modalPage === 1 && (
+            <AlarmQuestionComponent setModalPage={setModalPage} />
+          )}
+          {modalPage === 2 && <EnterPhoneNumComponent />}
+        </ModalComponent>
+      )}
       <button onClick={() => navigate(-1)}>뒤로가기</button>
       <div>
         <Title>
@@ -72,7 +88,7 @@ function IncomePage() {
                   <TargetAmountComponent key={itm.id} item={itm} />
                 ))}
               </div>
-              <StyledBtn>확인</StyledBtn>
+              <StyledBtn onClick={handleBtnClick}>확인</StyledBtn>
             </Wrapper>
           </>
         )}

@@ -43,6 +43,7 @@ const StyledBtn = styled.button`
   margin-left: 40px;
   font-family: "SUITLight";
   /* font-size: 20px; */
+  cursor: pointer;
 `;
 
 const Wrapper = styled.div`
