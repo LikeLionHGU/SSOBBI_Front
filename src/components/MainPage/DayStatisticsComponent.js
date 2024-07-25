@@ -14,7 +14,7 @@ const Box = styled.div`
   font-size: 18px;
   width: 260px;
   height: 192px;
-  margin-right: 20px;
+  margin-right: 25px;
   border-radius: 20px;
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -24,6 +24,27 @@ const Box = styled.div`
   background-color: #fcfffe;
 `;
 
+const TagBox = styled.div`
+  font-family: "SUITLight";
+  font-size: 18px;
+  width: 80px;
+  height: 40px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background-color: ${({ color }) => color || "#BEFEDB"};
+  margin: 5px;
+`;
+
+const tags = [
+  { tag: "패션" },
+  { tag: "음식" },
+  { tag: "쇼핑" },
+  { tag: "교통비" },
+];
+const colors = ["#BEFEDB", "#C4FAF7", "#BDEFFF", "#C1FFAC"];
 function DayStatisticsComponent({ happy }) {
   return (
     <>
@@ -34,39 +55,34 @@ function DayStatisticsComponent({ happy }) {
         <Box>
           오늘의 행복지수
           <GaugeComponent
+            type="semicircle"
             arc={{
-              subArcs: [
-                {
-                  limit: 20,
-                  color: "#D0FFE5",
-                  showTick: true,
-                },
-                {
-                  limit: 50,
-                  color: "#8FFFC2",
-                  showTick: true,
-                },
-                {
-                  limit: 70,
-                  color: "#57EA9B",
-                  showTick: true,
-                },
-                {
-                  limit: 100,
-                  color: "#2AA663",
-                  showTick: true,
-                },
-              ],
+              colorArray: ["#D0FFE5", "#2AA663"],
+              padding: 0.01,
+              subArcs: [{ limit: 33 }, { limit: 66 }, { limit: 100 }],
+            }}
+            pointer={{
+              type: "arrow",
+              animationDelay: 0,
             }}
             value={happy}
+            style={{ height: "120px", width: "250px" }}
+            marginInPercent={{
+              top: 0.12,
+              bottom: 0.0,
+              left: 0.07,
+              right: 0.07,
+            }}
           />
         </Box>
         <Box>
           오늘 과소비 건수
-          <p style={{ fontSize: "30px", fontWeight: "bold" }}>
+          <p
+            style={{ fontSize: "35px", fontWeight: "bold", marginTop: "20px" }}
+          >
             <span
               style={{
-                fontSize: "55px",
+                fontSize: "60px",
                 fontFamily: "SUITExtraBold",
                 fontWeight: "bold",
                 color: "#19844A",
@@ -77,7 +93,18 @@ function DayStatisticsComponent({ happy }) {
             {"   "}건
           </p>
         </Box>
-        <Box>오늘 과소비 항목</Box>
+        <Box>
+          오늘 과소비 항목
+          <Horizontal
+            style={{ width: "200px", flexWrap: "wrap", marginTop: "15px" }}
+          >
+            {tags.map((item, index) => (
+              <TagBox key={index} color={colors[index % colors.length]}>
+                # {item.tag}
+              </TagBox>
+            ))}
+          </Horizontal>
+        </Box>
       </Horizontal>
     </>
   );

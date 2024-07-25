@@ -83,7 +83,7 @@ function MainPage() {
               style={{
                 alignItems: "flex-start",
                 marginLeft: "30px",
-                marginRight: "50px",
+                marginRight: "55px",
               }}
             >
               <DayStatisticsComponent happy={dayData.happy} />

@@ -1,7 +1,5 @@
 import { useState } from "react";
-
 import styled from "styled-components";
-import Chart from "react-apexcharts";
 import Switch from "react-switch";
 import GaugeComponent from "react-gauge-component";
 
@@ -24,6 +22,7 @@ const Title = styled.p`
 
 const Box = styled.div`
   font-family: "SUITLight";
+  font-size: 18px;
   width: 260px;
   height: 192px;
   margin-right: 20px;
@@ -35,32 +34,53 @@ const Box = styled.div`
   align-items: center;
   background-color: #fcfffe;
 `;
-
-const options = {
-  chart: {
-    type: "donut",
-  },
-  labels: ["식비", "쇼핑", "교통비", "카페", "기타"],
-  responsive: [
-    {
-      breakpoint: 480,
-      options: {
-        chart: {
-          width: 200,
-        },
-        legend: {
-          position: "bottom",
-        },
-      },
-    },
-  ],
-};
+const CircleBox = styled.div`
+  font-family: "SUITLight";
+  font-size: ${({ font }) => font};
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  color: ${(props) => props.theme.colors.COLOR100};
+  background-color: ${({ color }) => color};
+  margin-top: ${({ margin }) => margin};
+`;
 
 function WeekMonthStstisticsComponent({ whappy, mhappy }) {
   const [isMonthly, setIsMonthly] = useState(false);
-  const weeklySeries = [44, 55, 41, 17, 15]; // 주간 데이터
-  const monthlySeries = [10, 60, 50, 30, 50]; // 월간 데이터
-  const series = isMonthly ? monthlySeries : weeklySeries; // 주간/월간 데이터 선택
+  const circledatas = [
+    {
+      size: "80px",
+      bcolor: "#ACFFD2",
+      tag: "패션",
+      font: "16px",
+      margin: "32px",
+    },
+    {
+      size: "50px",
+      bcolor: "#ACFFFA",
+      tag: "음식",
+      font: "10px",
+      margin: "63px",
+    },
+    {
+      size: "65px",
+      bcolor: "#ACEBFF",
+      tag: "쇼핑",
+      font: "12px",
+      margin: "30px",
+    },
+    {
+      size: "31px",
+      bcolor: "#C1FFAC",
+      tag: "교통비",
+      font: "8px",
+      margin: "72px",
+    },
+  ];
 
   const handleToggle = () => {
     setIsMonthly(!isMonthly);
@@ -121,40 +141,36 @@ function WeekMonthStstisticsComponent({ whappy, mhappy }) {
       </NoCenterHorizontal>
       <Horizontal>
         <Box>
+          오늘의 행복지수
           <GaugeComponent
+            type="semicircle"
             arc={{
-              subArcs: [
-                {
-                  limit: 20,
-                  color: "#D0FFE5",
-                  showTick: true,
-                },
-                {
-                  limit: 50,
-                  color: "#8FFFC2",
-                  showTick: true,
-                },
-                {
-                  limit: 70,
-                  color: "#57EA9B",
-                  showTick: true,
-                },
-                {
-                  limit: 100,
-                  color: "#2AA663",
-                  showTick: true,
-                },
-              ],
+              colorArray: ["#D0FFE5", "#2AA663"],
+              padding: 0.01,
+              subArcs: [{ limit: 33 }, { limit: 66 }, { limit: 100 }],
+            }}
+            pointer={{
+              type: "arrow",
+              animationDelay: 0,
             }}
             value={isMonthly ? mhappy : whappy}
+            style={{ height: "120px", width: "250px" }}
+            marginInPercent={{
+              top: 0.12,
+              bottom: 0.0,
+              left: 0.07,
+              right: 0.07,
+            }}
           />
         </Box>
         <Box>
           {isMonthly ? "이번달 과소비 건수" : "이번주 과소비 건수"}
-          <p style={{ fontSize: "30px", fontWeight: "bold" }}>
+          <p
+            style={{ fontSize: "35px", fontWeight: "bold", marginTop: "20px" }}
+          >
             <span
               style={{
-                fontSize: "55px",
+                fontSize: "60px",
                 fontFamily: "SUITExtraBold",
                 fontWeight: "bold",
                 color: "#19844A",
@@ -167,9 +183,23 @@ function WeekMonthStstisticsComponent({ whappy, mhappy }) {
         </Box>
         <Box>
           {isMonthly ? "이번달 과소비 항목" : "이번주 과소비 항목"}
-          <div id="chart">
+          {/* <div id="chart">
             <Chart options={options} series={series} type="donut" />
-          </div>
+          </div> */}
+          <Horizontal>
+            {circledatas.map((item, index) => (
+              <CircleBox
+                key={index}
+                color={item.bcolor}
+                width={item.size}
+                height={item.size}
+                font={item.font}
+                margin={item.margin}
+              >
+                {item.tag}
+              </CircleBox>
+            ))}
+          </Horizontal>
         </Box>
       </Horizontal>
     </>
