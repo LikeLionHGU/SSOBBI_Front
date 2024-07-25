@@ -1,13 +1,7 @@
 import styled from "styled-components";
 import GaugeComponent from "react-gauge-component";
 
-import { NoCenterHorizontal, Horizontal } from "../../styles/CommunalStyle";
-
-const Title = styled.p`
-  color: ${(props) => props.theme.colors.COLORBlack};
-  font-family: "SUITLight";
-  font-size: 20px;
-`;
+import { Horizontal } from "../../styles/CommunalStyle";
 
 const Box = styled.div`
   font-family: "SUITLight";
@@ -84,13 +78,9 @@ const circledatas = [
   },
 ];
 
-function MonthComponent({ happy, month }) {
+function MonthComponent({ happy, month, onDetailCPChange }) {
   return (
     <>
-      <Title>
-        한나님의 {month}월{" "}
-        <span style={{ fontFamily: "SUITMedium" }}> 소비 </span>
-      </Title>
       <Horizontal>
         <Box>
           {month}월의 행복지수
@@ -149,7 +139,9 @@ function MonthComponent({ happy, month }) {
               </CircleBox>
             ))}
           </Horizontal>
-          <DetailBT>카테고리별 소비금액 확인하기</DetailBT>
+          <DetailBT onClick={onDetailCPChange}>
+            카테고리별 소비금액 확인하기
+          </DetailBT>
         </Box>
       </Horizontal>
     </>

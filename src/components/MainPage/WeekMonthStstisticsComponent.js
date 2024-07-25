@@ -1,7 +1,5 @@
 import { useState } from "react";
-
 import styled from "styled-components";
-// import Chart from "react-apexcharts";
 import Switch from "react-switch";
 import GaugeComponent from "react-gauge-component";
 
@@ -51,30 +49,8 @@ const CircleBox = styled.div`
   margin-top: ${({ margin }) => margin};
 `;
 
-const options = {
-  chart: {
-    type: "donut",
-  },
-  labels: ["식비", "쇼핑", "교통비", "카페", "기타"],
-  responsive: [
-    {
-      breakpoint: 480,
-      options: {
-        chart: {
-          width: 200,
-        },
-        legend: {
-          position: "bottom",
-        },
-      },
-    },
-  ],
-};
-
 function WeekMonthStstisticsComponent({ whappy, mhappy }) {
   const [isMonthly, setIsMonthly] = useState(false);
-  const weeklySeries = [44, 55, 41, 17, 15]; // 주간 데이터
-  const monthlySeries = [10, 60, 50, 30, 50]; // 월간 데이터
   const circledatas = [
     {
       size: "80px",
@@ -105,7 +81,6 @@ function WeekMonthStstisticsComponent({ whappy, mhappy }) {
       margin: "72px",
     },
   ];
-  const series = isMonthly ? monthlySeries : weeklySeries; // 주간/월간 데이터 선택
 
   const handleToggle = () => {
     setIsMonthly(!isMonthly);
