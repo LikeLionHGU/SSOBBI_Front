@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Horizontal } from "../../styles/CommunalStyle";
 
@@ -34,18 +34,23 @@ const PriceInput = styled.input`
   }
 `;
 
-function TargetAmountComponent({ targetAmount }) {
+function TargetAmountComponent(props) {
+  const formattedNum = new Intl.NumberFormat().format(props.item.money);
+  const [priceInputValue, setPriceInputValue] = useState(formattedNum);
+
+  function handlePriceInputChange(e) {
+    const { value } = e.target;
+    // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
+    const onlyNumber = value.replace(/[^0-9]/g, "");
+    const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
+    setPriceInputValue(formattedNumber);
+  }
   return (
     <>
-      <p>
-        카테고리별로 한달에 사용할 <strong>목표금액</strong>을 설정해주세요
-      </p>
-      {targetAmount.map((itm) => (
-        <Horizontal style={{ marginBottom: "14px" }}>
-          <CategoryInput value={itm.category} />
-          <PriceInput value={itm.money} />
-        </Horizontal>
-      ))}
+      <Horizontal style={{ marginBottom: "14px" }}>
+        <CategoryInput value={props.item.category} />
+        <PriceInput value={priceInputValue} onChange={handlePriceInputChange} />
+      </Horizontal>
     </>
   );
 }
