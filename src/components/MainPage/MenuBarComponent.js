@@ -95,7 +95,7 @@ const MenuBarComponent = ({ menu }) => {
         active={activeIcon === "target"}
         onClick={() => handleIconClick("target")}
       >
-        <StyledLink href="/">
+        <StyledLink to="/ssobbi">
           <TbTargetArrow />
         </StyledLink>
       </Icon>

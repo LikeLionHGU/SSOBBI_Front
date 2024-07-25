@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import styled from "styled-components";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";

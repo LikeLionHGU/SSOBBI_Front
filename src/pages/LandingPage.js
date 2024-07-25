@@ -7,6 +7,9 @@ import {
   NoCenterHorizontal,
 } from "../styles/CommunalStyle";
 import SliderComponent from "../components/LandingPage/SliderComponent";
+import Block1Component from "../components/LandingPage/Block1Component";
+import Block2Component from "../components/LandingPage/Block2Component";
+import Footer from "./Footer";
 
 const Title = styled.p`
   color: ${(props) => props.theme.colors.COLORBlack};
@@ -61,6 +64,9 @@ const LandingPage = () => {
         <LogIn onClick={handleLoginClick}>카카오톡 로그인</LogIn>
       </NoCenterHorizontal>
       <SliderComponent />
+      <Block1Component />
+      <Block2Component />
+      <Footer />
     </Vertical>
   );
 };
