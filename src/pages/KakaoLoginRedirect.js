@@ -2,12 +2,14 @@ import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import axios from "axios";
-import { UserTokenState } from "../store/atom";
+import { UserTokenState, tokenState } from "../store/atom";
 
 const KakaoLoginRedirect = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const setUserToken = useSetRecoilState(UserTokenState);
+  const setToken = useSetRecoilState(tokenState);
+  // api 요청에 필요한 토큰 저장
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -26,6 +28,7 @@ const KakaoLoginRedirect = () => {
           if (response.data.accessToken) {
             setUserToken(response.data.accessToken);
             setUserToken({ isLoggedIn: true });
+            setToken(response.data.accessToken); // token 저장
 
             axios
               .get(secondUrl, {

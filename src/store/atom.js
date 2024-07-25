@@ -45,3 +45,8 @@ export const UserTokenState = atom({
   key: "userToken",
   default: { isLoggedIn: false },
 });
+
+export const tokenState = atom({
+  key: "token",
+  default: null,
+});
