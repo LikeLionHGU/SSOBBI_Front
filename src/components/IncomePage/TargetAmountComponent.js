@@ -14,6 +14,8 @@ const CategoryInput = styled.input`
   box-shadow: 0px 12px 34px 0px rgba(0, 0, 0, 0.08),
     0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
   margin-right: 16px;
+  font-family: "SUITLight";
+  font-size: 20px;
 `;
 
 const PriceInput = styled.input`
@@ -32,6 +34,8 @@ const PriceInput = styled.input`
     outline: none;
     border: 1px solid rgba(42, 166, 99, 1);
   }
+  font-family: "SUITLight";
+  font-size: 20px;
 `;
 
 function TargetAmountComponent(props) {
@@ -47,7 +51,7 @@ function TargetAmountComponent(props) {
   }
   return (
     <>
-      <Horizontal style={{ marginBottom: "14px" }}>
+      <Horizontal style={{ marginTop: "14px", justifyContent: "flex-start" }}>
         <CategoryInput value={props.item.category} />
         <PriceInput value={priceInputValue} onChange={handlePriceInputChange} />
       </Horizontal>
