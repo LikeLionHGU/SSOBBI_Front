@@ -3,7 +3,7 @@ import IncomeInputComponent from "../components/IncomePage/IncomeInputComponent"
 import TargetAmountComponent from "../components/IncomePage/TargetAmountComponent";
 import ModalComponent from "../components/IncomePage/ModalComponent";
 import { Vertical } from "../styles/CommunalStyle";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import AlarmQuestionComponent from "../components/IncomePage/AlarmQuestionComponent";
 import EnterPhoneNumComponent from "../components/IncomePage/EnterPhoneNumComponent";
@@ -55,9 +55,19 @@ const Title = styled.p`
 function IncomePage() {
   const [targetAmount, setTargetAmount] = useState(null); // 월간수입을 토대로 목표금액 설정 -> 백엔드와 연결
   const [modalPage, setModalPage] = useState(null);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const isNew = searchParams.get("isNew");
   const navigate = useNavigate();
   function handleBtnClick() {
     setModalPage(1);
+  }
+  function handleBackBtnClick() {
+    if (isNew === "true") {
+      navigate("/ssobbi");
+    } else {
+      navigate(-1);
+    }
   }
   return (
     <AllWrapper>
@@ -69,7 +79,7 @@ function IncomePage() {
           {modalPage === 2 && <EnterPhoneNumComponent />}
         </ModalComponent>
       )}
-      <button onClick={() => navigate(-1)}>뒤로가기</button>
+      <button onClick={handleBackBtnClick}>뒤로가기</button>
       <div>
         <Title>
           OO님의 <span>한달 수입을 입력해주세요</span>
