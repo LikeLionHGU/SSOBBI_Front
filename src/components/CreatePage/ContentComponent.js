@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { importantIncidentState } from "../../store/atom";
+import { contentState } from "../../store/atom";
 import { useRecoilState } from "recoil";
 
 const TextCount = styled.p`
@@ -22,17 +22,12 @@ const StyledTextarea = styled.textarea`
   border-radius: 10px;
 `;
 
-function EmotionIndexComponent() {
-  const [importantIncident, setImportantIncident] = useRecoilState(
-    importantIncidentState
-  ); // 기록 페이지 데이터 관리 recoil
-  const [isOver, setIsOver] = useState(false);
+function ContentComponent() {
+  const [content, setContent] = useRecoilState(contentState); // 기록 페이지 데이터 관리 recoil
   const handleInputChange = (e) => {
     if (e.target.value.length <= "200") {
-      setImportantIncident(e.target.value);
-      setIsOver(false);
+      setContent(e.target.value);
     } else {
-      setIsOver(true);
       // 글자 수 초과 색 변경 기능 작동 안함
     }
   };
@@ -47,15 +42,13 @@ function EmotionIndexComponent() {
           id="content"
           maxLength="200"
           onChange={handleInputChange}
-          value={importantIncident}
+          value={content}
           // isOver={isOver}
         ></StyledTextarea>
-        <TextCount className="textCount">
-          {importantIncident.length}/200
-        </TextCount>
+        <TextCount className="textCount">{content.length}/200</TextCount>
       </div>
     </div>
   );
 }
 
-export default EmotionIndexComponent;
+export default ContentComponent;

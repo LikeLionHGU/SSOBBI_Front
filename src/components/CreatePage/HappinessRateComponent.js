@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { happinessIndexState } from "../../store/atom";
+import { happinessRateState } from "../../store/atom";
 import { useRecoilState } from "recoil";
 
 const InputWrapper = styled.div`
@@ -51,9 +51,8 @@ const StyledInput = styled.input`
   }
 `;
 
-function HappinessIndexComponent() {
-  const [happinessIndex, setHappinessIndex] =
-    useRecoilState(happinessIndexState); // 행복 지수 관리 recoil
+function HappinessRateComponent() {
+  const [happinessRate, setHappinessRate] = useRecoilState(happinessRateState); // 행복 지수 관리 recoil
   return (
     <div style={{ marginBottom: "44px" }}>
       <p>
@@ -64,8 +63,8 @@ function HappinessIndexComponent() {
           type="range"
           min="0"
           max="100"
-          onChange={(e) => setHappinessIndex(e.target.value)}
-          value={happinessIndex}
+          onChange={(e) => setHappinessRate(e.target.value)}
+          value={happinessRate}
         />
         <div
           style={{
@@ -82,4 +81,4 @@ function HappinessIndexComponent() {
   );
 }
 
-export default HappinessIndexComponent;
+export default HappinessRateComponent;
