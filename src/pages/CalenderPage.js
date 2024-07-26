@@ -6,6 +6,7 @@ import MenuBarComponent from "../components/MainPage/MenuBarComponent";
 import CalenderComponent from "../components/CalenderPage/CalenderComponent";
 import MonthComponent from "../components/CalenderPage/MonthComponent";
 import CategoryDetailComponent from "../components/CalenderPage/CategoryDetailComponent";
+import ScatterChartsComponent from "../components/CalenderPage/ScatterChartsComponent";
 import {
   Horizontal,
   Vertical,
@@ -144,7 +145,9 @@ function CalenderPage() {
                 </Vertical>
                 <CalenderComponent onMonthChange={handleMonthChange} />
               </Horizontal>
-              <HappyBox>낮은 행복/과소비 점 그래프 가져오기</HappyBox>
+              <HappyBox>
+                <ScatterChartsComponent />
+              </HappyBox>
             </>
           )}
         </NoCenterVertical>
