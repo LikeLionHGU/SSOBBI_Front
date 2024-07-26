@@ -3,9 +3,9 @@ import { atom } from "recoil";
 export const emotionComsumptionDataState = atom({
   key: "emotionConsumptionData",
   default: {
-    happiness: null,
-    emotionIndex: "",
-    consumtion: [
+    happinessRate: null,
+    content: "",
+    consumptions: [
       {
         id: "",
         category: "",
@@ -15,13 +15,13 @@ export const emotionComsumptionDataState = atom({
   },
 });
 
-export const happinessIndexState = atom({
-  key: "happinessIndex",
+export const happinessRateState = atom({
+  key: "happinessRate",
   default: 0,
 });
 
-export const importantIncidentState = atom({
-  key: "importantIncident",
+export const contentState = atom({
+  key: "content",
   default: "",
 });
 

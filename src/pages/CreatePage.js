@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import HappinessIndexComponent from "../components/CreatePage/HappinessIndexComponent";
-import EmotionIndexComponent from "../components/CreatePage/EmotionIndexComponent";
+import HappinessRateComponent from "../components/CreatePage/HappinessRateComponent";
+import ContentComponent from "../components/CreatePage/ContentComponent";
 import ConsumptionIndexComponent from "../components/CreatePage/ConsumptionIndexComponent";
 import {
-  happinessIndexState,
-  importantIncidentState,
+  happinessRateState,
+  contentState,
   consumptionIndexState,
 } from "../store/atom";
 import { useRecoilValue } from "recoil";
@@ -48,15 +48,15 @@ const SubmitBtn = styled.button`
 `;
 
 function CreatePage() {
-  const happinessIndex = useRecoilValue(happinessIndexState);
-  const importantIncident = useRecoilValue(importantIncidentState);
+  const happinessRate = useRecoilValue(happinessRateState);
+  const content = useRecoilValue(contentState);
   const consumptionIndex = useRecoilValue(consumptionIndexState);
   const [inputCmpnt, setInputCmpnt] = useState(null); //inputComponent
   const [keyCounter, setKeyCounter] = useState(consumptionIndex.length + 1); // id 1씩 증가시키기 위한 useState
   function writeBtnClick() {
     const data = {
-      happinessIndex: happinessIndex,
-      importantIncident: importantIncident,
+      happinessRate: happinessRate,
+      content: content,
       consumptionIndex: consumptionIndex,
     };
     console.log(data);
@@ -93,8 +93,8 @@ function CreatePage() {
         }}
       >
         <div style={{ height: "158px" }} />
-        <HappinessIndexComponent />
-        <EmotionIndexComponent />
+        <HappinessRateComponent />
+        <ContentComponent />
         <div>
           <p style={{ marginTop: "16px" }}>
             OO님의 <strong>오늘 소비를 입력해주세요</strong>
