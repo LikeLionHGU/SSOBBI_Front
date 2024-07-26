@@ -18,6 +18,8 @@ const CategoryInput = styled.input`
   border: ${(props) => (props.checked === true ? "1px solid red" : "none")};
   margin-left: 16px;
   margin-right: 16px;
+  font-family: "SUITLight";
+  font-size: 20px;
 `;
 
 const PriceInput = styled.input`
@@ -32,6 +34,8 @@ const PriceInput = styled.input`
   box-shadow: 0px 12px 34px 0px rgba(0, 0, 0, 0.08),
     0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
   border: ${(props) => (props.checked === true ? "1px solid red" : "none")};
+  font-family: "SUITLight";
+  font-size: 20px;
 `;
 
 const StyledBtn = styled.button`
@@ -48,7 +52,7 @@ function CheckComponent({ category, consumption }) {
     setInputCheck((prev) => !prev);
   }
   return (
-    <Horizontal>
+    <Horizontal style={{ justifyContent: "flex-start" }}>
       <StyledBtn id={category} onClick={handleCheckBox} checked={inputCheck}>
         <img
           src={inputCheck === true ? CheckOverImg : NoCheckOverImg}
