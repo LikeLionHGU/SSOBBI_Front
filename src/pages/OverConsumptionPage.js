@@ -9,6 +9,12 @@ import {
 } from "../styles/CommunalStyle";
 import CalenderComponent from "../components/CreatePage/CalenderComponent";
 import CheckComponent from "../components/OverConsumptionPage/CheckComponent";
+import TooltipComponent from "../components/OverConsumptionPage/TooltipComponent";
+import styled from "styled-components";
+
+const TooltipBtn = styled.button`
+  cursor: pointer;
+`;
 
 function OverConsumptionPage() {
   const consumptions = useRecoilValue(consumptionIndexState);
@@ -26,6 +32,11 @@ function OverConsumptionPage() {
         <p style={{ marginTop: "16px" }}>
           쏘삐가 생각하는 OO님의 과소비 내역이 맞는지 확인해주세요
         </p>
+        <div className="container">
+          <TooltipComponent infoText="hello world">
+            <TooltipBtn className="btn">!</TooltipBtn>
+          </TooltipComponent>
+        </div>
         {consumptions.map((itm) => (
           <CheckComponent
             category={itm.category}
