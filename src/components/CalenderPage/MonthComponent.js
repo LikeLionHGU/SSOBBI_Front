@@ -106,19 +106,18 @@ function MonthComponent({ happy, month, onDetailCPChange }) {
           />
         </Box>
         <Box>
-          {month}월의 과소비 수
+          {month}월의 과소비 금액
           <p style={{ fontSize: "30px", fontWeight: "bold" }}>
             <span
               style={{
-                fontSize: "55px",
+                fontSize: "40px",
                 fontFamily: "SUITExtraBold",
                 fontWeight: "bold",
-                color: "#19844A",
               }}
             >
-              7
+              50000000
             </span>
-            {"   "}건
+            {"   "}원
           </p>
         </Box>
         <Box
