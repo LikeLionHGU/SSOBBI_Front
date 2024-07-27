@@ -4,6 +4,7 @@ import "../../styles/Calender.css";
 import moment from "moment";
 import styled from "styled-components";
 
+// ToDo: 과소비 건수 확인하는 박스 부분부터 시작
 const StyledDot = styled.div`
   background-color: blue;
   border-radius: 50%;
@@ -25,6 +26,37 @@ const StyledToday = styled.div`
   transform: translateX(-50%);
 `;
 
+const SSOBBIBox = styled.div`
+  width: 232px;
+  height: 85px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: "SUITLight";
+  font-size: 14px;
+  margin-top: 50px;
+  text-align: center;
+  background-color: #f6f6fc;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const DetailBT = styled.div`
+  font-family: "SUITLight";
+  font-size: 10px;
+  width: 100%;
+  height: 34px;
+  border-radius: 0 0 20px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  background-color: #ff4d4d;
+  margin-top: 15px;
+  cursor: pointer;
+`;
+
 function Calender() {
   const today = new Date();
   const attendDay = [
@@ -32,20 +64,24 @@ function Calender() {
       date: "2024-07-02",
       emotion: "슬픔",
       category: "식비",
+      count: 2,
     },
     {
       date: "2024-07-19",
       emotion: "기쁨",
       category: "교통비",
+      count: 5,
     },
   ];
-  const [data, setData] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [data, setData] = useState(0);
   const handleDateChange = (e) => {
-    attendDay.map((itm) =>
-      itm.date === moment(e).format("YYYY-MM-DD")
-        ? setData(itm.category)
-        : setData("")
+    const formattedDate = moment(e).format("DD");
+    setSelectedDate(formattedDate);
+    const foundDate = attendDay.find(
+      (itm) => itm.date === moment(e).format("YYYY-MM-DD")
     );
+    setData(foundDate ? foundDate.count : 0);
   };
   return (
     <div>
@@ -76,7 +112,18 @@ function Calender() {
           return <>{html}</>;
         }}
       />
-      <p>카테고리 출력 : {data}</p>
+      {selectedDate && (
+        <>
+          <SSOBBIBox>
+            <p>
+              아이코! {selectedDate}일에{" "}
+              <span style={{ fontWeight: "bold" }}>{data}번</span> 과소비
+              했어요.
+            </p>
+            <DetailBT>소비 내역 확인하기</DetailBT>
+          </SSOBBIBox>
+        </>
+      )}
     </div>
   );
 }

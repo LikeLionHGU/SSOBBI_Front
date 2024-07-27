@@ -40,7 +40,7 @@ const Logo = styled.img`
 const Box = styled.div`
   width: 830px;
   height: 125px;
-  margin-top: 65px;
+  margin-top: 50px;
   border-radius: 20px;
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -52,8 +52,6 @@ const Box = styled.div`
 const HappyBox = styled.div`
   width: 1190px;
   height: 210px;
-  margin-top: 30px;
-  margin-left: 30px;
   border-radius: 20px;
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -115,10 +113,14 @@ function CalenderPage() {
               >
                 <SubTitle>
                   한나님의 {selectedMonth}월{" "}
-                  <span style={{ fontFamily: "SUITMedium" }}> 소비 </span>
+                  <span style={{ fontFamily: "SUITMedium" }}>
+                    {" "}
+                    카테고리별 소비{" "}
+                  </span>
                 </SubTitle>
                 <CategoryDetailComponent />
               </Vertical>
+              <CalenderComponent onMonthChange={handleMonthChange} />
             </Horizontal>
           ) : (
             <>
@@ -145,9 +147,24 @@ function CalenderPage() {
                 </Vertical>
                 <CalenderComponent onMonthChange={handleMonthChange} />
               </Horizontal>
-              <HappyBox>
-                <ScatterChartsComponent />
-              </HappyBox>
+              <Vertical
+                style={{
+                  alignItems: "flex-start",
+                  marginLeft: "30px",
+                  marginRight: "20px",
+                }}
+              >
+                <SubTitle>
+                  한나님의 {selectedMonth}월{" "}
+                  <span style={{ fontFamily: "SUITMedium" }}>
+                    {" "}
+                    감정별 소비{" "}
+                  </span>
+                </SubTitle>
+                <HappyBox>
+                  <ScatterChartsComponent />
+                </HappyBox>
+              </Vertical>
             </>
           )}
         </NoCenterVertical>
