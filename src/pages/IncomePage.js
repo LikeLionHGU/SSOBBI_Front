@@ -7,6 +7,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import AlarmQuestionComponent from "../components/IncomePage/AlarmQuestionComponent";
 import EnterPhoneNumComponent from "../components/IncomePage/EnterPhoneNumComponent";
+import { tokenState } from "../store/atom";
+import axios from "axios";
+import { useRecoilValue } from "recoil";
 
 const AllWrapper = styled.div`
   width: 1440px;
@@ -54,13 +57,35 @@ const Title = styled.p`
 
 function IncomePage() {
   const [targetAmount, setTargetAmount] = useState(null); // 월간수입을 토대로 목표금액 설정 -> 백엔드와 연결
+  const userToken = useRecoilValue(tokenState);
   const [modalPage, setModalPage] = useState(null);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const isNew = searchParams.get("isNew");
   const navigate = useNavigate();
+  function convertToInt(numberString) {
+    const numberWithoutCommas = numberString.replace(/,/g, "");
+    const number = parseInt(numberWithoutCommas, 10);
+    return number;
+  }
   function handleBtnClick() {
-    setModalPage(1);
+    const apiUrl =
+      process.env.REACT_APP_BASE_URL + "/category/monthly/TargetAmount";
+    console.log(targetAmount);
+    axios
+      .post(apiUrl, JSON.stringify(targetAmount), {
+        headers: {
+          Authorization: "Bearer " + userToken,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        if (response) setModalPage(1);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
   function handleBackBtnClick() {
     if (isNew === "true") {
@@ -84,7 +109,10 @@ function IncomePage() {
         <Title>
           OO님의 <span>한달 수입을 입력해주세요</span>
         </Title>
-        <IncomeInputComponent setTargetAmount={setTargetAmount} />
+        <IncomeInputComponent
+          setTargetAmount={setTargetAmount}
+          convertToInt={convertToInt}
+        />
       </div>
       <Vertical style={{ alignItems: "flex-start" }}>
         {targetAmount && (
@@ -95,7 +123,12 @@ function IncomePage() {
             <Wrapper>
               <div>
                 {targetAmount.map((itm) => (
-                  <TargetAmountComponent key={itm.id} item={itm} />
+                  <TargetAmountComponent
+                    key={itm.id}
+                    item={itm}
+                    setTargetAmount={setTargetAmount}
+                    convertToInt={convertToInt}
+                  />
                 ))}
               </div>
               <StyledBtn onClick={handleBtnClick}>확인</StyledBtn>
