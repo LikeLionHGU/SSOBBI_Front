@@ -1,4 +1,10 @@
 import { atom } from "recoil";
+import { recoilPersist } from "recoil-persist";
+
+const { persistAtom } = recoilPersist({
+  key: "localStorage", //원하는 key 값 입력
+  storage: localStorage,
+});
 
 export const emotionComsumptionDataState = atom({
   key: "emotionConsumptionData",
@@ -33,9 +39,11 @@ export const consumptionIndexState = atom({
 export const UserTokenState = atom({
   key: "userToken",
   default: { isLoggedIn: false },
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const tokenState = atom({
   key: "token",
   default: null,
+  effects_UNSTABLE: [persistAtom],
 });

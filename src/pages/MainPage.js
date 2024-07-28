@@ -1,4 +1,9 @@
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import { useRecoilValue } from "recoil";
+import axios from "axios";
+import moment from "moment";
+import { tokenState } from "../store/atom";
 import DropDownComponent from "../components/MainPage/DropDownComponent";
 import CalenderComponent from "../components/MainPage/CalenderComponent";
 import DayStatisticsComponent from "../components/MainPage/DayStatisticsComponent";
@@ -10,7 +15,6 @@ import {
   NoCenterHorizontal,
   NoCenterVertical,
 } from "../styles/CommunalStyle";
-
 import LogoImg from "../imgs/Logo.png";
 
 const dayData = {
@@ -53,6 +57,22 @@ const Box = styled.div`
 `;
 
 function MainPage() {
+  const userToken = useRecoilValue(tokenState);
+  const today = moment().format("YYYY-MM-DD");
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/records/daily/${today}`, {
+        headers: {
+          Authorization: "Bearer  " + userToken,
+        },
+      })
+      .then((res) => {
+        console.log("메인페이지 데이터 확인 : ", res.data);
+      })
+      .catch((err) => {
+        console.log("error: ", err);
+      });
+  }, []);
   return (
     <>
       <Horizontal style={{ height: "100vh", overflowY: "hidden" }}>
