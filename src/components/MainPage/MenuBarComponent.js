@@ -6,7 +6,6 @@ import styled from "styled-components";
 import { FaHouseChimney } from "react-icons/fa6";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { FaRegCalendarCheck } from "react-icons/fa6";
-import { TbTargetArrow } from "react-icons/tb";
 import { PiNotePencilFill } from "react-icons/pi";
 import { IoLogOutOutline } from "react-icons/io5";
 
@@ -92,14 +91,6 @@ const MenuBarComponent = ({ menu }) => {
       >
         <StyledLink to="/ssobbi/calender">
           <FaRegCalendarCheck />
-        </StyledLink>
-      </Icon>
-      <Icon
-        active={activeIcon === "target"}
-        onClick={() => handleIconClick("target")}
-      >
-        <StyledLink to="/ssobbi">
-          <TbTargetArrow />
         </StyledLink>
       </Icon>
       <Icon

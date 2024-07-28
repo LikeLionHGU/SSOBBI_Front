@@ -101,7 +101,7 @@ const DropDownComponent = () => {
       <Menu isDropped={myPageIsOpen}>
         <Ul>
           <Li>
-            <LinkWrapper href="/ssobbi">마이페이지</LinkWrapper>
+            <LinkWrapper href="/ssobbi/income">마이페이지</LinkWrapper>
           </Li>
           <Li onClick={logoutClickHandler}>
             <LinkWrapper href="/">로그아웃</LinkWrapper>
