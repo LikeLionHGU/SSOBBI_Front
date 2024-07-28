@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import axios from "axios";
@@ -16,11 +16,6 @@ import {
   NoCenterVertical,
 } from "../styles/CommunalStyle";
 import LogoImg from "../imgs/Logo.png";
-
-const dayData = {
-  happy: 24,
-  cost: 250,
-};
 
 const staticData = {
   whappy: 52,
@@ -57,22 +52,33 @@ const Box = styled.div`
 `;
 
 function MainPage() {
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState(null);
   const userToken = useRecoilValue(tokenState);
   const today = moment().format("YYYY-MM-DD");
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_BASE_URL}/records/daily/${today}`, {
-        headers: {
-          Authorization: "Bearer  " + userToken,
-        },
-      })
-      .then((res) => {
-        console.log("메인페이지 데이터 확인 : ", res.data);
-      })
-      .catch((err) => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          // `${process.env.REACT_APP_BASE_URL}/records/daily/${today}/summary`,
+          `${process.env.REACT_APP_BASE_URL}/records/daily/${today}`,
+          {
+            headers: {
+              Authorization: "Bearer " + userToken,
+            },
+          }
+        );
+        setData(response.data);
+        setLoading(false);
+        console.log("메인페이지 데이터 확인 : ", response.data);
+      } catch (err) {
         console.log("error: ", err);
-      });
-  }, []);
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [userToken, today]);
+  if (loading) return <p>Loading...</p>;
   return (
     <>
       <Horizontal style={{ height: "100vh", overflowY: "hidden" }}>
@@ -106,12 +112,12 @@ function MainPage() {
                 marginRight: "55px",
               }}
             >
-              <DayStatisticsComponent happy={dayData.happy} />
-              <Box>오늘의 일기랄까</Box>
-              <WeekMonthStstisticsComponent
-                whappy={staticData.whappy}
-                mhappy={staticData.mhappy}
-              />
+              <DayStatisticsComponent dayData={data} />
+
+              <Box>
+                {data.content ? data.content : "오늘의 일기를 남겨주세요!"}
+              </Box>
+              <WeekMonthStstisticsComponent weekData={data} monthData={data} />
             </Vertical>
             <CalenderComponent />
           </Horizontal>

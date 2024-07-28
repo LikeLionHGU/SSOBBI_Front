@@ -48,8 +48,8 @@ const CircleBox = styled.div`
   background-color: ${({ color }) => color};
   margin-top: ${({ margin }) => margin};
 `;
-
-function WeekMonthStstisticsComponent({ whappy, mhappy }) {
+//ToDo: api 추가 개발 시 데이터 받아와서 연결 새롭게 하기
+function WeekMonthStstisticsComponent({ weekData, monthData }) {
   const [isMonthly, setIsMonthly] = useState(false);
   const circledatas = [
     {
@@ -153,7 +153,15 @@ function WeekMonthStstisticsComponent({ whappy, mhappy }) {
               type: "arrow",
               animationDelay: 0,
             }}
-            value={isMonthly ? mhappy : whappy}
+            value={
+              isMonthly
+                ? monthData.happinessRate
+                  ? monthData.happinessRate
+                  : 0
+                : weekData.happinessRate
+                ? weekData.happinessRate
+                : 0
+            }
             style={{ height: "120px", width: "250px" }}
             marginInPercent={{
               top: 0.12,
@@ -164,42 +172,136 @@ function WeekMonthStstisticsComponent({ whappy, mhappy }) {
           />
         </Box>
         <Box>
-          {isMonthly ? "이번달 과소비 건수" : "이번주 과소비 건수"}
-          <p
-            style={{ fontSize: "35px", fontWeight: "bold", marginTop: "20px" }}
-          >
-            <span
-              style={{
-                fontSize: "60px",
-                fontFamily: "SUITExtraBold",
-                fontWeight: "bold",
-                color: "#19844A",
-              }}
-            >
-              {overconsumptionCount}
-            </span>
-            {"   "}건
-          </p>
+          {isMonthly ? (
+            <>
+              이번달 과소비 건수
+              <p
+                style={{
+                  fontSize: "35px",
+                  fontWeight: "bold",
+                  marginTop: "20px",
+                }}
+              >
+                {monthData.totalOverConsumptionCount ? (
+                  <>
+                    ({monthData.totalOverConsumptionCount} ?
+                    <span
+                      style={{
+                        fontSize: "60px",
+                        fontFamily: "SUITExtraBold",
+                        fontWeight: "bold",
+                        color: "#19844A",
+                      }}
+                    >
+                      {monthData.totalOverConsumptionCount}
+                    </span>{" "}
+                    건)
+                  </>
+                ) : (
+                  <span style={{ fontSize: "18px", color: "#19844A" }}>
+                    기록이 없습니다.
+                  </span>
+                )}
+              </p>
+            </>
+          ) : (
+            <>
+              이번주 과소비 건수
+              <p
+                style={{
+                  fontSize: "35px",
+                  fontWeight: "bold",
+                  marginTop: "20px",
+                }}
+              >
+                {weekData.totalOverConsumptionCount ? (
+                  <>
+                    ({weekData.totalOverConsumptionCount} ?
+                    <span
+                      style={{
+                        fontSize: "60px",
+                        fontFamily: "SUITExtraBold",
+                        fontWeight: "bold",
+                        color: "#19844A",
+                      }}
+                    >
+                      {weekData.totalOverConsumptionCount}
+                    </span>{" "}
+                    건)
+                  </>
+                ) : (
+                  <span style={{ fontSize: "18px", color: "#19844A" }}>
+                    기록이 없습니다.
+                  </span>
+                )}
+              </p>
+            </>
+          )}
         </Box>
         <Box>
-          {isMonthly ? "이번달 과소비 항목" : "이번주 과소비 항목"}
-          {/* <div id="chart">
-            <Chart options={options} series={series} type="donut" />
-          </div> */}
-          <Horizontal>
-            {circledatas.map((item, index) => (
-              <CircleBox
-                key={index}
-                color={item.bcolor}
-                width={item.size}
-                height={item.size}
-                font={item.font}
-                margin={item.margin}
-              >
-                {item.tag}
-              </CircleBox>
-            ))}
-          </Horizontal>
+          {isMonthly ? (
+            <>
+              이번달 과소비 항목
+              {monthData.overConsumptionCategories ? (
+                <Horizontal>
+                  {monthData.overConsumptionCategories.map((item, index) => (
+                    <CircleBox
+                      key={index}
+                      color={item.bcolor}
+                      width={item.size}
+                      height={item.size}
+                      font={item.font}
+                      margin={item.margin}
+                    >
+                      {item.tag}
+                    </CircleBox>
+                  ))}
+                </Horizontal>
+              ) : (
+                <span
+                  style={{
+                    fontSize: "18px",
+                    color: "#19844A",
+                    marginTop: "37px",
+                    marginBottom: "43px",
+                  }}
+                >
+                  기록이 없습니다.
+                </span>
+              )}
+            </>
+          ) : (
+            <>
+              이번주 과소비 항목
+              {weekData.overConsumptionCategories ? (
+                <Horizontal>
+                  {weekData.overConsumptionCategories.map((item, index) => (
+                    <CircleBox
+                      key={index}
+                      color={item.bcolor}
+                      width={item.size}
+                      height={item.size}
+                      font={item.font}
+                      margin={item.margin}
+                    >
+                      {item.tag}
+                    </CircleBox>
+                  ))}
+                </Horizontal>
+              ) : (
+                <span
+                  style={{
+                    fontSize: "18px",
+                    color: "#19844A",
+                    marginTop: "37px",
+                    marginBottom: "43px",
+                  }}
+                >
+                  기록이 없습니다.
+                </span>
+              )}
+            </>
+          )}
         </Box>
       </Horizontal>
     </>

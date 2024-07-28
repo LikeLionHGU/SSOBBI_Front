@@ -38,14 +38,8 @@ const TagBox = styled.div`
   margin: 5px;
 `;
 
-const tags = [
-  { tag: "패션" },
-  { tag: "음식" },
-  { tag: "쇼핑" },
-  { tag: "교통비" },
-];
 const colors = ["#BEFEDB", "#C4FAF7", "#BDEFFF", "#C1FFAC"];
-function DayStatisticsComponent({ happy }) {
+function DayStatisticsComponent({ dayData }) {
   return (
     <>
       <Title>
@@ -65,7 +59,7 @@ function DayStatisticsComponent({ happy }) {
               type: "arrow",
               animationDelay: 0,
             }}
-            value={happy}
+            value={dayData.happinessRate ? dayData.happinessRate : 0}
             style={{ height: "120px", width: "250px" }}
             marginInPercent={{
               top: 0.12,
@@ -80,30 +74,54 @@ function DayStatisticsComponent({ happy }) {
           <p
             style={{ fontSize: "35px", fontWeight: "bold", marginTop: "20px" }}
           >
-            <span
-              style={{
-                fontSize: "60px",
-                fontFamily: "SUITExtraBold",
-                fontWeight: "bold",
-                color: "#19844A",
-              }}
-            >
-              1
-            </span>
-            {"   "}건
+            {dayData.totalOverConsumptionCount ? (
+              <>
+                ({dayData.totalOverConsumptionCount} ?
+                <span
+                  style={{
+                    fontSize: "60px",
+                    fontFamily: "SUITExtraBold",
+                    fontWeight: "bold",
+                    color: "#19844A",
+                  }}
+                >
+                  {dayData.totalOverConsumptionCount}
+                </span>{" "}
+                건)
+              </>
+            ) : (
+              <span style={{ fontSize: "18px", color: "#19844A" }}>
+                오늘의 데이터 입력해주세요!
+              </span>
+            )}
           </p>
         </Box>
         <Box>
           오늘 과소비 항목
-          <Horizontal
-            style={{ width: "200px", flexWrap: "wrap", marginTop: "15px" }}
-          >
-            {tags.map((item, index) => (
-              <TagBox key={index} color={colors[index % colors.length]}>
-                # {item.tag}
-              </TagBox>
-            ))}
-          </Horizontal>
+          {dayData.overConsumptionCategories ? (
+            <>
+              <Horizontal
+                style={{ width: "200px", flexWrap: "wrap", marginTop: "15px" }}
+              >
+                {dayData.overConsumptionCategories.map((item, index) => (
+                  <TagBox key={index} color={colors[index % colors.length]}>
+                    # {item.tag}
+                  </TagBox>
+                ))}
+              </Horizontal>
+            </>
+          ) : (
+            <p
+              style={{
+                fontSize: "18px",
+                marginTop: "37px",
+                marginBottom: "43px",
+                color: "#19844A",
+              }}
+            >
+              오늘의 데이터 입력해주세요!
+            </p>
+          )}
         </Box>
       </Horizontal>
     </>
