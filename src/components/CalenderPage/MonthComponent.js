@@ -42,7 +42,7 @@ const DetailBT = styled.div`
   flex-direction: column;
   align-items: center;
   color: white;
-  background-color: ${(props) => props.theme.colors.COLOR90};
+  background-color: ${(props) => props.theme.colors.COLOR70};
   margin-top: 22px;
   cursor: pointer;
 `;

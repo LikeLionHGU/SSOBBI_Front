@@ -4,6 +4,7 @@ import moment from "moment";
 import DropDownComponent from "../components/MainPage/DropDownComponent";
 import MenuBarComponent from "../components/MainPage/MenuBarComponent";
 import CalenderComponent from "../components/CalenderPage/CalenderComponent";
+import MainCalenderComponent from "../components/MainPage/CalenderComponent";
 import MonthComponent from "../components/CalenderPage/MonthComponent";
 import CategoryDetailComponent from "../components/CalenderPage/CategoryDetailComponent";
 import ScatterChartsComponent from "../components/CalenderPage/ScatterChartsComponent";
@@ -120,7 +121,7 @@ function CalenderPage() {
                 </SubTitle>
                 <CategoryDetailComponent />
               </Vertical>
-              <CalenderComponent onMonthChange={handleMonthChange} />
+              <MainCalenderComponent onMonthChange={handleMonthChange} />
             </Horizontal>
           ) : (
             <>

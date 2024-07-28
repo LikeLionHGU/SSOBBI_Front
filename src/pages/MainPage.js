@@ -95,7 +95,6 @@ function MainPage() {
               style={{
                 justifyContent: "flex-start",
                 marginLeft: "25px",
-                marginBottom: "35px",
                 marginTop: "30px",
               }}
             >
@@ -104,12 +103,19 @@ function MainPage() {
             </Horizontal>
             <DropDownComponent />
           </NoCenterHorizontal>
-          <NoCenterHorizontal>
+          <NoCenterHorizontal
+            style={{
+              height: "750px",
+              overflowY: "scroll",
+            }}
+          >
             <NoCenterVertical
               style={{
                 alignItems: "flex-start",
                 marginLeft: "30px",
                 marginRight: "55px",
+                paddingTop: "30px",
+                paddingBottom: "20px",
               }}
             >
               <DayStatisticsComponent dayData={data} />
