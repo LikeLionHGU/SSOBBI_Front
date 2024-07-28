@@ -104,8 +104,8 @@ function MainPage() {
             </Horizontal>
             <DropDownComponent />
           </NoCenterHorizontal>
-          <Horizontal>
-            <Vertical
+          <NoCenterHorizontal>
+            <NoCenterVertical
               style={{
                 alignItems: "flex-start",
                 marginLeft: "30px",
@@ -113,14 +113,13 @@ function MainPage() {
               }}
             >
               <DayStatisticsComponent dayData={data} />
-
               <Box>
                 {data.content ? data.content : "오늘의 일기를 남겨주세요!"}
               </Box>
               <WeekMonthStstisticsComponent weekData={data} monthData={data} />
-            </Vertical>
+            </NoCenterVertical>
             <CalenderComponent />
-          </Horizontal>
+          </NoCenterHorizontal>
         </NoCenterVertical>
       </Horizontal>
     </>
