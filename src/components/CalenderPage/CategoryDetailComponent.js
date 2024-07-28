@@ -116,7 +116,7 @@ function CategoryDetailComponent() {
       <NoCenterHorizontal
         style={{
           flexWrap: "wrap",
-          width: "790px",
+          width: "850px",
           height: "600px",
           overflowY: "scroll",
           padding: "10px 20px 20px 20px",

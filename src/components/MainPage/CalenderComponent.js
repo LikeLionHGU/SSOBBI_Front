@@ -1,12 +1,25 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Calendar from "react-calendar";
 import "../../styles/Calender.css";
 import moment from "moment";
 import styled from "styled-components";
+import CheckImg from "../../imgs/CheckPoint.svg";
 
 // ToDo: 과소비 건수 확인하는 박스 부분부터 시작
+
+const CalenderWrapper = styled.div`
+  height: 630px;
+  background-color: #f2f6f4;
+  border-radius: 20px;
+  margin-top: 65px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const StyledDot = styled.div`
-  background-color: blue;
+  background-color: #2aa663;
   border-radius: 50%;
   width: 0.3rem;
   height: 0.3rem;
@@ -17,13 +30,15 @@ const StyledDot = styled.div`
 `;
 
 const StyledToday = styled.div`
-  font-size: x-small;
-  color: red;
-  font-weight: 600;
+  background-color: #3fc87e;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
   position: absolute;
-  top: 50%;
+  top: 12%;
   left: 50%;
   transform: translateX(-50%);
+  color: white;
 `;
 
 const SSOBBIBox = styled.div`
@@ -41,7 +56,14 @@ const SSOBBIBox = styled.div`
   justify-content: center;
 `;
 
-const DetailBT = styled.div`
+const CheckPoint = styled.img`
+  width: 28px;
+  height: 28px;
+  margin-left: 20px;
+  margin-top: -15px;
+`;
+
+const DetailBT = styled(Link)`
   font-family: "SUITLight";
   font-size: 10px;
   width: 100%;
@@ -53,8 +75,8 @@ const DetailBT = styled.div`
   align-items: center;
   color: white;
   background-color: #ff4d4d;
-  margin-top: 15px;
   cursor: pointer;
+  text-decoration: none;
 `;
 
 function Calender() {
@@ -85,7 +107,7 @@ function Calender() {
     setData(foundDate ? foundDate.count : 0);
   };
   return (
-    <div>
+    <CalenderWrapper>
       <Calendar
         onChange={handleDateChange}
         formatDay={(locale, date) => moment(date).format("D")} // 일 제거 숫자만 보이게
@@ -116,16 +138,17 @@ function Calender() {
       {selectedDate && (
         <>
           <SSOBBIBox>
+            <CheckPoint src={CheckImg} />
             <p>
               아이코! {selectedDate}일에{" "}
               <span style={{ fontWeight: "bold" }}>{data}번</span> 과소비
               했어요.
             </p>
-            <DetailBT>소비 내역 확인하기</DetailBT>
+            <DetailBT to="/ssobbi/calender">소비 내역 확인하기</DetailBT>
           </SSOBBIBox>
         </>
       )}
-    </div>
+    </CalenderWrapper>
   );
 }
 

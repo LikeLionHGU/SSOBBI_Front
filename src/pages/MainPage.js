@@ -95,7 +95,6 @@ function MainPage() {
               style={{
                 justifyContent: "flex-start",
                 marginLeft: "25px",
-                marginBottom: "35px",
                 marginTop: "30px",
               }}
             >
@@ -104,23 +103,29 @@ function MainPage() {
             </Horizontal>
             <DropDownComponent />
           </NoCenterHorizontal>
-          <Horizontal>
+          <NoCenterHorizontal
+            style={{
+              height: "750px",
+              overflowY: "scroll",
+            }}
+          >
             <Vertical
               style={{
                 alignItems: "flex-start",
                 marginLeft: "30px",
                 marginRight: "55px",
+                paddingTop: "30px",
+                paddingBottom: "20px",
               }}
             >
               <DayStatisticsComponent dayData={data} />
-
               <Box>
                 {data.content ? data.content : "오늘의 일기를 남겨주세요!"}
               </Box>
               <WeekMonthStstisticsComponent weekData={data} monthData={data} />
             </Vertical>
             <CalenderComponent />
-          </Horizontal>
+          </NoCenterHorizontal>
         </NoCenterVertical>
       </Horizontal>
     </>

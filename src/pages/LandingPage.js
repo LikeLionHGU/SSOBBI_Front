@@ -44,9 +44,9 @@ const LandingPage = () => {
 
   return (
     <Vertical>
-      <NoCenterHorizontal
+      <Horizontal
         style={{
-          width: "100vw",
+          width: "100%",
           marginTop: "30px",
           marginBottom: "50px",
         }}
@@ -62,7 +62,7 @@ const LandingPage = () => {
           <Title>SSOBBI</Title>
         </Horizontal>
         <LogIn onClick={handleLoginClick}>카카오톡 로그인</LogIn>
-      </NoCenterHorizontal>
+      </Horizontal>
       <SliderComponent />
       <Block1Component />
       <Block2Component />

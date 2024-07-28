@@ -9,11 +9,6 @@ import Saly1 from "../../imgs/Saly1.svg";
 import Saly2 from "../../imgs/Saly2.svg";
 import Saly3 from "../../imgs/Saly3.svg";
 
-const Box = styled.div`
-  width: 100%;
-  height: 100%;
-  margin-top: 100px;
-`;
 const Text1 = styled.p`
   color: ${(props) => props.theme.colors.COLORBlack};
   font-family: "SUITLight";
@@ -55,45 +50,38 @@ const TextBox = styled.div`
 
 export default function Block2Component() {
   return (
-    <Box>
-      <NoCenterHorizontal>
-        <NoCenterVertical>
-          <Text1>
-            감정적 소비보다는{" "}
-            <span style={{ fontWeight: "bold" }}>합리적 쏘삐</span>를
-          </Text1>
-          <Horizontal>
-            <Saly1Img src={Saly1} />
-            <TextBox style={{ marginLeft: "-100px" }}>
-              {" "}
-              쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐
-              칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다.
-              쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐
-              칭찬입니다. 쏘삐 칭찬입니다.
-            </TextBox>
-          </Horizontal>
-          <Horizontal>
-            <TextBox style={{ marginLeft: "250px" }}>
-              {" "}
-              쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐
-              칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다.
-              쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐
-              칭찬입니다. 쏘삐 칭찬입니다.
-            </TextBox>
-            <Saly2Img src={Saly2} />
-          </Horizontal>
-          <Horizontal>
-            <Saly3Img src={Saly3} />
-            <TextBox style={{ marginLeft: "-100px" }}>
-              {" "}
-              쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐
-              칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다.
-              쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐
-              칭찬입니다. 쏘삐 칭찬입니다.
-            </TextBox>
-          </Horizontal>
-        </NoCenterVertical>
-      </NoCenterHorizontal>
-    </Box>
+    <NoCenterVertical style={{ marginTop: "100px" }}>
+      <Text1>
+        감정적 소비보다는{" "}
+        <span style={{ fontWeight: "bold" }}>합리적 쏘삐</span>를
+      </Text1>
+      <Horizontal>
+        <Saly1Img src={Saly1} />
+        <TextBox style={{ marginLeft: "-100px" }}>
+          {" "}
+          쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다.
+          쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다.
+          쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다.
+        </TextBox>
+      </Horizontal>
+      <Horizontal>
+        <TextBox style={{ marginLeft: "250px" }}>
+          {" "}
+          쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다.
+          쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다.
+          쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다.
+        </TextBox>
+        <Saly2Img src={Saly2} />
+      </Horizontal>
+      <Horizontal>
+        <Saly3Img src={Saly3} />
+        <TextBox style={{ marginLeft: "-100px" }}>
+          {" "}
+          쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다.
+          쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다.
+          쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다. 쏘삐 칭찬입니다.
+        </TextBox>
+      </Horizontal>
+    </NoCenterVertical>
   );
 }

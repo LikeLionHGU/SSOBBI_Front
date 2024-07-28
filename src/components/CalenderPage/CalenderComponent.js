@@ -5,7 +5,7 @@ import moment from "moment";
 import styled from "styled-components";
 
 const StyledDot = styled.div`
-  background-color: blue;
+  background-color: #2aa663;
   border-radius: 50%;
   width: 0.3rem;
   height: 0.3rem;
@@ -16,13 +16,15 @@ const StyledDot = styled.div`
 `;
 
 const StyledToday = styled.div`
-  font-size: x-small;
-  color: red;
-  font-weight: 600;
+  background-color: #3fc87e;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
   position: absolute;
-  top: 50%;
+  top: 12%;
   left: 50%;
   transform: translateX(-50%);
+  color: white;
 `;
 
 function CalenderComponent({ onMonthChange }) {
@@ -81,7 +83,6 @@ function CalenderComponent({ onMonthChange }) {
           return <>{html}</>;
         }}
       />
-      {/* <p>카테고리 출력 : {data}</p> */}
     </div>
   );
 }
