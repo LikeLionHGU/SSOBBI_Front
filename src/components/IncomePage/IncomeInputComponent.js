@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { tokenState } from "../../store/atom";
+import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { useNavigate } from "react-router-dom";
 
 const dummyData = [
   {
     category: "식비",
-    money: "30000",
+    amount: 30000,
   },
   {
     category: "교통비",
-    money: "40000",
+    amount: 40000,
   },
 ];
 
@@ -53,6 +57,8 @@ const Wrapper = styled.div`
 `;
 function IncomeInputComponent(props) {
   const [monthIncome, setMonthIncome] = useState("");
+  const userToken = useRecoilValue(tokenState);
+  const navigate = useNavigate();
   function handleInputChange(e) {
     const { value } = e.target;
     // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
@@ -66,8 +72,29 @@ function IncomeInputComponent(props) {
     }
   }
   function handleBtnClick() {
-    // 백엔드로 한달 수입 보내기
-    // 정보 불러와서 targetAmount에 저장
+    if (userToken === null) {
+      alert("세션정보가 존재하지 않아 로그아웃됩니다");
+      navigate("/");
+    }
+    const apiUrl = process.env.REACT_APP_BASE_URL + "/user/monthly/income";
+    const income = props.convertToInt(monthIncome);
+    const newArr = { income: income };
+    // 새로고침하면 토큰이 없어짐..
+    // localStorage에 저장해서 쓰던지 다른 방법 고민좀,,
+    axios
+      .post(apiUrl, JSON.stringify(newArr), {
+        headers: {
+          Authorization: "Bearer " + userToken,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        //reponseData를 setTargetArgument에 저장
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     props.setTargetAmount(dummyData);
   }
   return (

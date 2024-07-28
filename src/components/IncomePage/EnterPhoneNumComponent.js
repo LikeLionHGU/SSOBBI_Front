@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Vertical, NoCenterHorizontal } from "../../styles/CommunalStyle";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { tokenState } from "../../store/atom";
+import { useRecoilValue } from "recoil";
 
 const Phrases = styled.p`
   border: 1px solid black;
@@ -19,6 +22,7 @@ function EnterPhoneNumComponent() {
   const [isC1Checked, setIsC1Checked] = useState(false);
   const [isC2Checked, setIsC2Checked] = useState(false);
   const [showError, setShowError] = useState(false);
+  const userToken = useRecoilValue(tokenState);
   function handleInputChange(e) {
     setPhoneNum(e.target.value);
   }
@@ -32,14 +36,28 @@ function EnterPhoneNumComponent() {
   }
   function handleSubmitbtn(e) {
     e.preventDefault();
+
     if (!isC1Checked || !isC2Checked) {
       setShowError(true);
       return;
     } else {
       setShowError(false);
-      // 추가적인 제출 로직을 여기에 추가
+      const apiUrl = process.env.REACT_APP_BASE_URL + "/user/alarm-message/ok";
+      const newObj = { userPhoneNumber: phoneNum };
+      axios
+        .post(apiUrl, JSON.stringify(newObj), {
+          headers: {
+            Authorization: "Bearer " + userToken,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          if (response) navigate("/ssobbi");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
-    navigate("/ssobbi");
   }
   return (
     <Vertical>

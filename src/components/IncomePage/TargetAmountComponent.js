@@ -39,7 +39,7 @@ const PriceInput = styled.input`
 `;
 
 function TargetAmountComponent(props) {
-  const formattedNum = new Intl.NumberFormat().format(props.item.money);
+  const formattedNum = new Intl.NumberFormat().format(props.item.amount);
   const [priceInputValue, setPriceInputValue] = useState(formattedNum);
 
   function handlePriceInputChange(e) {
@@ -48,6 +48,13 @@ function TargetAmountComponent(props) {
     const onlyNumber = value.replace(/[^0-9]/g, "");
     const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
     setPriceInputValue(formattedNumber);
+    props.setTargetAmount((prev) =>
+      prev.map((item) =>
+        item.category === props.item.category
+          ? { ...item, amount: props.convertToInt(value) }
+          : item
+      )
+    );
   }
   return (
     <>
