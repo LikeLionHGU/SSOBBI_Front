@@ -2,7 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { UserTokenState, tokenState } from "../../store/atom";
 import { useSetRecoilState } from "recoil";
-import useDetectClose from "../hooks/useDetectClose";
+import useDetectClose from "../../hooks/useDetectClose";
 import { SlArrowUp, SlArrowDown } from "react-icons/sl";
 import LogoImg from "../../imgs/Logo.png";
 

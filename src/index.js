@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "./styles/GlobalStyle";
+import AuthWrapper from "./hooks/AuthWrapper";
 import LandingPage from "./pages/LandingPage";
 import MainPage from "./pages/MainPage";
 import CreatePage from "./pages/CreatePage";
@@ -19,15 +20,27 @@ const router = createBrowserRouter([
   },
   {
     path: "/ssobbi",
-    element: <MainPage />,
+    element: (
+      <AuthWrapper>
+        <MainPage />
+      </AuthWrapper>
+    ),
   },
   {
     path: "/ssobbi/create",
-    element: <CreatePage />,
+    element: (
+      <AuthWrapper>
+        <CreatePage />
+      </AuthWrapper>
+    ),
   },
   {
     path: "/ssobbi/calender",
-    element: <CalenderPage />,
+    element: (
+      <AuthWrapper>
+        <CalenderPage />
+      </AuthWrapper>
+    ),
   },
   {
     path: "/login/oauth/kakao",
@@ -35,11 +48,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/ssobbi/income",
-    element: <IncomePage />,
+    element: (
+      <AuthWrapper>
+        <IncomePage />
+      </AuthWrapper>
+    ),
   },
   {
     path: "/ssobbi/create/check",
-    element: <OverConsumptionPage />,
+    element: (
+      <AuthWrapper>
+        <OverConsumptionPage />
+      </AuthWrapper>
+    ),
   },
 ]);
 
@@ -67,7 +88,11 @@ root.render(
     {/* <React.StrictMode> */}
     <GlobalStyle />
     <ThemeProvider theme={themeColors}>
-      <RouterProvider router={router} />
+      <RouterProvider router={router}>
+        <AuthWrapper>
+          <Outlet />
+        </AuthWrapper>
+      </RouterProvider>
     </ThemeProvider>
     {/* </React.StrictMode> */}
   </RecoilRoot>

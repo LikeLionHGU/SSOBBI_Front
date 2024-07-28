@@ -75,12 +75,7 @@ function CalenderPage() {
   };
   return (
     <>
-      <Horizontal
-        style={{
-          height: "100vh",
-          overflowY: "hidden",
-        }}
-      >
+      <Horizontal style={{ height: "100vh", overflowY: "hidden" }}>
         <MenuBarComponent menu={"calendar"} />
         <NoCenterVertical
           style={{
@@ -104,7 +99,7 @@ function CalenderPage() {
             <DropDownComponent />
           </NoCenterHorizontal>
           {detailCP ? (
-            <Horizontal>
+            <NoCenterHorizontal>
               <Vertical
                 style={{
                   alignItems: "flex-start",
@@ -122,10 +117,14 @@ function CalenderPage() {
                 <CategoryDetailComponent />
               </Vertical>
               <MainCalenderComponent onMonthChange={handleMonthChange} />
-            </Horizontal>
+            </NoCenterHorizontal>
           ) : (
-            <>
-              <Horizontal>
+            <Vertical
+              style={{
+                alignItems: "flex-start",
+              }}
+            >
+              <NoCenterHorizontal>
                 <Vertical
                   style={{
                     alignItems: "flex-start",
@@ -147,26 +146,15 @@ function CalenderPage() {
                   </Box>
                 </Vertical>
                 <CalenderComponent onMonthChange={handleMonthChange} />
-              </Horizontal>
-              <Vertical
-                style={{
-                  alignItems: "flex-start",
-                  marginLeft: "30px",
-                  marginRight: "20px",
-                }}
-              >
-                <SubTitle>
-                  한나님의 {selectedMonth}월{" "}
-                  <span style={{ fontFamily: "SUITMedium" }}>
-                    {" "}
-                    감정별 소비{" "}
-                  </span>
-                </SubTitle>
-                <HappyBox>
-                  <ScatterChartsComponent />
-                </HappyBox>
-              </Vertical>
-            </>
+              </NoCenterHorizontal>
+              <SubTitle style={{ marginLeft: "30px" }}>
+                한나님의 {selectedMonth}월{" "}
+                <span style={{ fontFamily: "SUITMedium" }}> 감정별 소비 </span>
+              </SubTitle>
+              <HappyBox style={{ marginLeft: "30px" }}>
+                <ScatterChartsComponent />
+              </HappyBox>
+            </Vertical>
           )}
         </NoCenterVertical>
       </Horizontal>

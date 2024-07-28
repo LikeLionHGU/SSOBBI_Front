@@ -109,7 +109,7 @@ function MainPage() {
               overflowY: "scroll",
             }}
           >
-            <NoCenterVertical
+            <Vertical
               style={{
                 alignItems: "flex-start",
                 marginLeft: "30px",
@@ -123,7 +123,7 @@ function MainPage() {
                 {data.content ? data.content : "오늘의 일기를 남겨주세요!"}
               </Box>
               <WeekMonthStstisticsComponent weekData={data} monthData={data} />
-            </NoCenterVertical>
+            </Vertical>
             <CalenderComponent />
           </NoCenterHorizontal>
         </NoCenterVertical>
