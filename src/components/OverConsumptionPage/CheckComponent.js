@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Horizontal } from "../../styles/CommunalStyle";
 import CheckOverImg from "../../imgs/CheckOver.svg";
 import NoCheckOverImg from "../../imgs/NoCheckOver.svg";
+import { consumptionIndexState } from "../../store/atom";
+import { useRecoilState } from "recoil";
 
 const CategoryInput = styled.input`
   &:focus {
@@ -46,11 +48,34 @@ const StyledBtn = styled.button`
   border-radius: 20px;
 `;
 
-function CheckComponent({ category, consumption }) {
+function CheckComponent({ category, consumption, targetAmount }) {
+  const [consumptions, setConsumptions] = useRecoilState(consumptionIndexState);
   const [inputCheck, setInputCheck] = useState(true);
   function handleCheckBox(e) {
     setInputCheck((prev) => !prev);
+    setConsumptions((prev) =>
+      prev.map((itm) =>
+        itm.category === category
+          ? { ...itm, isOverConsumption: !inputCheck }
+          : itm
+      )
+    );
   }
+  useEffect(() => {
+    consumption > targetAmount ? setInputCheck(true) : setInputCheck(false);
+    setConsumptions((prev) =>
+      prev.map((itm) => {
+        if (itm.category === category) {
+          if (consumption > targetAmount) {
+            return { ...itm, isOverConsumption: true };
+          } else {
+            return { ...itm, isOverConsumption: false };
+          }
+        }
+        return itm;
+      })
+    );
+  }, []);
   return (
     <Horizontal style={{ justifyContent: "flex-start" }}>
       <StyledBtn id={category} onClick={handleCheckBox} checked={inputCheck}>
@@ -60,9 +85,18 @@ function CheckComponent({ category, consumption }) {
         />
       </StyledBtn>
       <CategoryInput value={category} checked={inputCheck} readOnly />
-      <PriceInput value={consumption} checked={inputCheck} readOnly />
+      <PriceInput
+        value={convertStringNum(consumption)}
+        checked={inputCheck}
+        readOnly
+      />
     </Horizontal>
   );
 }
 
 export default CheckComponent;
+
+function convertStringNum(onlyNumber) {
+  const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
+  return formattedNumber;
+}

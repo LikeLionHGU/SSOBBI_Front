@@ -2,8 +2,8 @@ import styled from "styled-components";
 import HappinessRateComponent from "../components/CreatePage/HappinessRateComponent";
 import ContentComponent from "../components/CreatePage/ContentComponent";
 import ConsumptionIndexComponent from "../components/CreatePage/ConsumptionIndexComponent";
-import { consumptionIndexState } from "../store/atom";
-import { useRecoilState } from "recoil";
+import { consumptionIndexState, tokenState } from "../store/atom";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
 import MenuBarComponent from "../components/MainPage/MenuBarComponent";
 import {
@@ -13,6 +13,7 @@ import {
 } from "../styles/CommunalStyle";
 import CalenderComponent from "../components/CreatePage/CalenderComponent";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const BtnInputWrapper = styled.div`
   display: flex;
@@ -45,15 +46,32 @@ const SubmitBtn = styled.button`
 `;
 
 function CreatePage() {
+  const [targetAmount, setTargetAmount] = useState(null);
+  const userToken = useRecoilValue(tokenState);
   const [consumptions, setConsumptions] = useRecoilState(consumptionIndexState);
   const [inputCmpnt, setInputCmpnt] = useState(null); //inputComponent
   const [keyCounter, setKeyCounter] = useState(consumptions.length + 1); // id 1씩 증가시키기 위한 useState
   const navigate = useNavigate();
   function writeBtnClick() {
     setConsumptions((prev) =>
-      prev.filter(
-        (itm) => itm.category !== undefined && itm.consumption !== undefined
-      )
+      prev
+        .filter(
+          (itm) => itm.category !== undefined && itm.consumption !== undefined
+        )
+        .map((itm) => {
+          // 현재 아이템과 일치하는 targetAmount 항목 찾기
+          const target = targetAmount.find((t) => t.category === itm.category);
+          // 일치하는 targetAmount 항목이 있으면 아이템을 업데이트
+          if (target) {
+            return {
+              ...itm,
+              targetAmount: target.amount,
+              consumption: convertToInt(itm.consumption),
+            };
+          }
+          // 일치하는 항목이 없으면 원래 아이템을 반환
+          return itm;
+        })
     );
     navigate("/ssobbi/create/check");
   }
@@ -66,6 +84,21 @@ function CreatePage() {
     console.log(inputCmpnt);
   }
   useEffect(() => {
+    const apiUrl =
+      process.env.REACT_APP_BASE_URL + "/category/monthly/TargetAmount";
+    axios
+      .get(apiUrl, {
+        headers: {
+          Authorization: "Bearer " + userToken,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        setTargetAmount(response.data.responses);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     const existData = consumptions.map((itm, idx, arr) => ({
       key: itm.id,
       id: itm.id,
@@ -123,3 +156,9 @@ function CreatePage() {
 }
 
 export default CreatePage;
+
+function convertToInt(numberString) {
+  const numberWithoutCommas = numberString.replace(/,/g, "");
+  const number = parseInt(numberWithoutCommas, 10);
+  return number;
+}
