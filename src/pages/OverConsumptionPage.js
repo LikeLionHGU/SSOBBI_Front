@@ -1,6 +1,11 @@
-import React from "react";
-import { useRecoilValue } from "recoil";
-import { consumptionIndexState } from "../store/atom";
+import React, { useEffect } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  consumptionIndexState,
+  happinessRateState,
+  contentState,
+  tokenState,
+} from "../store/atom";
 import MenuBarComponent from "../components/MainPage/MenuBarComponent";
 import InfoCircleImg from "../imgs/InfoCircle.svg";
 import {
@@ -13,6 +18,7 @@ import CheckComponent from "../components/OverConsumptionPage/CheckComponent";
 import TooltipComponent from "../components/OverConsumptionPage/TooltipComponent";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -55,11 +61,41 @@ const StyledBtn = styled.button`
 `;
 
 function OverConsumptionPage() {
-  const consumptions = useRecoilValue(consumptionIndexState);
+  const [consumptions, setConsumptions] = useRecoilState(consumptionIndexState);
+  const happinessRate = useRecoilValue(happinessRateState);
+  const content = useRecoilValue(contentState);
+  const userToken = useRecoilValue(tokenState);
   const navigate = useNavigate();
   function handleBtnClick() {
-    navigate("/ssobbi");
+    const apiUrl = process.env.REACT_APP_BASE_URL + "/records";
+    const newArr = {
+      happinessRate: happinessRate,
+      content: content,
+      date: "2024-07-28",
+      consumptions: consumptions,
+    };
+    axios
+      .post(apiUrl, newArr, {
+        headers: {
+          Authorization: "Bearer " + userToken,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        navigate("/ssobbi");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
+  useEffect(() => {
+    setConsumptions((prev) =>
+      prev.map(({ id, ...rest }) => ({
+        ...rest,
+      }))
+    );
+  }, []);
   return (
     <Horizontal style={{ height: "100vh", alignItems: "flex-start" }}>
       <MenuBarComponent menu={"note"} />
@@ -90,6 +126,7 @@ function OverConsumptionPage() {
             <CheckComponent
               category={itm.category}
               consumption={itm.consumption}
+              targetAmount={itm.targetAmount}
             />
           ))}
           <StyledBtn onClick={handleBtnClick}>완료하기</StyledBtn>
