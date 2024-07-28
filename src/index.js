@@ -11,6 +11,7 @@ import CalenderPage from "./pages/CalenderPage";
 import KakaoLoginRedirect from "./pages/KakaoLoginRedirect";
 import IncomePage from "./pages/IncomePage";
 import OverConsumptionPage from "./pages/OverConsumptionPage";
+import MyPage from "./pages/MyPage";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: "/ssobbi/create/check",
     element: <OverConsumptionPage />,
+  },
+  {
+    path: "/ssobbi/mypage",
+    element: <MyPage />,
   },
 ]);
 
