@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { UserTokenState } from "../../store/atom";
+import { UserTokenState, tokenState } from "../../store/atom";
 import { useSetRecoilState } from "recoil";
 import useDetectClose from "../hooks/useDetectClose";
 import { SlArrowUp, SlArrowDown } from "react-icons/sl";
@@ -83,9 +83,12 @@ const LinkWrapper = styled.a`
 const DropDownComponent = () => {
   const [myPageIsOpen, myPageRef, myPageHandler] = useDetectClose(false);
   const setUserToken = useSetRecoilState(UserTokenState);
+  const setToken = useSetRecoilState(tokenState);
 
   const logoutClickHandler = () => {
+    localStorage.removeItem("recoil-persist");
     setUserToken(null);
+    setToken(null);
     setUserToken({ isLoggedIn: false });
   };
 

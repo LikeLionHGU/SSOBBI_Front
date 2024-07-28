@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import { UserTokenState } from "../../store/atom";
+import { UserTokenState, tokenState } from "../../store/atom";
 import styled from "styled-components";
 import { FaHouseChimney } from "react-icons/fa6";
 import { IoPersonCircleOutline } from "react-icons/io5";
@@ -54,9 +54,12 @@ const Icon = styled.div`
 const MenuBarComponent = ({ menu }) => {
   const [activeIcon, setActiveIcon] = useState(menu);
   const setUserToken = useSetRecoilState(UserTokenState);
+  const setToken = useSetRecoilState(tokenState);
 
   const logoutClickHandler = () => {
+    localStorage.removeItem("recoil-persist");
     setUserToken(null);
+    setToken(null);
     setUserToken({ isLoggedIn: false });
     handleIconClick("logout");
   };
