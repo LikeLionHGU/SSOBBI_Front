@@ -112,43 +112,53 @@ function CreatePage() {
     setInputCmpnt(consumptions.length === 0 ? newData : existData);
   }, [consumptions]); // 화면 처음 렌더링 될 때 기본 데이터 불러와서 화면에 띄우기, 이후 백엔드 api와 연결할 때 코드 똑같이 복사
   return (
-    <Horizontal style={{ height: "100vh", alignItems: "flex-start" }}>
+    <Horizontal style={{ height: "100vh", overflowY: "hidden" }}>
       <MenuBarComponent menu={"note"} />
       <Vertical
         style={{
           justifyContent: "flex-start",
           alignItems: "flex-start",
-          marginLeft: "33px",
+          height: "100vh",
+          marginRight: "28px;",
         }}
       >
         <div style={{ height: "158px" }} />
-        <HappinessRateComponent />
-        <ContentComponent />
-        <div>
-          <p style={{ marginTop: "16px" }}>
-            OO님의 <strong>오늘 소비를 입력해주세요</strong>
-          </p>
-          <BtnInputWrapper>
-            <Vertical>
-              {inputCmpnt &&
-                inputCmpnt.map((item) => (
-                  <ConsumptionIndexComponent
-                    key={item.id}
-                    id={item.id}
-                    category={item.category}
-                    consumption={item.consumption}
-                    handleAddBtnClick={handleAddBtnClick}
-                    focus={item.focus}
-                    isLast={item.isLast}
-                  />
-                ))}
-            </Vertical>
-          </BtnInputWrapper>
+        <div
+          style={{
+            overflowY: "scroll",
+            height: "700px",
+            paddingLeft: "45px",
+            paddingRight: "60px",
+          }}
+        >
+          <HappinessRateComponent />
+          <ContentComponent />
+          <div>
+            <p style={{ marginTop: "16px" }}>
+              OO님의 <strong>오늘 소비를 입력해주세요</strong>
+            </p>
+            <BtnInputWrapper>
+              <Vertical>
+                {inputCmpnt &&
+                  inputCmpnt.map((item) => (
+                    <ConsumptionIndexComponent
+                      key={item.id}
+                      id={item.id}
+                      category={item.category}
+                      consumption={item.consumption}
+                      handleAddBtnClick={handleAddBtnClick}
+                      focus={item.focus}
+                      isLast={item.isLast}
+                    />
+                  ))}
+              </Vertical>
+            </BtnInputWrapper>
+          </div>
+          <SubmitBtn onClick={writeBtnClick}>기록하기</SubmitBtn>
         </div>
-        <SubmitBtn onClick={writeBtnClick}>기록하기</SubmitBtn>
       </Vertical>
-      <NoCenterVertical style={{ marginLeft: "56px" }}>
-        <div style={{ height: "158px" }} />
+      <NoCenterVertical style={{ marginLeft: "28px", height: "100vh" }}>
+        <div style={{ height: "17vh" }} />
         <CalenderComponent />
       </NoCenterVertical>
     </Horizontal>

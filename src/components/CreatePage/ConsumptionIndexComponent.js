@@ -33,6 +33,7 @@ const StyledSelect = styled.select`
     outline: none;
   }
   z-index: 1;
+  left: -8px;
 `;
 
 const StyledOption = styled.option`

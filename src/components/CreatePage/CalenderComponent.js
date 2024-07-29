@@ -29,7 +29,7 @@ const StyledToday = styled.div`
 `;
 
 const CalenderWrapper = styled.div`
-  height: 100vh;
+  height: 83vh;
   background-color: #f2f6f4;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
