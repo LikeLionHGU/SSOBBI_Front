@@ -55,7 +55,7 @@ const MoneyImg = styled.img`
   margin-left: 150px;
 `;
 
-export default function Slide1Component() {
+export default function Slide1Component({ onMoveBox }) {
   return (
     <Box>
       <NoCenterHorizontal>
@@ -66,7 +66,7 @@ export default function Slide1Component() {
             <SSOBBI>SSOBBI</SSOBBI>로 관리해
           </Text>
           <SSOBBIBT>쏘삐로 저장하기</SSOBBIBT>
-          <IntroBT>서비스 더 알아보기</IntroBT>
+          <IntroBT onClick={onMoveBox}>서비스 더 알아보기</IntroBT>
         </NoCenterVertical>
         <MoneyImg src={LandingMoneyImg} />
       </NoCenterHorizontal>

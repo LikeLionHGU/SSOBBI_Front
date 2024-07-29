@@ -1,11 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import LogoImg from "../imgs/Logo.png";
-import {
-  Horizontal,
-  Vertical,
-  NoCenterHorizontal,
-} from "../styles/CommunalStyle";
+import { Horizontal, Vertical } from "../styles/CommunalStyle";
 import SliderComponent from "../components/LandingPage/SliderComponent";
 import Block1Component from "../components/LandingPage/Block1Component";
 import Block2Component from "../components/LandingPage/Block2Component";
@@ -38,12 +34,26 @@ const LogIn = styled.button`
 `;
 
 const LandingPage = () => {
+  const handleMoveBox = () => {
+    console.log("클릭함 이동버튼");
+    const element = document.getElementById("block2");
+    console.log(element, "클릭함 이동버튼");
+    if (element) {
+      console.log("클릭함 이동버튼!!!");
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   const handleLoginClick = () => {
     window.location.href = process.env.REACT_APP_KAKAO_URL;
   };
 
   return (
-    <Vertical>
+    <Vertical
+      style={{
+        width: "100%",
+      }}
+    >
       <Horizontal
         style={{
           width: "100%",
@@ -63,9 +73,9 @@ const LandingPage = () => {
         </Horizontal>
         <LogIn onClick={handleLoginClick}>카카오톡 로그인</LogIn>
       </Horizontal>
-      <SliderComponent />
+      <SliderComponent onMoveBox={handleMoveBox} />
       <Block1Component />
-      <Block2Component />
+      <Block2Component id={"block2"} />
       <Footer />
     </Vertical>
   );

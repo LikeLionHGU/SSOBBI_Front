@@ -18,11 +18,11 @@ const Box = styled.div`
   height: 100%;
 `;
 
-export default function SliderComponent() {
+export default function SliderComponent({ onMoveBox }) {
   return (
     <CarouselWrapper>
-      <Carousel showStatus={false}>
-        <Slide1Component />
+      <Carousel showThumbs={false} showStatus={false}>
+        <Slide1Component onMoveBox={onMoveBox} />
         <Box>2</Box>
         <Box>3</Box>
       </Carousel>
