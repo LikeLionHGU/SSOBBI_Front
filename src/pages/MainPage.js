@@ -47,24 +47,48 @@ const Box = styled.div`
 
 function MainPage() {
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState(null);
+  const [dailyData, setDailyData] = useState(null);
+  const [weeklyData, setWeeklyData] = useState(null);
+  const [monthlyData, setMonthlyData] = useState(null);
   const userToken = useRecoilValue(tokenState);
   const today = moment().format("YYYY-MM-DD");
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          // `${process.env.REACT_APP_BASE_URL}/records/daily/${today}/summary`,
-          `${process.env.REACT_APP_BASE_URL}/records/daily/${today}`,
+        const day = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/records/daily/${today}/summary`,
           {
             headers: {
               Authorization: "Bearer " + userToken,
             },
           }
         );
-        setData(response.data);
+        setDailyData(day.data);
+        const week = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/records/weekly/${today}/summary`,
+          {
+            headers: {
+              Authorization: "Bearer " + userToken,
+            },
+          }
+        );
+        setWeeklyData(week.data);
+        const month = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/records/weekly/${today}/summary`,
+          {
+            headers: {
+              Authorization: "Bearer " + userToken,
+            },
+          }
+        );
+        setMonthlyData(month.data);
         setLoading(false);
-        console.log("메인페이지 데이터 확인 : ", response.data);
+        console.log(
+          "메인페이지 데이터 확인 : ",
+          day.data,
+          week.data,
+          month.data
+        );
       } catch (err) {
         console.log("error: ", err);
         setLoading(false);
@@ -112,11 +136,16 @@ function MainPage() {
                 paddingBottom: "20px",
               }}
             >
-              <DayStatisticsComponent dayData={data} />
+              <DayStatisticsComponent dayData={dailyData} />
               <Box>
-                {data.content ? data.content : "오늘의 일기를 남겨주세요!"}
+                {dailyData.content
+                  ? dailyData.content
+                  : "오늘의 일기를 남겨주세요!"}
               </Box>
-              <WeekMonthStstisticsComponent weekData={data} monthData={data} />
+              <WeekMonthStstisticsComponent
+                weekData={weeklyData}
+                monthData={monthlyData}
+              />
             </Vertical>
             <CalenderComponent />
           </NoCenterHorizontal>

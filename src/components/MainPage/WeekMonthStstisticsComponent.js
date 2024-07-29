@@ -55,28 +55,24 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
     {
       size: "80px",
       bcolor: "#ACFFD2",
-      tag: "패션",
       font: "16px",
       margin: "32px",
     },
     {
       size: "50px",
       bcolor: "#ACFFFA",
-      tag: "음식",
       font: "10px",
       margin: "63px",
     },
     {
       size: "65px",
       bcolor: "#ACEBFF",
-      tag: "쇼핑",
       font: "12px",
       margin: "30px",
     },
     {
       size: "31px",
       bcolor: "#C1FFAC",
-      tag: "교통비",
       font: "8px",
       margin: "72px",
     },
@@ -86,7 +82,6 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
     setIsMonthly(!isMonthly);
   };
 
-  const overconsumptionCount = isMonthly ? 12 : 3; // 월간과 주간 과소비 건수
   return (
     <>
       <NoCenterHorizontal>
@@ -182,9 +177,9 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
                   marginTop: "20px",
                 }}
               >
-                {monthData.totalOverConsumptionCount ? (
+                {monthData.overConsumptionRate ? (
                   <>
-                    ({monthData.totalOverConsumptionCount} ?
+                    ({monthData.overConsumptionRate} ?
                     <span
                       style={{
                         fontSize: "60px",
@@ -193,9 +188,9 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
                         color: "#19844A",
                       }}
                     >
-                      {monthData.totalOverConsumptionCount}
+                      {monthData.overConsumptionRate}
                     </span>{" "}
-                    건)
+                    %)
                   </>
                 ) : (
                   <span style={{ fontSize: "18px", color: "#19844A" }}>
@@ -241,21 +236,26 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
         <Box>
           {isMonthly ? (
             <>
-              이번달 과소비 항목
-              {monthData.overConsumptionCategories ? (
+              이번달 과소비 항목 Top4
+              {monthData.topFourOverConsumptionCategories ? (
                 <Horizontal>
-                  {monthData.overConsumptionCategories.map((item, index) => (
-                    <CircleBox
-                      key={index}
-                      color={item.bcolor}
-                      width={item.size}
-                      height={item.size}
-                      font={item.font}
-                      margin={item.margin}
-                    >
-                      {item.tag}
-                    </CircleBox>
-                  ))}
+                  {monthData.topFourOverConsumptionCategories.map(
+                    (item, index) => {
+                      const circleData = circledatas[index];
+                      return (
+                        <CircleBox
+                          key={index}
+                          color={circleData.bcolor}
+                          width={circleData.size}
+                          height={circleData.size}
+                          font={circleData.font}
+                          margin={circleData.margin}
+                        >
+                          {item.category}
+                        </CircleBox>
+                      );
+                    }
+                  )}
                 </Horizontal>
               ) : (
                 <span
@@ -272,21 +272,26 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
             </>
           ) : (
             <>
-              이번주 과소비 항목
-              {weekData.overConsumptionCategories ? (
+              이번주 과소비 항목 Top4
+              {weekData.topFourOverConsumptionCategories ? (
                 <Horizontal>
-                  {weekData.overConsumptionCategories.map((item, index) => (
-                    <CircleBox
-                      key={index}
-                      color={item.bcolor}
-                      width={item.size}
-                      height={item.size}
-                      font={item.font}
-                      margin={item.margin}
-                    >
-                      {item.tag}
-                    </CircleBox>
-                  ))}
+                  {weekData.topFourOverConsumptionCategories.map(
+                    (item, index) => {
+                      const circleData = circledatas[index];
+                      return (
+                        <CircleBox
+                          key={index}
+                          color={circleData.bcolor}
+                          width={circleData.size}
+                          height={circleData.size}
+                          font={circleData.font}
+                          margin={circleData.margin}
+                        >
+                          {item.category}
+                        </CircleBox>
+                      );
+                    }
+                  )}
                 </Horizontal>
               ) : (
                 <span
