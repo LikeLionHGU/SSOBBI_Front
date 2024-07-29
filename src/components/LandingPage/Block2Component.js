@@ -1,10 +1,5 @@
 import styled from "styled-components";
-import {
-  NoCenterHorizontal,
-  Vertical,
-  NoCenterVertical,
-  Horizontal,
-} from "../../styles/CommunalStyle";
+import { NoCenterVertical, Horizontal } from "../../styles/CommunalStyle";
 import Saly1 from "../../imgs/Saly1.svg";
 import Saly2 from "../../imgs/Saly2.svg";
 import Saly3 from "../../imgs/Saly3.svg";
@@ -48,9 +43,9 @@ const TextBox = styled.div`
   font-family: "SUITLight";
 `;
 
-export default function Block2Component() {
+export default function Block2Component({ id }) {
   return (
-    <NoCenterVertical style={{ marginTop: "100px" }}>
+    <NoCenterVertical style={{ marginTop: "100px" }} id={id}>
       <Text1>
         감정적 소비보다는{" "}
         <span style={{ fontWeight: "bold" }}>합리적 쏘삐</span>를

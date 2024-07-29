@@ -17,12 +17,6 @@ import {
 } from "../styles/CommunalStyle";
 import LogoImg from "../imgs/Logo.png";
 
-const staticData = {
-  whappy: 52,
-  wcost: 250,
-  mhappy: 94,
-  mcost: 250,
-};
 const Title = styled.p`
   color: ${(props) => props.theme.colors.COLORBlack};
   font-family: "RowdiesBold";

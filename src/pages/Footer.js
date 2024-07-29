@@ -1,9 +1,5 @@
 import styled from "styled-components";
-import {
-  NoCenterHorizontal,
-  Vertical,
-  Horizontal,
-} from "../styles/CommunalStyle";
+import { NoCenterHorizontal, Vertical } from "../styles/CommunalStyle";
 
 const Box = styled.div`
   width: 100%;

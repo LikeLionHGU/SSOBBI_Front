@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import axios from "axios";
 import { UserTokenState, tokenState } from "../store/atom";
+import axios from "axios";
 
 const KakaoLoginRedirect = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
   const setUserToken = useSetRecoilState(UserTokenState);
   const setToken = useSetRecoilState(tokenState);
+  const location = useLocation();
+  const navigate = useNavigate();
+
   // api 요청에 필요한 토큰 저장
 
   useEffect(() => {
