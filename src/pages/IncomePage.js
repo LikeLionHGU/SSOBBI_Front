@@ -71,9 +71,11 @@ function IncomePage() {
   function handleBtnClick() {
     const apiUrl =
       process.env.REACT_APP_BASE_URL + "/category/monthly/TargetAmount";
-    console.log(targetAmount);
+    const newArr = {
+      requests: targetAmount,
+    };
     axios
-      .post(apiUrl, JSON.stringify(targetAmount), {
+      .post(apiUrl, newArr, {
         headers: {
           Authorization: "Bearer " + userToken,
           "Content-Type": "application/json",
@@ -88,11 +90,7 @@ function IncomePage() {
       });
   }
   function handleBackBtnClick() {
-    if (isNew === "true") {
-      navigate("/ssobbi");
-    } else {
-      navigate(-1);
-    }
+    navigate("/ssobbi");
   }
   return (
     <AllWrapper>

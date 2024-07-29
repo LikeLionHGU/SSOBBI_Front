@@ -29,11 +29,47 @@ const AmountUpdateBtn = styled.button`
   color: white;
   margin-left: 28px;
   margin-bottom: 7px;
+  cursor: pointer;
+`;
+
+const ErrorMessage = styled.p`
+  color: red;
 `;
 
 function MyPage() {
   const userToken = useRecoilValue(tokenState);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [amount, setAmount] = useState(null);
+  const [isMinimumCategory, setIsMinimumCategory] = useState(false);
+  function handleAmountBtnClick() {
+    setIsUpdating(true);
+  }
+  function handleAddBtnClick() {
+    setAmount((prev) => [...prev, { category: "", amount: "" }]);
+    setIsMinimumCategory(false);
+  }
+  function handleLoadBtnClick() {
+    console.log(amount);
+    const apiUrl =
+      process.env.REACT_APP_BASE_URL + "/category/monthly/TargetAmount";
+    const newArr = {
+      request: amount,
+    };
+    axios
+      .patch(apiUrl, newArr, {
+        headers: {
+          Authorization: "Bearer " + userToken,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        if (response) setIsUpdating(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   useEffect(() => {
     const apiUrl =
       process.env.REACT_APP_BASE_URL + "/category/monthly/TargetAmount";
@@ -50,7 +86,7 @@ function MyPage() {
       .catch((error) => {
         console.log(error);
       });
-  }, [amount, userToken]);
+  }, []);
   return (
     amount && (
       <Horizontal style={{ height: "100vh" }}>
@@ -73,11 +109,32 @@ function MyPage() {
           >
             <div>
               {amount.map((itm) => (
-                <CategoryAmountComponent data={itm} />
+                <CategoryAmountComponent
+                  data={itm}
+                  isUpdating={isUpdating}
+                  amount={amount}
+                  setAmount={setAmount}
+                  setIsMinimumCategory={setIsMinimumCategory}
+                />
               ))}
             </div>
-            <AmountUpdateBtn>수정하기</AmountUpdateBtn>
+            {isUpdating === false && (
+              <AmountUpdateBtn onClick={handleAmountBtnClick}>
+                수정하기
+              </AmountUpdateBtn>
+            )}
           </div>
+          {isUpdating === true && (
+            <button onClick={handleAddBtnClick}>추가하기</button>
+          )}
+          {isMinimumCategory === true && (
+            <ErrorMessage>카테고리는 최소 2개 이상 있어야함</ErrorMessage>
+          )}
+          {isUpdating === true && (
+            <AmountUpdateBtn onClick={handleLoadBtnClick}>
+              저장하기
+            </AmountUpdateBtn>
+          )}
         </Vertical>
         <NoCenterVertical style={{ marginLeft: "56px" }}>
           <div style={{ height: "158px" }} />
