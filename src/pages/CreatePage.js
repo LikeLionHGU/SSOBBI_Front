@@ -47,6 +47,7 @@ const SubmitBtn = styled.button`
 
 function CreatePage() {
   const [targetAmount, setTargetAmount] = useState(null);
+  const [options, setOptions] = useState(null);
   const userToken = useRecoilValue(tokenState);
   const [consumptions, setConsumptions] = useRecoilState(consumptionIndexState);
   const [inputCmpnt, setInputCmpnt] = useState(null); //inputComponent
@@ -94,7 +95,9 @@ function CreatePage() {
         },
       })
       .then((response) => {
-        setTargetAmount(response.data.responses);
+        const data = response.data.responses;
+        setTargetAmount(data);
+        setOptions(data.map((itm) => itm.category));
       })
       .catch((error) => {
         console.log(error);
@@ -149,6 +152,7 @@ function CreatePage() {
                       handleAddBtnClick={handleAddBtnClick}
                       focus={item.focus}
                       isLast={item.isLast}
+                      options={options}
                     />
                   ))}
               </Vertical>

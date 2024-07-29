@@ -186,7 +186,7 @@ function ConsumptionIndexComponent(props) {
               setIsFocus(false);
 
               var isOptionData = false;
-              optionData.map((itm) => {
+              props.options.map((itm) => {
                 if (categoryInput === itm) isOptionData = true;
               });
               if (!isOptionData) setCategoryInput("");
@@ -197,13 +197,13 @@ function ConsumptionIndexComponent(props) {
         {isFocus && (
           <StyledSelect id="search" size="4" onChange={handleSelectChange}>
             {!categoryInput && // 포커스 돼있을때만
-              optionData.map((itm) => (
+              props.options.map((itm) => (
                 <StyledOption key={itm} value={itm}>
                   {itm}
                 </StyledOption>
               ))}
             {categoryInput && // inputValue에 어떤 값이 들어있을 때
-              optionData
+              props.options
                 .filter((itm) =>
                   itm.toLowerCase().includes(categoryInput.toLowerCase())
                 )
