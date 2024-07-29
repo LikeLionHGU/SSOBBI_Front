@@ -6,21 +6,6 @@ const { persistAtom } = recoilPersist({
   storage: localStorage,
 });
 
-export const emotionComsumptionDataState = atom({
-  key: "emotionConsumptionData",
-  default: {
-    happinessRate: null,
-    content: "",
-    consumptions: [
-      {
-        id: "",
-        category: "",
-        money: "",
-      },
-    ],
-  },
-});
-
 export const happinessRateState = atom({
   key: "happinessRate",
   default: 0,
