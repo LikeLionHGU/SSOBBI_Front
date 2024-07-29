@@ -4,6 +4,7 @@ import {
   Horizontal,
   Vertical,
   NoCenterVertical,
+  NoCenterHorizontal,
 } from "../styles/CommunalStyle";
 import ProfileComponent from "../components/MyPage/ProfileComponent";
 import MonthIncomeComponent from "../components/MyPage/MonthIncomeComponent";
@@ -13,6 +14,8 @@ import axios from "axios";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import CalenderComponent from "../components/CreatePage/CalenderComponent";
+import DropDownComponent from "../components/MainPage/DropDownComponent";
+import LogoImg from "../imgs/Logo.png";
 
 const AmountUpdateBtn = styled.button`
   display: inline-flex;
@@ -34,6 +37,21 @@ const AmountUpdateBtn = styled.button`
 
 const ErrorMessage = styled.p`
   color: red;
+`;
+
+const Title = styled.p`
+  color: ${(props) => props.theme.colors.COLORBlack};
+  font-family: "RowdiesBold";
+  font-weight: 700;
+  font-style: normal;
+  font-size: 28px;
+  margin: 0;
+  margin-top: 10px;
+`;
+const Logo = styled.img`
+  width: 35px;
+  height: 35px;
+  margin-right: 15px;
 `;
 
 function MyPage() {
@@ -89,57 +107,89 @@ function MyPage() {
   }, []);
   return (
     amount && (
-      <Horizontal style={{ height: "100vh" }}>
+      <Horizontal style={{ height: "100vh", overflow: "hidden" }}>
         <MenuBarComponent />
         <Vertical
           style={{
             alignItems: "flex-start",
-            marginLeft: "33px",
             marginRight: "217px",
           }}
         >
-          <ProfileComponent />
-          <MonthIncomeComponent />
-          <div
+          <NoCenterHorizontal>
+            <Horizontal
+              style={{
+                justifyContent: "flex-start",
+                marginLeft: "25px",
+                marginTop: "30px",
+              }}
+            >
+              <Logo src={LogoImg} />
+              <Title>SSOBBI</Title>
+            </Horizontal>
+            <DropDownComponent />
+          </NoCenterHorizontal>
+          <Horizontal
             style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "flex-end",
+              alignItems: "flex-start",
+              paddingTop: "43px",
             }}
           >
-            <div>
-              {amount.map((itm) => (
-                <CategoryAmountComponent
-                  data={itm}
-                  isUpdating={isUpdating}
-                  amount={amount}
-                  setAmount={setAmount}
-                  setIsMinimumCategory={setIsMinimumCategory}
-                />
-              ))}
-            </div>
-            {isUpdating === false && (
-              <AmountUpdateBtn onClick={handleAmountBtnClick}>
-                수정하기
-              </AmountUpdateBtn>
-            )}
-          </div>
-          {isUpdating === true && (
-            <button onClick={handleAddBtnClick}>추가하기</button>
-          )}
-          {isMinimumCategory === true && (
-            <ErrorMessage>카테고리는 최소 2개 이상 있어야함</ErrorMessage>
-          )}
-          {isUpdating === true && (
-            <AmountUpdateBtn onClick={handleLoadBtnClick}>
-              저장하기
-            </AmountUpdateBtn>
-          )}
+            <NoCenterVertical
+              style={{
+                alignItems: "flex-start",
+              }}
+            >
+              <div
+                style={{
+                  overflowY: "scroll",
+                  height: "700px",
+                  paddingLeft: "33px",
+                }}
+              >
+                <ProfileComponent />
+                <MonthIncomeComponent />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "flex-end",
+                  }}
+                >
+                  <div>
+                    {amount.map((itm) => (
+                      <CategoryAmountComponent
+                        data={itm}
+                        isUpdating={isUpdating}
+                        amount={amount}
+                        setAmount={setAmount}
+                        setIsMinimumCategory={setIsMinimumCategory}
+                      />
+                    ))}
+                  </div>
+                  {isUpdating === false && (
+                    <AmountUpdateBtn onClick={handleAmountBtnClick}>
+                      수정하기
+                    </AmountUpdateBtn>
+                  )}
+                </div>
+                {isUpdating === true && (
+                  <button onClick={handleAddBtnClick}>추가하기</button>
+                )}
+                {isMinimumCategory === true && (
+                  <ErrorMessage>카테고리는 최소 2개 이상 있어야함</ErrorMessage>
+                )}
+                {isUpdating === true && (
+                  <AmountUpdateBtn onClick={handleLoadBtnClick}>
+                    저장하기
+                  </AmountUpdateBtn>
+                )}
+              </div>
+            </NoCenterVertical>
+            <NoCenterVertical style={{ marginLeft: "56px" }}>
+              <CalenderComponent />
+            </NoCenterVertical>
+          </Horizontal>
         </Vertical>
-        <NoCenterVertical style={{ marginLeft: "56px" }}>
-          <div style={{ height: "158px" }} />
-          <CalenderComponent />
-        </NoCenterVertical>
       </Horizontal>
     )
   );
