@@ -91,7 +91,7 @@ function EnterPhoneNumComponent() {
       <button type="submit" onClick={handleSubmitbtn}>
         제출
       </button>
-      {showError && <p id="errorMessage">모든 정보를 제출해주세요</p>}
+      {showError && <p id="errorMessage">모든 문장에 동의해주세요</p>}
     </Vertical>
   );
 }

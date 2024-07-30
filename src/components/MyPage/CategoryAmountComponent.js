@@ -99,7 +99,9 @@ function CategoryAmountComponent({
     setPrice(formattedNumber);
     setAmount((prev) =>
       prev.map((itm) =>
-        itm.category === data.category ? { ...itm, amount: onlyNumber } : itm
+        itm.category === data.category
+          ? { ...itm, amount: convertToInt(onlyNumber) }
+          : itm
       )
     );
   }
@@ -137,4 +139,10 @@ export default CategoryAmountComponent;
 function convertStringNum(onlyNumber) {
   const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
   return formattedNumber;
+}
+
+function convertToInt(numberString) {
+  const numberWithoutCommas = numberString.replace(/,/g, "");
+  const number = parseInt(numberWithoutCommas, 10);
+  return number;
 }

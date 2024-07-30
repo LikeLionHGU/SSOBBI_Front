@@ -70,25 +70,28 @@ function MyPage() {
     setIsMinimumCategory(false);
   }
   function handleLoadBtnClick() {
-    // const apiUrl =
-    //   process.env.REACT_APP_BASE_URL + "/category/monthly/TargetAmount";
-    // const newArr = {
-    //   request: amount,
-    // };
-    // axios
-    //   .patch(apiUrl, newArr, {
-    //     headers: {
-    //       Authorization: "Bearer " + userToken,
-    //       "Content-Type": "application/json",
-    //     },
-    //   })
-    //   .then((response) => {
-    //     console.log(response);
-    //     if (response) setIsUpdating(false);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    const apiUrl =
+      process.env.REACT_APP_BASE_URL + "/category/monthly/TargetAmount";
+    const data = amount.map((itm) => ({
+      category: itm.category,
+      amount: itm.amount,
+    }));
+    const newArr = { requests: data };
+    console.log(newArr);
+    axios
+      .patch(apiUrl, newArr, {
+        headers: {
+          Authorization: "Bearer " + userToken,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        if (response) setIsUpdating(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
   useEffect(() => {
     const apiUrl =
@@ -111,7 +114,7 @@ function MyPage() {
       .catch((error) => {
         console.log(error);
       });
-  }, [amount]);
+  }, []);
   return (
     amount && (
       <Horizontal style={{ height: "100vh", overflow: "hidden" }}>
@@ -203,3 +206,9 @@ function MyPage() {
 }
 
 export default MyPage;
+
+function convertToInt(numberString) {
+  const numberWithoutCommas = numberString.replace(/,/g, "");
+  const number = parseInt(numberWithoutCommas, 10);
+  return number;
+}
