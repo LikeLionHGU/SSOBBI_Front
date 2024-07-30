@@ -72,9 +72,10 @@ function CalenderPage() {
   const [detailCP, setDetailCP] = useState(false);
   const [dailyData, setDailyData] = useState(null);
   const [monthlyData, setMonthlyData] = useState(null);
+  const [happinessRate, setHappinessRate] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchMonthData = async () => {
       try {
         const month = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/records/monthly/${apiMonth}/summary`,
@@ -90,7 +91,25 @@ function CalenderPage() {
         console.log("error: ", err);
       }
     };
-    fetchData();
+    const fetchHappyData = async () => {
+      const happyDate = apiMonth.substring(0, 7);
+      try {
+        const happiness = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/records/monthly/${happyDate}/summary/by-happiness-rate`,
+          {
+            headers: {
+              Authorization: "Bearer " + userToken,
+            },
+          }
+        );
+        setHappinessRate(happiness.data.records);
+        console.log("setHappinessRate: ", happiness.data.records);
+      } catch (err) {
+        console.log("error: ", err);
+      }
+    };
+    fetchMonthData();
+    fetchHappyData();
   }, [selectedMonth]);
 
   const handleMonthChange = (month) => {
@@ -200,7 +219,7 @@ function CalenderPage() {
                 <span style={{ fontFamily: "SUITMedium" }}> 감정별 소비 </span>
               </SubTitle>
               <HappyBox style={{ marginLeft: "30px" }}>
-                <ScatterChartsComponent />
+                <ScatterChartsComponent happinessRateData={happinessRate} />
               </HappyBox>
             </Vertical>
           )}
