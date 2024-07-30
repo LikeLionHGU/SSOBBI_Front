@@ -13,7 +13,7 @@ import { tokenState } from "../store/atom";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import CalenderComponent from "../components/CreatePage/CalenderComponent";
+import AlarmComponent from "../components/MyPage/AlarmComponent";
 import DropDownComponent from "../components/MainPage/DropDownComponent";
 import LogoImg from "../imgs/Logo.png";
 
@@ -63,30 +63,32 @@ function MyPage() {
     setIsUpdating(true);
   }
   function handleAddBtnClick() {
-    setAmount((prev) => [...prev, { category: "", amount: "" }]);
+    setAmount((prev) => [
+      ...prev.map((itm) => ({ ...itm, isLast: false })),
+      { category: "", amount: "", isLast: true },
+    ]);
     setIsMinimumCategory(false);
   }
   function handleLoadBtnClick() {
-    console.log(amount);
-    const apiUrl =
-      process.env.REACT_APP_BASE_URL + "/category/monthly/TargetAmount";
-    const newArr = {
-      request: amount,
-    };
-    axios
-      .patch(apiUrl, newArr, {
-        headers: {
-          Authorization: "Bearer " + userToken,
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        console.log(response);
-        if (response) setIsUpdating(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // const apiUrl =
+    //   process.env.REACT_APP_BASE_URL + "/category/monthly/TargetAmount";
+    // const newArr = {
+    //   request: amount,
+    // };
+    // axios
+    //   .patch(apiUrl, newArr, {
+    //     headers: {
+    //       Authorization: "Bearer " + userToken,
+    //       "Content-Type": "application/json",
+    //     },
+    //   })
+    //   .then((response) => {
+    //     console.log(response);
+    //     if (response) setIsUpdating(false);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   }
   useEffect(() => {
     const apiUrl =
@@ -99,12 +101,17 @@ function MyPage() {
         },
       })
       .then((response) => {
-        setAmount(response.data.responses);
+        const data = response.data.responses.map((itm, idx, arr) => ({
+          category: itm.category,
+          amount: itm.amount,
+          isLast: idx === arr.length - 1,
+        }));
+        setAmount(data);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [amount]);
   return (
     amount && (
       <Horizontal style={{ height: "100vh", overflow: "hidden" }}>
@@ -153,6 +160,7 @@ function MyPage() {
                     display: "flex",
                     flexDirection: "row",
                     alignItems: "flex-end",
+                    justifyContent: "space-between",
                   }}
                 >
                   <div>
@@ -163,6 +171,8 @@ function MyPage() {
                         amount={amount}
                         setAmount={setAmount}
                         setIsMinimumCategory={setIsMinimumCategory}
+                        isLast={itm.isLast}
+                        handleAddBtnClick={handleAddBtnClick}
                       />
                     ))}
                   </div>
@@ -171,22 +181,19 @@ function MyPage() {
                       수정하기
                     </AmountUpdateBtn>
                   )}
+                  {isUpdating === true && (
+                    <AmountUpdateBtn onClick={handleLoadBtnClick}>
+                      저장하기
+                    </AmountUpdateBtn>
+                  )}
                 </div>
-                {isUpdating === true && (
-                  <button onClick={handleAddBtnClick}>추가하기</button>
-                )}
                 {isMinimumCategory === true && (
                   <ErrorMessage>카테고리는 최소 2개 이상 있어야함</ErrorMessage>
-                )}
-                {isUpdating === true && (
-                  <AmountUpdateBtn onClick={handleLoadBtnClick}>
-                    저장하기
-                  </AmountUpdateBtn>
                 )}
               </div>
             </NoCenterVertical>
             <NoCenterVertical style={{ marginLeft: "56px" }}>
-              <CalenderComponent />
+              <AlarmComponent />
             </NoCenterVertical>
           </Horizontal>
         </Vertical>

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Vertical, Horizontal } from "../../styles/CommunalStyle";
+import { Horizontal } from "../../styles/CommunalStyle";
 import styled from "styled-components";
+import AddBtnImg from "../../imgs/AddBtnImg.svg";
+import RmvBtnImg from "../../imgs/RemoveBtnImg.svg";
 
 const CategoryInput = styled.input`
   width: 115px;
@@ -41,12 +43,33 @@ const Unit = styled.span`
   top: 20px;
 `;
 
+const ManageBtn = styled.button`
+  width: 60px;
+  height: 60px;
+  border-radius: 20px;
+  border: 1px solid
+    ${(props) => (props.id === "addBtn" ? "#2AA663" : "#939393")};
+  background: #fff;
+  box-shadow: 0px 12px 34px 0px rgba(0, 0, 0, 0.08),
+    0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
+  cursor: pointer;
+  margin-left: 16px;
+  &:hover {
+  }
+
+  > img {
+    width: 16px;
+  }
+`;
+
 function CategoryAmountComponent({
   data,
   isUpdating,
   amount,
   setAmount,
   setIsMinimumCategory,
+  isLast,
+  handleAddBtnClick,
 }) {
   const [category, setCategory] = useState(data.category);
   const [price, setPrice] = useState(convertStringNum(data.amount));
@@ -81,7 +104,7 @@ function CategoryAmountComponent({
     );
   }
   return (
-    <Horizontal style={{ marginTop: "14px" }}>
+    <Horizontal style={{ marginTop: "14px", justifyContent: "flex-start" }}>
       <CategoryInput
         readOnly={!isUpdating}
         value={category}
@@ -95,7 +118,16 @@ function CategoryAmountComponent({
         />
         <Unit>원</Unit>
       </div>
-      {isUpdating === true && <button onClick={removeBtnClick}>빼기</button>}
+      {isLast === false && isUpdating === true && (
+        <ManageBtn onClick={removeBtnClick} id="rmvBtn">
+          <img src={RmvBtnImg} alt="removeImg" id="rmvBtn" />
+        </ManageBtn>
+      )}
+      {isLast === true && isUpdating === true && (
+        <ManageBtn onClick={handleAddBtnClick} id="addBtn">
+          <img src={AddBtnImg} alt="addImg" id="addBtn" />
+        </ManageBtn>
+      )}
     </Horizontal>
   );
 }
