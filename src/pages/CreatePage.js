@@ -19,6 +19,8 @@ import { useNavigate } from "react-router-dom";
 import LogoImg from "../imgs/Logo.png";
 import axios from "axios";
 
+//TODO: API명세서 보고 다시 수정하기
+
 const BtnInputWrapper = styled.div`
   display: flex;
   align-items: flex-end;
@@ -65,7 +67,9 @@ const SubmitBtn = styled.button`
 `;
 
 function CreatePage() {
-  const [selectDate, setSelectDate] = useState(moment().format("YY-MM-DDs"));
+  const [selectDate, setSelectDate] = useState(moment().format("YYYY-MM-DD"));
+  const month = selectDate.slice(5, 7).padStart(2, "0");
+  const day = selectDate.slice(-2).padStart(2, "0");
   const [targetAmount, setTargetAmount] = useState(null);
   const [options, setOptions] = useState(null);
   const userToken = useRecoilValue(tokenState);
@@ -94,7 +98,9 @@ function CreatePage() {
           return itm;
         })
     );
-    navigate("/ssobbi/create/check");
+    navigate("/ssobbi/create/check", {
+      state: { date: selectDate },
+    });
   }
   function handleAddBtnClick() {
     setInputCmpnt((prev) => [
@@ -174,11 +180,14 @@ function CreatePage() {
                 paddingRight: "60px",
               }}
             >
-              <HappinessRateComponent />
+              <HappinessRateComponent month={month} day={day} />
               <ContentComponent />
               <div>
                 <p style={{ marginTop: "16px" }}>
-                  OO님의 <strong>오늘 소비를 입력해주세요</strong>
+                  OO님의{" "}
+                  <strong>
+                    {month}월 {day}일 소비를 입력해주세요
+                  </strong>
                 </p>
                 <BtnInputWrapper>
                   <Vertical>
@@ -202,7 +211,7 @@ function CreatePage() {
             </div>
           </Vertical>
           <NoCenterVertical style={{ marginLeft: "28px", height: "100vh" }}>
-            <CalenderComponent />
+            <CalenderComponent setSelectDate={setSelectDate} />
           </NoCenterVertical>
         </NoCenterHorizontal>
       </NoCenterVertical>

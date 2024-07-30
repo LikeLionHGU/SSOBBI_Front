@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRecoilValue } from "recoil";
+import { tokenState } from "../../store/atom";
+import axios from "axios";
 import Calendar from "react-calendar";
 import "../../styles/Calender.css";
 import moment from "moment";
@@ -27,20 +30,34 @@ const StyledToday = styled.div`
   color: white;
 `;
 
-function CalenderComponent({ onMonthChange }) {
+function CalenderComponent({ onMonthChange, setApiMonth }) {
+  const userToken = useRecoilValue(tokenState);
+
   const today = new Date();
-  const attendDay = [
-    {
-      date: "2024-07-02",
-      emotion: "슬픔",
-      category: "식비",
-    },
-    {
-      date: "2024-07-19",
-      emotion: "기쁨",
-      category: "교통비",
-    },
-  ];
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [attendDay, setAttendDay] = useState(null);
+  useEffect(() => {
+    const selectedMonth = selectedDate
+      ? moment(selectedDate).format("YYYY-MM")
+      : moment().format("YYYY-MM");
+    const fetchData = async () => {
+      try {
+        const records = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/records/monthly/${selectedMonth}/recorded-dates`,
+          {
+            headers: {
+              Authorization: "Bearer " + userToken,
+            },
+          }
+        );
+        setAttendDay(records.data.recordedDates);
+        console.log("setAttendDay: ", records.data.recordedDates);
+      } catch (err) {
+        console.log("error: ", err);
+      }
+    };
+    fetchData();
+  }, []);
   const [data, setData] = useState(null);
 
   const handleDateChange = (e) => {
@@ -52,6 +69,7 @@ function CalenderComponent({ onMonthChange }) {
     );
     const month = selectedDate.format("M");
     onMonthChange(month);
+    setApiMonth(moment(e).format("YYYY-MM-DD"));
   };
   return (
     <div>
@@ -76,7 +94,8 @@ function CalenderComponent({ onMonthChange }) {
             html.push(<StyledToday key={"today"}>오늘</StyledToday>);
           }
           if (
-            attendDay.find((x) => x.date === moment(date).format("YYYY-MM-DD"))
+            attendDay &&
+            attendDay.includes(moment(date).format("YYYY-MM-DD"))
           ) {
             html.push(<StyledDot key={moment(date).format("YYYY-MM-DD")} />);
           }

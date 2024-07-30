@@ -17,7 +17,7 @@ import CalenderComponent from "../components/CreatePage/CalenderComponent";
 import CheckComponent from "../components/OverConsumptionPage/CheckComponent";
 import TooltipComponent from "../components/OverConsumptionPage/TooltipComponent";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
 const Wrapper = styled.div`
@@ -61,6 +61,8 @@ const StyledBtn = styled.button`
 `;
 
 function OverConsumptionPage() {
+  const location = useLocation();
+  const selectedDate = location.state.date;
   const [consumptions, setConsumptions] = useRecoilState(consumptionIndexState);
   const happinessRate = useRecoilValue(happinessRateState);
   const content = useRecoilValue(contentState);
@@ -71,9 +73,10 @@ function OverConsumptionPage() {
     const newArr = {
       happinessRate: happinessRate,
       content: content,
-      date: "2024-07-28",
+      date: selectedDate,
       consumptions: consumptions,
     };
+    console.log("기록하기 위해 넘겨질 데이터 확인", newArr);
     axios
       .post(apiUrl, newArr, {
         headers: {

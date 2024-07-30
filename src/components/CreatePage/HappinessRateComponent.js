@@ -51,12 +51,15 @@ const StyledInput = styled.input`
   }
 `;
 
-function HappinessRateComponent() {
+function HappinessRateComponent({ month, day }) {
   const [happinessRate, setHappinessRate] = useRecoilState(happinessRateState); // 행복 지수 관리 recoil
   return (
     <div style={{ marginTop: "70px", marginBottom: "44px" }}>
       <p>
-        OO님의 <strong>오늘 행복 지수를 알고 싶어요</strong>
+        OO님의{" "}
+        <strong>
+          {month}월 {day}일 행복 지수를 알고 싶어요
+        </strong>
       </p>
       <InputWrapper>
         <StyledInput
