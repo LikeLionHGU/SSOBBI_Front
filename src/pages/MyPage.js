@@ -119,7 +119,6 @@ function MyPage() {
         <Vertical
           style={{
             alignItems: "flex-start",
-            marginRight: "217px",
           }}
         >
           <NoCenterHorizontal>
@@ -151,6 +150,7 @@ function MyPage() {
                   overflowY: "scroll",
                   height: "700px",
                   paddingLeft: "33px",
+                  paddingRight: "210px",
                 }}
               >
                 <ProfileComponent />
