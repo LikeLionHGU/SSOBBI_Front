@@ -32,3 +32,9 @@ export const tokenState = atom({
   default: null,
   effects_UNSTABLE: [persistAtom],
 });
+
+export const userData = atom({
+  key: "userData",
+  default: null,
+  effects_UNSTABLE: [persistAtom],
+});

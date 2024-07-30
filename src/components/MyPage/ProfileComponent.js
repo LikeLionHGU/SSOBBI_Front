@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { userData, tokenState } from "../../store/atom";
+import { useRecoilValue } from "recoil";
+import UpdateImg from "../../imgs/PencilFill.svg";
+import axios from "axios";
 
 const Wrapper = styled.div`
   width: 640px;
@@ -16,19 +20,46 @@ const Profile = styled.div`
   width: 64px;
   height: 64px;
   border-radius: 64px;
-  border: 1px solid black;
+
+  > img {
+    width: 64px;
+    height: 64px;
+    border-radius: 64px;
+  }
 `;
 
 const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   > span {
     font-family: "SUITLight";
     font-size: 18px;
   }
   margin-left: 20px;
+
+  > div {
+    display: flex;
+    align-items: center;
+    > button {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      background-color: white;
+      border: none;
+    }
+  }
+`;
+
+const StyledInput = styled.input`
+  font-family: "SUITLight";
+  font-size: 18px;
+  border: none;
+  outline: none;
+  width: 150px;
+  border-bottom: ${(props) =>
+    props.readOnly ? "1px solid black" : "2px solid #2AA663"};
 `;
 
 const LogoutBtn = styled.button`
@@ -42,16 +73,91 @@ const LogoutBtn = styled.button`
   font-size: 15px;
   color: #939393;
 `;
+
 function ProfileComponent() {
+  const userInfo = useRecoilValue(userData);
+  const phoneNumRef = useRef("");
+  const [phoneNum, setPhoneNum] = useState("");
+  const [isUpdating, setIsUpdating] = useState(false);
+  const userToken = useRecoilValue(tokenState);
+
+  useEffect(() => {
+    if (userInfo.userPhoneNumber) {
+      setPhoneNum(userInfo.userPhoneNumber);
+    }
+  }, [userInfo.userPhoneNumber]);
+
+  const handleBtnClick = () => {
+    setIsUpdating(true);
+    phoneNumRef.current.focus();
+  };
+
+  function handlePhoneNumChange(e) {
+    let value = e.target.value;
+    value = value.replace(/\D/g, "");
+    if (value.length <= 3) {
+      setPhoneNum(value);
+    } else if (value.length <= 7) {
+      setPhoneNum(`${value.slice(0, 3)}-${value.slice(3)}`);
+      console.log("22");
+    } else if (value.length <= 11) {
+      setPhoneNum(
+        `${value.slice(0, 3)}-${value.slice(3, 7)}-${value.slice(7)}`
+      );
+    }
+  }
+
+  const phoneNumSubmit = () => {
+    const onlyNumber = phoneNum.replace(/[^0-9]/g, "");
+    const apiUrl = process.env.REACT_APP_BASE_URL + "/user/alarm-message/ok";
+    const newArr = { userPhoneNumber: onlyNumber };
+    axios
+      .post(apiUrl, newArr, {
+        headers: {
+          Authorization: "Bearer " + userToken,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        setIsUpdating(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const activeEnter = (e) => {
+    if (e.key === "Enter") {
+      phoneNumSubmit();
+    }
+  };
+
   return (
     <Wrapper>
       <div
         style={{ display: "flex", flexDirection: "row", marginLeft: "30px" }}
       >
-        <Profile></Profile>
+        <Profile>
+          <img src={userInfo.profileImageUrl} alt="userImg" />
+        </Profile>
         <InfoWrapper>
-          <span>이름</span>
-          <span>메일</span>
+          <span>{userInfo.name}</span>
+          <div>
+            <StyledInput
+              placeholder="010-0000-0000"
+              value={phoneNum}
+              onChange={handlePhoneNumChange}
+              readOnly={!isUpdating}
+              ref={phoneNumRef}
+              onKeyDown={activeEnter}
+              onBlur={phoneNumSubmit}
+            />
+            {phoneNum && (
+              <button onClick={handleBtnClick}>
+                <img src={UpdateImg} alt="updateImg" />
+              </button>
+            )}
+          </div>
         </InfoWrapper>
       </div>
       <LogoutBtn>로그아웃</LogoutBtn>

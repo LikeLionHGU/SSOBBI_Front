@@ -59,9 +59,7 @@ function IncomePage() {
   const [targetAmount, setTargetAmount] = useState(null); // 월간수입을 토대로 목표금액 설정 -> 백엔드와 연결
   const userToken = useRecoilValue(tokenState);
   const [modalPage, setModalPage] = useState(null);
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const isNew = searchParams.get("isNew");
+  const [keyCounter, setKeyCounter] = useState(null);
   const navigate = useNavigate();
   function convertToInt(numberString) {
     const numberWithoutCommas = numberString.replace(/,/g, "");
@@ -89,6 +87,12 @@ function IncomePage() {
         console.error(error);
       });
   }
+  function handleAddBtnClick() {
+    setTargetAmount((prev) => [
+      ...prev.map((itm) => ({ ...itm, isLast: false })),
+      { category: "", amount: "", isLast: true },
+    ]);
+  }
   function handleBackBtnClick() {
     navigate("/ssobbi");
   }
@@ -110,6 +114,7 @@ function IncomePage() {
         <IncomeInputComponent
           setTargetAmount={setTargetAmount}
           convertToInt={convertToInt}
+          setKeyCounter={setKeyCounter}
         />
       </div>
       <Vertical style={{ alignItems: "flex-start" }}>
@@ -122,10 +127,13 @@ function IncomePage() {
               <div>
                 {targetAmount.map((itm) => (
                   <TargetAmountComponent
-                    key={itm.id}
-                    item={itm}
+                    category={itm.category}
+                    amount={itm.amount}
                     setTargetAmount={setTargetAmount}
+                    targetAmount={targetAmount}
                     convertToInt={convertToInt}
+                    isLast={itm.isLast}
+                    handleAddBtnClick={handleAddBtnClick}
                   />
                 ))}
               </div>

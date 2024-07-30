@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import { UserTokenState, tokenState } from "../store/atom";
+import { UserTokenState, tokenState, userData } from "../store/atom";
 import axios from "axios";
 
 const KakaoLoginRedirect = () => {
   const setUserToken = useSetRecoilState(UserTokenState);
   const setToken = useSetRecoilState(tokenState);
+  const setUserData = useSetRecoilState(userData);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -30,7 +31,7 @@ const KakaoLoginRedirect = () => {
             setUserToken(response.data.accessToken);
             setUserToken({ isLoggedIn: true });
             setToken(response.data.accessToken); // token 저장
-
+            setUserData(response.data);
             axios
               .get(secondUrl, {
                 headers: {
@@ -40,7 +41,7 @@ const KakaoLoginRedirect = () => {
               .then((response) => {
                 // 성공 시 처리
                 console.log(response.data);
-                if (response.data.length === 0) {
+                if (response.data.responses.length === 0) {
                   navigate(`/ssobbi/income?isNew=${true}`);
                 } else {
                   navigate("/ssobbi");

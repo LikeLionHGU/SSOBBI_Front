@@ -9,10 +9,12 @@ const dummyData = [
   {
     category: "식비",
     amount: 30000,
+    isLast: false,
   },
   {
     category: "교통비",
     amount: 40000,
+    isLast: true,
   },
 ];
 
@@ -68,17 +70,17 @@ function IncomeInputComponent(props) {
   }
   function activeEnter(e) {
     if (e.key === "Enter") {
-      handleBtnClick();
+      handleSubmitBtnClick();
     }
   }
-  function handleBtnClick() {
+  function handleSubmitBtnClick() {
     if (userToken === null) {
       alert("세션정보가 존재하지 않아 로그아웃됩니다");
       navigate("/");
     }
     const apiUrl = process.env.REACT_APP_BASE_URL + "/user/monthly/income";
     const income = props.convertToInt(monthIncome);
-    const newArr = { income: income };
+    const newArr = { requests: [{ income: income }] };
     // 새로고침하면 토큰이 없어짐..
     // localStorage에 저장해서 쓰던지 다른 방법 고민좀,,
     axios
@@ -96,6 +98,7 @@ function IncomeInputComponent(props) {
         console.error(error);
       });
     props.setTargetAmount(dummyData);
+    props.setKeyCounter(dummyData.length);
   }
   return (
     <Wrapper>
@@ -104,7 +107,7 @@ function IncomeInputComponent(props) {
         value={monthIncome}
         onKeyDown={activeEnter}
       />
-      <StyledBtn onClick={handleBtnClick}>입력하기</StyledBtn>
+      <StyledBtn onClick={handleSubmitBtnClick}>입력하기</StyledBtn>
     </Wrapper>
   );
 }
