@@ -136,7 +136,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
       </NoCenterHorizontal>
       <Horizontal>
         <Box>
-          오늘의 행복지수
+          {isMonthly ? "이번달 행복지수" : "이번주 행복지수"}
           <GaugeComponent
             type="semicircle"
             arc={{
@@ -169,7 +169,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
         <Box>
           {isMonthly ? (
             <>
-              이번달 과소비 건수
+              이번달 과소비 비율
               <p
                 style={{
                   fontSize: "35px",
@@ -179,7 +179,6 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
               >
                 {monthData.overConsumptionRate ? (
                   <>
-                    ({monthData.overConsumptionRate} ?
                     <span
                       style={{
                         fontSize: "60px",
@@ -190,7 +189,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
                     >
                       {monthData.overConsumptionRate}
                     </span>{" "}
-                    %)
+                    %
                   </>
                 ) : (
                   <span style={{ fontSize: "18px", color: "#19844A" }}>
@@ -201,7 +200,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
             </>
           ) : (
             <>
-              이번주 과소비 건수
+              이번주 과소비 비율
               <p
                 style={{
                   fontSize: "35px",
@@ -209,9 +208,8 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
                   marginTop: "20px",
                 }}
               >
-                {weekData.totalOverConsumptionCount ? (
+                {weekData.overConsumptionRate ? (
                   <>
-                    ({weekData.totalOverConsumptionCount} ?
                     <span
                       style={{
                         fontSize: "60px",
@@ -220,9 +218,9 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
                         color: "#19844A",
                       }}
                     >
-                      {weekData.totalOverConsumptionCount}
+                      {weekData.overConsumptionRate}
                     </span>{" "}
-                    건)
+                    %
                   </>
                 ) : (
                   <span style={{ fontSize: "18px", color: "#19844A" }}>

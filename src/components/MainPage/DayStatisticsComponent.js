@@ -76,7 +76,6 @@ function DayStatisticsComponent({ dayData }) {
           >
             {dayData.totalOverConsumptionCount ? (
               <>
-                ({dayData.totalOverConsumptionCount} ?
                 <span
                   style={{
                     fontSize: "60px",
@@ -87,7 +86,7 @@ function DayStatisticsComponent({ dayData }) {
                 >
                   {dayData.totalOverConsumptionCount}
                 </span>{" "}
-                건)
+                건
               </>
             ) : (
               <span style={{ fontSize: "18px", color: "#19844A" }}>
@@ -105,7 +104,7 @@ function DayStatisticsComponent({ dayData }) {
               >
                 {dayData.overConsumptionCategories.map((item, index) => (
                   <TagBox key={index} color={colors[index % colors.length]}>
-                    # {item.tag}
+                    # {item}
                   </TagBox>
                 ))}
               </Horizontal>

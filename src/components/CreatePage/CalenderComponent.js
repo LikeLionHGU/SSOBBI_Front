@@ -34,29 +34,28 @@ const CalenderWrapper = styled.div`
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 `;
+const attendDay = [
+  // 일정이 기록된 api만 받아서 달력에 표시하기 위한 더미데이터
+  {
+    date: "2024-07-02",
+    emotion: "슬픔",
+    category: "식비",
+    count: 2,
+  },
+  {
+    date: "2024-07-19",
+    emotion: "기쁨",
+    category: "교통비",
+    count: 5,
+  },
+];
 
-function Calender() {
+function Calender({ setSelectDate }) {
   const today = new Date();
-  const attendDay = [
-    {
-      date: "2024-07-02",
-      emotion: "슬픔",
-      category: "식비",
-    },
-    {
-      date: "2024-07-19",
-      emotion: "기쁨",
-      category: "교통비",
-    },
-  ];
   const todayDate = ("0" + today.getDate()).slice(-2);
   const [data, setData] = useState(null);
   const handleDateChange = (e) => {
-    attendDay.map((itm) =>
-      itm.date === moment(e).format("YYYY-MM-DD")
-        ? setData(itm.category)
-        : setData("")
-    );
+    setSelectDate(moment(e).format("YYYY-MM-DD"));
   };
   const shortWeekdayFormat = (locale, date) => {
     return format(date, "EEE", { locale });
