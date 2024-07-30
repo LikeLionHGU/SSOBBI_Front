@@ -151,6 +151,7 @@ function Calender() {
         next2Label={null} // +1년 & +10년 이동 버튼 숨기기
         prev2Label={null} // -1년 & -10년 이동 버튼 숨기기
         minDetail="year" // 10년단위 년도 숨기기
+        tileDisabled={({ date, view }) => view === "month" && date > today}
         tileContent={({ date, view }) => {
           let html = [];
           if (
