@@ -84,20 +84,6 @@ const DetailBT = styled(Link)`
 
 function Calender() {
   const today = new Date();
-  // const attendDay = [
-  //   {
-  //     date: "2024-07-02",
-  //     emotion: "슬픔",
-  //     category: "식비",
-  //     count: 2,
-  //   },
-  //   {
-  //     date: "2024-07-19",
-  //     emotion: "기쁨",
-  //     category: "교통비",
-  //     count: 5,
-  //   },
-  // ];
   const [selectedDate, setSelectedDate] = useState(null);
   const [attendDay, setAttendDay] = useState(null);
   const userToken = useRecoilValue(tokenState);
@@ -143,8 +129,10 @@ function Calender() {
         }
       )
       .then((response) => {
-        const totalOverConsumptionCount =
-          response.data.totalOverConsumptionCount;
+        const totalOverConsumptionCount = response.data
+          .totalOverConsumptionCount
+          ? response.data.totalOverConsumptionCount
+          : 0;
         setData(totalOverConsumptionCount);
       })
       .catch((error) => {

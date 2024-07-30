@@ -150,10 +150,10 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
             }}
             value={
               isMonthly
-                ? monthData.happinessRate
+                ? monthData?.happinessRate
                   ? monthData.happinessRate
                   : 0
-                : weekData.happinessRate
+                : weekData?.happinessRate
                 ? weekData.happinessRate
                 : 0
             }
@@ -177,7 +177,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
                   marginTop: "20px",
                 }}
               >
-                {monthData.overConsumptionRate ? (
+                {monthData?.overConsumptionRate ? (
                   <>
                     <span
                       style={{
@@ -235,7 +235,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
           {isMonthly ? (
             <>
               이번달 과소비 항목 Top4
-              {monthData.topFourOverConsumptionCategories ? (
+              {monthData?.topFourOverConsumptionCategories ? (
                 <Horizontal>
                   {monthData.topFourOverConsumptionCategories.map(
                     (item, index) => {

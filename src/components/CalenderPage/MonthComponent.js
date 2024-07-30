@@ -35,7 +35,7 @@ const DetailBT = styled.div`
   font-family: "SUITLight";
   font-size: 10px;
   width: 100%;
-  height: 34px;
+  height: 40px;
   border-radius: 0 0 20px 20px;
   display: flex;
   justify-content: center;
@@ -51,34 +51,30 @@ const circledatas = [
   {
     size: "80px",
     bcolor: "#ACFFD2",
-    tag: "패션",
     font: "16px",
     margin: "15px",
   },
   {
     size: "50px",
     bcolor: "#ACFFFA",
-    tag: "음식",
     font: "10px",
     margin: "43px",
   },
   {
     size: "65px",
     bcolor: "#ACEBFF",
-    tag: "쇼핑",
     font: "12px",
     margin: "10px",
   },
   {
     size: "31px",
     bcolor: "#C1FFAC",
-    tag: "교통비",
     font: "8px",
     margin: "52px",
   },
 ];
 
-function MonthComponent({ happy, month, onDetailCPChange }) {
+function MonthComponent({ monthlyData, month, onDetailCPChange }) {
   return (
     <>
       <Horizontal>
@@ -95,7 +91,7 @@ function MonthComponent({ happy, month, onDetailCPChange }) {
               type: "arrow",
               animationDelay: 0,
             }}
-            value={happy}
+            value={monthlyData?.happinessRate}
             style={{ height: "120px", width: "250px" }}
             marginInPercent={{
               top: 0.12,
@@ -107,37 +103,68 @@ function MonthComponent({ happy, month, onDetailCPChange }) {
         </Box>
         <Box>
           {month}월의 과소비 금액
-          <p style={{ fontSize: "30px", fontWeight: "bold" }}>
+          {monthlyData?.totalOverConsumptionAmount ? (
+            <p style={{ fontSize: "30px", fontWeight: "bold" }}>
+              <span
+                style={{
+                  fontSize: "40px",
+                  fontFamily: "SUITExtraBold",
+                  fontWeight: "bold",
+                }}
+              >
+                {monthlyData.totalOverConsumptionAmount}
+              </span>
+              {"   "}원
+            </p>
+          ) : (
             <span
               style={{
-                fontSize: "40px",
-                fontFamily: "SUITExtraBold",
-                fontWeight: "bold",
+                fontSize: "18px",
+                color: "#19844A",
+                marginTop: "50px",
+                marginBottom: "45px",
               }}
             >
-              50000000
+              기록이 없습니다.
             </span>
-            {"   "}원
-          </p>
+          )}
         </Box>
         <Box
           style={{ marginRight: "0px", paddingTop: "20px", height: "172px" }}
         >
           이번달 과소비 항목 TOP4
-          <Horizontal>
-            {circledatas.map((item, index) => (
-              <CircleBox
-                key={index}
-                color={item.bcolor}
-                width={item.size}
-                height={item.size}
-                font={item.font}
-                margin={item.margin}
-              >
-                {item.tag}
-              </CircleBox>
-            ))}
-          </Horizontal>
+          {monthlyData?.topFourOverConsumptionCategories ? (
+            <Horizontal>
+              {monthlyData.topFourOverConsumptionCategories.map(
+                (item, index) => {
+                  const circleData = circledatas[index];
+                  return (
+                    <CircleBox
+                      key={index}
+                      color={circleData.bcolor}
+                      width={circleData.size}
+                      height={circleData.size}
+                      font={circleData.font}
+                      margin={circleData.margin}
+                    >
+                      {item.category}
+                    </CircleBox>
+                  );
+                }
+              )}
+            </Horizontal>
+          ) : (
+            <span
+              style={{
+                fontSize: "18px",
+                color: "#19844A",
+                marginTop: "40px",
+                marginBottom: "25px",
+              }}
+            >
+              기록이 없습니다.
+            </span>
+          )}
           <DetailBT onClick={onDetailCPChange}>
             카테고리별 소비금액 확인하기
           </DetailBT>

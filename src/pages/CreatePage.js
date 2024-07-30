@@ -19,6 +19,8 @@ import { useNavigate } from "react-router-dom";
 import LogoImg from "../imgs/Logo.png";
 import axios from "axios";
 
+//TODO: API명세서 보고 다시 수정하기
+
 const BtnInputWrapper = styled.div`
   display: flex;
   align-items: flex-end;

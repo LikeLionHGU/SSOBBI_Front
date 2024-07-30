@@ -74,7 +74,7 @@ function MainPage() {
         );
         setWeeklyData(week.data);
         const month = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/records/weekly/${today}/summary`,
+          `${process.env.REACT_APP_BASE_URL}/records/monthly/${today}/summary`,
           {
             headers: {
               Authorization: "Bearer " + userToken,

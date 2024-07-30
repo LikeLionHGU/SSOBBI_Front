@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import moment from "moment";
+import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { tokenState } from "../store/atom";
 import DropDownComponent from "../components/MainPage/DropDownComponent";
 import MenuBarComponent from "../components/MainPage/MenuBarComponent";
 import CalenderComponent from "../components/CalenderPage/CalenderComponent";
@@ -63,10 +66,50 @@ const HappyBox = styled.div`
 `;
 
 function CalenderPage() {
+  const userToken = useRecoilValue(tokenState);
+  const [apiMonth, setApiMonth] = useState(moment().format("YYYY-MM-DD"));
   const [selectedMonth, setSelectedMonth] = useState(moment().format("M"));
   const [detailCP, setDetailCP] = useState(false);
+  const [dailyData, setDailyData] = useState(null);
+  const [monthlyData, setMonthlyData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const month = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/records/monthly/${apiMonth}/summary`,
+          {
+            headers: {
+              Authorization: "Bearer " + userToken,
+            },
+          }
+        );
+        setMonthlyData(month.data);
+        console.log("setMonthlyData: ", month.data);
+      } catch (err) {
+        console.log("error: ", err);
+      }
+    };
+    fetchData();
+  }, [selectedMonth]);
 
   const handleMonthChange = (month) => {
+    //TODO: 데이터 반영이 늦게됨. 추후 확인 필요
+    axios
+      .get(
+        `${process.env.REACT_APP_BASE_URL}/records/daily/${apiMonth}/summary`,
+        {
+          headers: {
+            Authorization: "Bearer " + userToken,
+          },
+        }
+      )
+      .then((response) => {
+        setDailyData(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     setSelectedMonth(month);
   };
 
@@ -137,15 +180,20 @@ function CalenderPage() {
                     <span style={{ fontFamily: "SUITMedium" }}> 소비 </span>
                   </SubTitle>
                   <MonthComponent
-                    happy={90}
+                    monthlyData={monthlyData}
                     month={selectedMonth}
                     onDetailCPChange={handleDetailCPChange}
                   />
-                  <Box>
-                    {selectedMonth}월의 과소비 일기 API 연결해서 보여주기
-                  </Box>
+                  {dailyData?.content ? (
+                    <Box>{dailyData.content}</Box>
+                  ) : (
+                    <Box>해당 날에 일기가 없습니다.</Box>
+                  )}
                 </Vertical>
-                <CalenderComponent onMonthChange={handleMonthChange} />
+                <CalenderComponent
+                  onMonthChange={handleMonthChange}
+                  setApiMonth={setApiMonth}
+                />
               </NoCenterHorizontal>
               <SubTitle style={{ marginLeft: "30px" }}>
                 한나님의 {selectedMonth}월{" "}
