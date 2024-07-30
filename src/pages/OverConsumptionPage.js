@@ -82,7 +82,7 @@ function OverConsumptionPage() {
         },
       })
       .then((response) => {
-        console.log(response);
+        console.log("기록하기 성공", response);
         navigate("/ssobbi");
       })
       .catch((error) => {

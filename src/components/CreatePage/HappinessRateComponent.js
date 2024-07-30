@@ -54,7 +54,7 @@ const StyledInput = styled.input`
 function HappinessRateComponent() {
   const [happinessRate, setHappinessRate] = useRecoilState(happinessRateState); // 행복 지수 관리 recoil
   return (
-    <div style={{ marginBottom: "44px" }}>
+    <div style={{ marginTop: "70px", marginBottom: "44px" }}>
       <p>
         OO님의 <strong>오늘 행복 지수를 알고 싶어요</strong>
       </p>
