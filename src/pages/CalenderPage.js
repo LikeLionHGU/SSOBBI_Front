@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import moment from "moment";
 import axios from "axios";
@@ -44,7 +45,6 @@ const Logo = styled.img`
 const Box = styled.div`
   width: 830px;
   height: 125px;
-  margin-top: 50px;
   border-radius: 20px;
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -66,9 +66,18 @@ const HappyBox = styled.div`
 `;
 
 function CalenderPage() {
+  const location = useLocation();
+  console.log("location.state?.detailDate", location.state.detailDate);
+  const selectedDate = location.state?.detailDate
+    ? moment(location.state.detailDate, "YYYY-MM-DD").format("YYYY-MM-DD")
+    : moment().format("YYYY-MM-DD");
   const userToken = useRecoilValue(tokenState);
-  const [apiMonth, setApiMonth] = useState(moment().format("YYYY-MM-DD"));
-  const [selectedMonth, setSelectedMonth] = useState(moment().format("M"));
+  const [apiMonth, setApiMonth] = useState(
+    moment(selectedDate, "YYYY-MM-DD").format("YYYY-MM-DD")
+  );
+  const [selectedMonth, setSelectedMonth] = useState(
+    moment(selectedDate, "YYYY-MM-DD").format("M")
+  );
   const [detailCP, setDetailCP] = useState(false);
   const [dailyData, setDailyData] = useState(null);
   const [monthlyData, setMonthlyData] = useState(null);
@@ -108,11 +117,28 @@ function CalenderPage() {
         console.log("error: ", err);
       }
     };
+    const fetchDayilyData = async () => {
+      try {
+        const daycontent = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/records/daily/${apiMonth}/summary`,
+          {
+            headers: {
+              Authorization: "Bearer " + userToken,
+            },
+          }
+        );
+        setDailyData(daycontent.data);
+      } catch (err) {
+        console.log("error: ", err);
+      }
+    };
     fetchMonthData();
     fetchHappyData();
+    fetchDayilyData();
   }, [selectedMonth]);
 
   const handleMonthChange = (month) => {
+    setSelectedMonth(month);
     //TODO: 데이터 반영이 늦게됨. 추후 확인 필요
     axios
       .get(
@@ -129,7 +155,6 @@ function CalenderPage() {
       .catch((error) => {
         console.error(error);
       });
-    setSelectedMonth(month);
   };
 
   const handleDetailCPChange = () => {
@@ -204,9 +229,19 @@ function CalenderPage() {
                     onDetailCPChange={handleDetailCPChange}
                   />
                   {dailyData?.content ? (
-                    <Box>{dailyData.content}</Box>
+                    <>
+                      <p style={{ marginTop: "30px", marginBottom: "5px" }}>
+                        {apiMonth} 하루 과소비 일기
+                      </p>
+                      <Box>{dailyData.content}</Box>
+                    </>
                   ) : (
-                    <Box>해당 날에 일기가 없습니다.</Box>
+                    <>
+                      <p style={{ marginTop: "30px", marginBottom: "5px" }}>
+                        {apiMonth} 하루 과소비 일기
+                      </p>
+                      <Box>해당 날에 일기가 없습니다.</Box>
+                    </>
                   )}
                 </Vertical>
                 <CalenderComponent
