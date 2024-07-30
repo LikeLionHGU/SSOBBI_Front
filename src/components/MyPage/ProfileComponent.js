@@ -152,9 +152,11 @@ function ProfileComponent() {
               onKeyDown={activeEnter}
               onBlur={phoneNumSubmit}
             />
-            <button onClick={handleBtnClick}>
-              <img src={UpdateImg} alt="updateImg" />
-            </button>
+            {phoneNum && (
+              <button onClick={handleBtnClick}>
+                <img src={UpdateImg} alt="updateImg" />
+              </button>
+            )}
           </div>
         </InfoWrapper>
       </div>

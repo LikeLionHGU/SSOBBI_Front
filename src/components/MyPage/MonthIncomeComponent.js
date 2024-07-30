@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Vertical, NoCenterHorizontal } from "../../styles/CommunalStyle";
 import styled from "styled-components";
+import axios from "axios";
+import { tokenState } from "../../store/atom";
+import { useRecoilValue } from "recoil";
 
 const MonthIncome = styled.input`
   width: 381px;
@@ -59,14 +62,51 @@ const InputBtnWrapper = styled.div`
 function MonthIncomeComponent() {
   const [income, setIncome] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
+  const userToken = useRecoilValue(tokenState);
+  const incomeRef = useRef("");
+
   function handleSubmitBtnClick() {
-    setIsUpdating(false);
+    const newArr = { requests: [{ income: convertToInt(income) }] };
+    const apiUrl = process.env.REACT_APP_BASE_URL + "/user/monthly/income";
+    console.log(newArr);
+    axios
+      .post(apiUrl, newArr, {
+        headers: {
+          Authorization: "Bearer " + userToken,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response) setIsUpdating(false);
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
+
   function handleIncomeChange(e) {
     const onlyNumber = e.target.value.replace(/[^0-9]/g, "");
     const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
     setIncome(formattedNumber);
   }
+
+  // useEffect(() => {
+  //   axios
+  //     .get(apiUrl, {
+  //       headers: {
+  //         Authorization: "Bearer " + userToken,
+  //         "Content-Type": "application/json",
+  //       },
+  //     })
+  //     .then((response) => {
+  //       if (response) setIsUpdating(false);
+  //       console.log(response);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // })
   return (
     <Vertical style={{ alignItems: "flex-start" }}>
       <Title>
@@ -78,11 +118,19 @@ function MonthIncomeComponent() {
             readOnly={!isUpdating}
             value={income}
             onChange={handleIncomeChange}
+            ref={incomeRef}
           />
           <Unit>원</Unit>
         </div>
         {isUpdating === false && (
-          <UpdateBtn onClick={() => setIsUpdating(true)}>수정하기</UpdateBtn>
+          <UpdateBtn
+            onClick={() => {
+              setIsUpdating(true);
+              incomeRef.current.focus();
+            }}
+          >
+            수정하기
+          </UpdateBtn>
         )}
         {isUpdating === true && (
           <UpdateBtn onClick={handleSubmitBtnClick}>저장하기</UpdateBtn>
@@ -93,3 +141,9 @@ function MonthIncomeComponent() {
 }
 
 export default MonthIncomeComponent;
+
+function convertToInt(numberString) {
+  const numberWithoutCommas = numberString.replace(/,/g, "");
+  const number = parseInt(numberWithoutCommas, 10);
+  return number;
+}
