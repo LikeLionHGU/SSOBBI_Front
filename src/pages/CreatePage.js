@@ -6,19 +6,38 @@ import { consumptionIndexState, tokenState } from "../store/atom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
 import MenuBarComponent from "../components/MainPage/MenuBarComponent";
+import DropDownComponent from "../components/MainPage/DropDownComponent";
+import moment from "moment";
 import {
   Horizontal,
   Vertical,
   NoCenterVertical,
+  NoCenterHorizontal,
 } from "../styles/CommunalStyle";
 import CalenderComponent from "../components/CreatePage/CalenderComponent";
 import { useNavigate } from "react-router-dom";
+import LogoImg from "../imgs/Logo.png";
 import axios from "axios";
 
 const BtnInputWrapper = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
+`;
+
+const Title = styled.p`
+  color: ${(props) => props.theme.colors.COLORBlack};
+  font-family: "RowdiesBold";
+  font-weight: 700;
+  font-style: normal;
+  font-size: 28px;
+  margin: 0;
+  margin-top: 10px;
+`;
+const Logo = styled.img`
+  width: 35px;
+  height: 35px;
+  margin-right: 15px;
 `;
 
 const SubmitBtn = styled.button`
@@ -46,6 +65,7 @@ const SubmitBtn = styled.button`
 `;
 
 function CreatePage() {
+  const [selectDate, setSelectDate] = useState(moment().format("YY-MM-DDs"));
   const [targetAmount, setTargetAmount] = useState(null);
   const [options, setOptions] = useState(null);
   const userToken = useRecoilValue(tokenState);
@@ -117,53 +137,74 @@ function CreatePage() {
   return (
     <Horizontal style={{ height: "100vh", overflowY: "hidden" }}>
       <MenuBarComponent menu={"note"} />
-      <Vertical
+      <NoCenterVertical
         style={{
-          justifyContent: "flex-start",
-          alignItems: "flex-start",
           height: "100vh",
-          marginRight: "28px;",
+          justifyContent: "flex-start",
+          marginTop: "40px",
         }}
       >
-        <div style={{ height: "158px" }} />
-        <div
-          style={{
-            overflowY: "scroll",
-            height: "700px",
-            paddingLeft: "45px",
-            paddingRight: "60px",
-          }}
-        >
-          <HappinessRateComponent />
-          <ContentComponent />
-          <div>
-            <p style={{ marginTop: "16px" }}>
-              OO님의 <strong>오늘 소비를 입력해주세요</strong>
-            </p>
-            <BtnInputWrapper>
-              <Vertical>
-                {inputCmpnt &&
-                  inputCmpnt.map((item) => (
-                    <ConsumptionIndexComponent
-                      key={item.id}
-                      id={item.id}
-                      category={item.category}
-                      consumption={item.consumption}
-                      handleAddBtnClick={handleAddBtnClick}
-                      focus={item.focus}
-                      isLast={item.isLast}
-                      options={options}
-                    />
-                  ))}
-              </Vertical>
-            </BtnInputWrapper>
-          </div>
-          <SubmitBtn onClick={writeBtnClick}>기록하기</SubmitBtn>
-        </div>
-      </Vertical>
-      <NoCenterVertical style={{ marginLeft: "28px", height: "100vh" }}>
-        <div style={{ height: "17vh" }} />
-        <CalenderComponent />
+        <NoCenterHorizontal>
+          <Horizontal
+            style={{
+              justifyContent: "flex-start",
+              marginLeft: "25px",
+              marginTop: "30px",
+            }}
+          >
+            <Logo src={LogoImg} />
+            <Title>SSOBBI</Title>
+          </Horizontal>
+          <DropDownComponent />
+        </NoCenterHorizontal>
+        <NoCenterHorizontal>
+          <Vertical
+            style={{
+              justifyContent: "flex-start",
+              alignItems: "flex-start",
+              height: "100vh",
+              marginRight: "28px;",
+            }}
+          >
+            <div
+              style={{
+                overflowY: "scroll",
+                height: "700px",
+                paddingLeft: "45px",
+                paddingRight: "60px",
+              }}
+            >
+              <HappinessRateComponent />
+              <ContentComponent />
+              <div>
+                <p style={{ marginTop: "16px" }}>
+                  OO님의 <strong>오늘 소비를 입력해주세요</strong>
+                </p>
+                <BtnInputWrapper>
+                  <Vertical>
+                    {inputCmpnt &&
+                      inputCmpnt.map((item) => (
+                        <ConsumptionIndexComponent
+                          key={item.id}
+                          id={item.id}
+                          category={item.category}
+                          consumption={item.consumption}
+                          handleAddBtnClick={handleAddBtnClick}
+                          focus={item.focus}
+                          isLast={item.isLast}
+                          options={options}
+                        />
+                      ))}
+                  </Vertical>
+                </BtnInputWrapper>
+              </div>
+              <SubmitBtn onClick={writeBtnClick}>기록하기</SubmitBtn>
+            </div>
+          </Vertical>
+          <NoCenterVertical style={{ marginLeft: "28px", height: "100vh" }}>
+            <CalenderComponent />
+          </NoCenterVertical>
+        </NoCenterHorizontal>
       </NoCenterVertical>
     </Horizontal>
   );
