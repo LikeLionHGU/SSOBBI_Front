@@ -41,7 +41,7 @@ const KakaoLoginRedirect = () => {
               .then((response) => {
                 // 성공 시 처리
                 console.log(response.data);
-                if (response.data.length === 0) {
+                if (response.data.responses.length === 0) {
                   navigate(`/ssobbi/income?isNew=${true}`);
                 } else {
                   navigate("/ssobbi");
