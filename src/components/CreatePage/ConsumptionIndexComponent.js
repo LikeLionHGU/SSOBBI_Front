@@ -91,8 +91,6 @@ const Vertical = styled.div`
   margin-right: 16px;
 `;
 
-const optionData = ["식비", "교통비", "의류", "문화", "취미", "악기"];
-
 function ConsumptionIndexComponent(props) {
   const [categoryInput, setCategoryInput] = useState(props.category); // 카테고리 inputValue useState
   const [priceInput, setPriceInput] = useState(props.consumption); // 가격 inputValue useState
@@ -117,7 +115,7 @@ function ConsumptionIndexComponent(props) {
           return {
             ...item,
             category: categoryInput,
-            consumption: priceInput,
+            amount: priceInput,
           };
         }
         return item;
@@ -129,7 +127,7 @@ function ConsumptionIndexComponent(props) {
         updatedConsumption.push({
           id: id,
           category: categoryInput,
-          consumption: priceInput,
+          amount: priceInput,
         });
       }
 
@@ -155,9 +153,9 @@ function ConsumptionIndexComponent(props) {
   }
 
   useEffect(() => {
-    setIsPriceEnter(props.consumption ? true : false);
+    setIsPriceEnter(props.amount ? true : false);
     if (props.focus === true) categoryRef.current.focus();
-  }, [props.focus, props.consumption, setIsPriceEnter]);
+  }, [props.focus, props.amount, setIsPriceEnter]);
   // 맨 처음 렌더링될때 포커스 맞추기 + 소비 이미 있으면 + 버튼 띄우기
 
   useEffect(() => {
