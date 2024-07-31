@@ -166,7 +166,7 @@ function MonthComponent({ monthlyData, month, onDetailCPChange }) {
             </span>
           )}
           <DetailBT onClick={onDetailCPChange}>
-            카테고리별 소비금액 확인하기
+            {month}월 카테고리별 소비금액 확인하기
           </DetailBT>
         </Box>
       </Horizontal>

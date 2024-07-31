@@ -1,55 +1,43 @@
-// ScatterChartsComponent.jsx
-
 import React from "react";
 import Chart from "react-apexcharts";
 
-const scatterData = [
-  [2, 44, "음식"],
-  [21, 58, "음식"],
-  [16, 100, "패션"],
-  [10, 20, "교통비"],
-  [25, 2, "기타"],
-  [50, 11, "패션"],
-  [45, 70, "쇼핑"],
-  [49, 90, "음식"],
-  [62, 29, "패션"],
-  [66, 45, "쇼핑"],
-  [55, 10, "기타"],
-  [59, 35, "패션"],
-  [99, 90, "쇼핑"],
-];
-const ScatterChartsComponent = () => {
-  const lowHappiness = scatterData.filter((point) => point[0] <= 40);
-  const mediumHappiness = scatterData.filter(
-    (point) => point[0] > 40 && point[0] <= 70
+const ScatterChartsComponent = ({ happinessRateData }) => {
+  const lowHappiness = happinessRateData?.filter(
+    (point) => point.happinessLevel === "낮음"
   );
-  const highHappiness = scatterData.filter((point) => point[0] > 70);
+  const mediumHappiness = happinessRateData?.filter(
+    (point) => point.happinessLevel === "중간"
+  );
+  const highHappiness = happinessRateData?.filter(
+    (point) => point.happinessLevel === "높음"
+  );
+
   const options = {
     series: [
       {
         name: "낮은 행복",
-        data: lowHappiness.map((point) => ({
-          x: point[0],
-          y: point[1],
-          title: point[2],
+        data: lowHappiness?.map((point) => ({
+          x: point.happinessRate,
+          y: point.normalizationOverConsumptionAmount,
+          title: point.overConsumptionCategories.join(", "),
         })),
         color: "#8FFFC2",
       },
       {
         name: "보통 행복",
-        data: mediumHappiness.map((point) => ({
-          x: point[0],
-          y: point[1],
-          title: point[2],
+        data: mediumHappiness?.map((point) => ({
+          x: point.happinessRate,
+          y: point.normalizationOverConsumptionAmount,
+          title: point.overConsumptionCategories.join(", "),
         })),
         color: "#3FC87E",
       },
       {
         name: "높은 행복",
-        data: highHappiness.map((point) => ({
-          x: point[0],
-          y: point[1],
-          title: point[2],
+        data: highHappiness?.map((point) => ({
+          x: point.happinessRate,
+          y: point.normalizationOverConsumptionAmount,
+          title: point.overConsumptionCategories.join(", "),
         })),
         color: "#19844A",
       },
@@ -72,6 +60,8 @@ const ScatterChartsComponent = () => {
       },
     },
     yaxis: {
+      min: 0,
+      max: 100,
       tickAmount: 5,
     },
   };
