@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "../../styles/Calender.css";
 import moment from "moment";
 import styled from "styled-components";
 import { format } from "date-fns";
+import axios from "axios";
+import { tokenState } from "../../store/atom";
+import { useRecoilValue } from "recoil";
 
 const StyledDot = styled.div`
   background-color: #2aa663;
@@ -34,36 +37,46 @@ const CalenderWrapper = styled.div`
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 `;
-const attendDay = [
-  // 일정이 기록된 api만 받아서 달력에 표시하기 위한 더미데이터
-  {
-    date: "2024-07-02",
-    emotion: "슬픔",
-    category: "식비",
-    count: 2,
-  },
-  {
-    date: "2024-07-19",
-    emotion: "기쁨",
-    category: "교통비",
-    count: 5,
-  },
-];
 
 function Calender({ setSelectDate }) {
   const today = new Date();
   const todayDate = ("0" + today.getDate()).slice(-2);
-  const [data, setData] = useState(null);
+  const [month, setMonth] = useState(moment(today).format("YYYY-MM"));
+  const [attendDay, setAttendDay] = useState();
+  const userToken = useRecoilValue(tokenState);
   const handleDateChange = (e) => {
     setSelectDate(moment(e).format("YYYY-MM-DD"));
   };
   const shortWeekdayFormat = (locale, date) => {
     return format(date, "EEE", { locale });
   }; // 캘린더 요일 형식 영어로 바꾸기
+  function handleMonthChange({ activeStartDate }) {
+    setMonth(moment(activeStartDate).format("YYYY-MM"));
+  }
+  useEffect(() => {
+    const apiUrl =
+      process.env.REACT_APP_BASE_URL +
+      `/records/monthly/${month}/recorded-dates`;
+    axios
+      .get(apiUrl, {
+        headers: {
+          Authorization: "Bearer " + userToken,
+        },
+      })
+      .then((response) => {
+        const data = response.data.recordedDates;
+        const formattedData = data.map((itm) => ({ date: itm }));
+        setAttendDay(formattedData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [month]);
   return (
     <CalenderWrapper>
       <Calendar
         formatShortWeekday={shortWeekdayFormat}
+        onActiveStartDateChange={handleMonthChange}
         onChange={handleDateChange}
         formatDay={(locale, date) => moment(date).format("DD")} // 일 제거 숫자만 보이게
         formatYear={(locale, date) => moment(date).format("YYYY")} // 네비게이션 눌렀을때 숫자 년도만 보이게
