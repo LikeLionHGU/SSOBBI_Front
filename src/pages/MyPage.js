@@ -58,6 +58,7 @@ function MyPage() {
   const userToken = useRecoilValue(tokenState);
   const [isUpdating, setIsUpdating] = useState(false);
   const [amount, setAmount] = useState(null);
+  const [categories, setCategories] = useState(null);
   const [isMinimumCategory, setIsMinimumCategory] = useState(false);
   function handleAmountBtnClick() {
     setIsUpdating(true);
@@ -69,6 +70,23 @@ function MyPage() {
     ]);
     setIsMinimumCategory(false);
   }
+  function haveSameCategory(array1, array2) {
+    // 배열의 길이가 다르면 동일할 수 없으므로 false 반환
+    if (array1.length !== array2.length) {
+      return false;
+    }
+    const category1 = new Set(array1.map((item) => item.category));
+    const category2 = new Set(array2.map((item) => item.category));
+    if (category1.size !== category2.size) {
+      return false;
+    }
+    for (const category of category1) {
+      if (!category2.has(category)) {
+        return false;
+      }
+    }
+    return true;
+  }
   function handleLoadBtnClick() {
     const apiUrl =
       process.env.REACT_APP_BASE_URL + "/category/monthly/TargetAmount";
@@ -76,22 +94,39 @@ function MyPage() {
       category: itm.category,
       amount: itm.amount,
     }));
+
     const newArr = { requests: data };
-    console.log(newArr);
-    axios
-      .patch(apiUrl, newArr, {
-        headers: {
-          Authorization: "Bearer " + userToken,
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        console.log(response);
-        if (response) setIsUpdating(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (haveSameCategory(data, categories)) {
+      axios
+        .patch(apiUrl, newArr, {
+          headers: {
+            Authorization: "Bearer " + userToken,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          if (response) setIsUpdating(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      axios
+        .post(apiUrl, newArr, {
+          headers: {
+            Authorization: "Bearer " + userToken,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          if (response) setIsUpdating(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
   useEffect(() => {
     const apiUrl =
@@ -110,6 +145,7 @@ function MyPage() {
           isLast: idx === arr.length - 1,
         }));
         setAmount(data);
+        setCategories(data.map((itm) => ({ category: itm.category })));
       })
       .catch((error) => {
         console.log(error);
@@ -118,7 +154,7 @@ function MyPage() {
   return (
     amount && (
       <Horizontal style={{ height: "100vh", overflow: "hidden" }}>
-        <MenuBarComponent />
+        <MenuBarComponent menu={"profile"} />
         <Vertical
           style={{
             alignItems: "flex-start",

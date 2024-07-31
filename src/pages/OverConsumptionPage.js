@@ -128,7 +128,7 @@ function OverConsumptionPage() {
           {consumptions.map((itm) => (
             <CheckComponent
               category={itm.category}
-              consumption={itm.consumption}
+              consumption={itm.amount}
               targetAmount={itm.targetAmount}
             />
           ))}
