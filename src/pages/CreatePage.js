@@ -187,86 +187,88 @@ function CreatePage() {
   }, [selectDate, userToken, setHappiness, setContent, setConsumptions]);
 
   return (
-    <Horizontal style={{ height: "100vh", overflowY: "hidden" }}>
-      <MenuBarComponent menu={"note"} />
-      <NoCenterVertical
-        style={{
-          height: "100vh",
-          justifyContent: "flex-start",
-          marginTop: "40px",
-        }}
-      >
-        <NoCenterHorizontal>
-          <Horizontal
-            style={{
-              justifyContent: "flex-start",
-              marginLeft: "25px",
-              marginTop: "30px",
-            }}
-          >
-            <a href="/ssobbi">
-              <Logo src={LogoImg} />
-            </a>
-            <a href="/ssobbi" style={{ textDecoration: "none" }}>
-              <Title>SSOBBI</Title>
-            </a>
-          </Horizontal>
-          <DropDownComponent />
-        </NoCenterHorizontal>
-        <NoCenterHorizontal>
-          <Vertical
-            style={{
-              justifyContent: "flex-start",
-              alignItems: "flex-start",
-              height: "100vh",
-              marginRight: "28px;",
-            }}
-          >
-            <div
+    options && (
+      <Horizontal style={{ height: "100vh", overflowY: "hidden" }}>
+        <MenuBarComponent menu={"note"} />
+        <NoCenterVertical
+          style={{
+            height: "100vh",
+            justifyContent: "flex-start",
+            marginTop: "40px",
+          }}
+        >
+          <NoCenterHorizontal>
+            <Horizontal
               style={{
-                overflowY: "scroll",
-                height: "700px",
-                paddingLeft: "45px",
-                paddingRight: "60px",
+                justifyContent: "flex-start",
+                marginLeft: "25px",
+                marginTop: "30px",
               }}
             >
-              <HappinessRateComponent month={month} day={day} />
-              <ContentComponent />
-              <div>
-                <p style={{ marginTop: "16px" }}>
-                  OO님의{" "}
-                  <strong>
-                    {month}월 {day}일 소비를 입력해주세요
-                  </strong>
-                </p>
-                <BtnInputWrapper>
-                  <Vertical>
-                    {consumptions.map((item) => (
-                      <>
-                        <ConsumptionIndexComponent
-                          key={item.id}
-                          id={item.id}
-                          category={item.category}
-                          amount={item.amount}
-                          handleAddBtnClick={handleAddBtnClick}
-                          focus={item.focus}
-                          isLast={item.isLast}
-                          options={options}
-                        />
-                      </>
-                    ))}
-                  </Vertical>
-                </BtnInputWrapper>
+              <a href="/ssobbi">
+                <Logo src={LogoImg} />
+              </a>
+              <a href="/ssobbi" style={{ textDecoration: "none" }}>
+                <Title>SSOBBI</Title>
+              </a>
+            </Horizontal>
+            <DropDownComponent />
+          </NoCenterHorizontal>
+          <NoCenterHorizontal>
+            <Vertical
+              style={{
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
+                height: "100vh",
+                marginRight: "28px;",
+              }}
+            >
+              <div
+                style={{
+                  overflowY: "scroll",
+                  height: "700px",
+                  paddingLeft: "45px",
+                  paddingRight: "60px",
+                }}
+              >
+                <HappinessRateComponent month={month} day={day} />
+                <ContentComponent />
+                <div>
+                  <p style={{ marginTop: "16px" }}>
+                    OO님의{" "}
+                    <strong>
+                      {month}월 {day}일 소비를 입력해주세요
+                    </strong>
+                  </p>
+                  <BtnInputWrapper>
+                    <Vertical>
+                      {consumptions.map((item) => (
+                        <>
+                          <ConsumptionIndexComponent
+                            key={item.id}
+                            id={item.id}
+                            category={item.category}
+                            amount={item.amount}
+                            handleAddBtnClick={handleAddBtnClick}
+                            focus={item.focus}
+                            isLast={item.isLast}
+                            options={options}
+                          />
+                        </>
+                      ))}
+                    </Vertical>
+                  </BtnInputWrapper>
+                </div>
+                <SubmitBtn onClick={writeBtnClick}>기록하기</SubmitBtn>
               </div>
-              <SubmitBtn onClick={writeBtnClick}>기록하기</SubmitBtn>
-            </div>
-          </Vertical>
-          <NoCenterVertical style={{ marginLeft: "28px", height: "100vh" }}>
-            <CalenderComponent setSelectDate={setSelectDate} />
-          </NoCenterVertical>
-        </NoCenterHorizontal>
-      </NoCenterVertical>
-    </Horizontal>
+            </Vertical>
+            <NoCenterVertical style={{ marginLeft: "28px", height: "100vh" }}>
+              <CalenderComponent setSelectDate={setSelectDate} />
+            </NoCenterVertical>
+          </NoCenterHorizontal>
+        </NoCenterVertical>
+      </Horizontal>
+    )
   );
 }
 
