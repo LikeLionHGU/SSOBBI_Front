@@ -212,42 +212,35 @@ function CreatePage() {
   }, [selectDate, userToken, setHappiness, setContent, setConsumptions]);
 
   return (
-    <Horizontal style={{ height: "100vh", overflowY: "hidden" }}>
-      <MenuBarComponent menu={"note"} />
-      <NoCenterVertical
-        style={{
-          height: "100vh",
-          justifyContent: "flex-start",
-          marginTop: "40px",
-        }}
-      >
-        <NoCenterHorizontal>
-          <Horizontal
-            style={{
-              justifyContent: "flex-start",
-              marginLeft: "25px",
-              marginTop: "30px",
-            }}
-          >
-            <a href="/ssobbi">
-              <Logo src={LogoImg} />
-            </a>
-            <a href="/ssobbi" style={{ textDecoration: "none" }}>
-              <Title>SSOBBI</Title>
-            </a>
-          </Horizontal>
-          <DropDownComponent />
-        </NoCenterHorizontal>
-        <NoCenterHorizontal>
-          <Vertical
-            style={{
-              justifyContent: "flex-start",
-              alignItems: "flex-start",
-              height: "100vh",
-              marginRight: "28px;",
-            }}
-          >
-            <div
+    options && (
+      <Horizontal style={{ height: "100vh", overflowY: "hidden" }}>
+        <MenuBarComponent menu={"note"} />
+        <NoCenterVertical
+          style={{
+            height: "100vh",
+            justifyContent: "flex-start",
+            marginTop: "40px",
+          }}
+        >
+          <NoCenterHorizontal>
+            <Horizontal
+              style={{
+                justifyContent: "flex-start",
+                marginLeft: "25px",
+                marginTop: "30px",
+              }}
+            >
+              <a href="/ssobbi">
+                <Logo src={LogoImg} />
+              </a>
+              <a href="/ssobbi" style={{ textDecoration: "none" }}>
+                <Title>SSOBBI</Title>
+              </a>
+            </Horizontal>
+            <DropDownComponent />
+          </NoCenterHorizontal>
+          <NoCenterHorizontal>
+            <Vertical
               style={{
                 justifyContent: "flex-start",
                 alignItems: "flex-start",

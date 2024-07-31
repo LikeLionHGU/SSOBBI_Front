@@ -1,9 +1,5 @@
 import styled from "styled-components";
-import {
-  NoCenterHorizontal,
-  Vertical,
-  Horizontal,
-} from "../../styles/CommunalStyle";
+import { Vertical, Horizontal } from "../../styles/CommunalStyle";
 
 const Text1 = styled.p`
   color: ${(props) => props.theme.colors.COLORBlack};

@@ -124,6 +124,7 @@ function OverConsumptionPage() {
         ...rest,
       }))
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Horizontal style={{ height: "100vh", alignItems: "flex-start" }}>

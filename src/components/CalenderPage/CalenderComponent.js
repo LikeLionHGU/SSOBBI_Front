@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { tokenState } from "../../store/atom";
@@ -57,6 +58,7 @@ function CalenderComponent({ onMonthChange, setApiMonth }) {
       }
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const [data, setData] = useState(null);
 

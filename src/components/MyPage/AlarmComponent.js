@@ -6,8 +6,6 @@ import styled from "styled-components";
 import ModalComponent from "./ModalComponent";
 import AlarmImg from "../../imgs/alarmCheck.png";
 import {
-  Horizontal,
-  Vertical,
   NoCenterHorizontal,
   NoCenterVertical,
 } from "../../styles/CommunalStyle";

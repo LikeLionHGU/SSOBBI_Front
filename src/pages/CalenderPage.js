@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import moment from "moment";
 import axios from "axios";
@@ -149,6 +149,7 @@ function CalenderPage() {
     fetchMonthData();
     fetchHappyData();
     fetchDayilyData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedMonth, apiMonth]);
 
   const handleMonthChange = (month) => {

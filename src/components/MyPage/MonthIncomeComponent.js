@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Vertical, NoCenterHorizontal } from "../../styles/CommunalStyle";
+import React, { useRef, useState } from "react";
+import { Vertical } from "../../styles/CommunalStyle";
 import styled from "styled-components";
 import axios from "axios";
 import { tokenState } from "../../store/atom";
