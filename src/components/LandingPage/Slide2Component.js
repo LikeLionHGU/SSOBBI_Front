@@ -53,7 +53,7 @@ const IntroBT = styled.button`
   cursor: pointer;
 `;
 const MoneyImg = styled.img`
-  width: 450px;
+  width: 400px;
   height: 343px;
 `;
 

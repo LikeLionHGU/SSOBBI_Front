@@ -53,8 +53,9 @@ const IntroBT = styled.button`
   cursor: pointer;
 `;
 const MoneyImg = styled.img`
-  width: 300px;
+  width: 200px;
   height: 343px;
+  margin-right: 100px;
 `;
 
 export default function Slide1Component({ onMoveBox }) {
