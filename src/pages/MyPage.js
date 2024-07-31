@@ -150,6 +150,7 @@ function MyPage() {
       .catch((error) => {
         console.log(error);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     amount && (
@@ -246,9 +247,3 @@ function MyPage() {
 }
 
 export default MyPage;
-
-function convertToInt(numberString) {
-  const numberWithoutCommas = numberString.replace(/,/g, "");
-  const number = parseInt(numberWithoutCommas, 10);
-  return number;
-}

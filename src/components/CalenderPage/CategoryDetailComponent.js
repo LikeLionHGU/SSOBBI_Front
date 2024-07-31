@@ -3,10 +3,7 @@ import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { tokenState } from "../../store/atom";
 import styled from "styled-components";
-import {
-  NoCenterHorizontal,
-  NoCenterVertical,
-} from "../../styles/CommunalStyle";
+import { NoCenterHorizontal } from "../../styles/CommunalStyle";
 
 const Box = styled.div`
   font-family: "SUITLight";
@@ -142,6 +139,7 @@ function CategoryDetailComponent({ apiMonth }) {
       }
     };
     fetchOverspentData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>

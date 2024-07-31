@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Calendar from "react-calendar";
 import "../../styles/Calender.css";
 import moment from "moment";
@@ -53,7 +53,6 @@ const attendDay = [
 function Calender({ setSelectDate }) {
   const today = new Date();
   const todayDate = ("0" + today.getDate()).slice(-2);
-  const [data, setData] = useState(null);
   const handleDateChange = (e) => {
     setSelectDate(moment(e).format("YYYY-MM-DD"));
   };

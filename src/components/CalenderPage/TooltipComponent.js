@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import CheckImg from "../../imgs/CheckImg.svg";
 const TooltipContainer = styled.div`
   display: flex;
   flex-direction: column;

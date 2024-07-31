@@ -3,7 +3,7 @@ import IncomeInputComponent from "../components/IncomePage/IncomeInputComponent"
 import TargetAmountComponent from "../components/IncomePage/TargetAmountComponent";
 import ModalComponent from "../components/IncomePage/ModalComponent";
 import { Vertical } from "../styles/CommunalStyle";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import AlarmQuestionComponent from "../components/IncomePage/AlarmQuestionComponent";
 import EnterPhoneNumComponent from "../components/IncomePage/EnterPhoneNumComponent";
@@ -59,6 +59,7 @@ function IncomePage() {
   const [targetAmount, setTargetAmount] = useState(null); // 월간수입을 토대로 목표금액 설정 -> 백엔드와 연결
   const userToken = useRecoilValue(tokenState);
   const [modalPage, setModalPage] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [keyCounter, setKeyCounter] = useState(null);
   const navigate = useNavigate();
   function convertToInt(numberString) {

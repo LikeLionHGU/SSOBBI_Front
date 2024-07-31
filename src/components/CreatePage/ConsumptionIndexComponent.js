@@ -185,6 +185,7 @@ function ConsumptionIndexComponent(props) {
                 setIsFocus(false);
 
                 var isOptionData = false;
+                // eslint-disable-next-line array-callback-return
                 props.options.map((itm) => {
                   if (categoryInput === itm) isOptionData = true;
                 });

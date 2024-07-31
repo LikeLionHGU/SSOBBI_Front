@@ -58,6 +58,7 @@ const KakaoLoginRedirect = () => {
           console.error("Error during Kakao login:", error);
         });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search]);
 
   return <div>카카오 로그인 처리 중...</div>;

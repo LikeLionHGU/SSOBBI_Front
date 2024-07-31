@@ -111,6 +111,7 @@ function Calender() {
       }
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const [data, setData] = useState(0);
   const handleDateChange = (e) => {

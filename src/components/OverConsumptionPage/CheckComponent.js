@@ -49,6 +49,7 @@ const StyledBtn = styled.button`
 `;
 
 function CheckComponent({ category, consumption, targetAmount }) {
+  // eslint-disable-next-line no-unused-vars
   const [consumptions, setConsumptions] = useRecoilState(consumptionIndexState);
   const [inputCheck, setInputCheck] = useState(true);
   function handleCheckBox(e) {
@@ -75,6 +76,7 @@ function CheckComponent({ category, consumption, targetAmount }) {
         return itm;
       })
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Horizontal style={{ justifyContent: "flex-start" }}>
