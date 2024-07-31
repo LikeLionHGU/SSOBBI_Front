@@ -3,6 +3,7 @@ import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { tokenState } from "../../store/atom";
 import styled from "styled-components";
+import ModalComponent from "./ModalComponent";
 import AlarmImg from "../../imgs/alarmCheck.png";
 import {
   Horizontal,
@@ -82,7 +83,7 @@ const SubmitButton = styled.button`
   color: white;
   background-color: ${(props) => (props.disabled ? "#D3D3D3" : "#2aa663")};
   cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
-  margin-top: 60px;
+  margin-top: 20px;
   margin-left: 170px;
 `;
 const CancleButton = styled.button`
@@ -98,9 +99,18 @@ const CancleButton = styled.button`
   margin-top: 60px;
   margin-left: 170px;
 `;
+const InputField = styled.input`
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  width: 200px;
+  margin-top: 6px;
+`;
 
 function AlarmComponent() {
   const userToken = useRecoilValue(tokenState);
+  const [phoneNumber, setPhoneNumber] = useState("");
   //TODO: API 불러와서 알람톡 신청 받고있는 사람인지 파악 후 setAlarm 초기값 세팅
   const [alarm, setAlarm] = useState(true);
   const [consent, setConsent] = useState(false);
@@ -110,6 +120,18 @@ function AlarmComponent() {
     terms2: false,
     marketing: false,
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleInputChange = (event) => {
+    setPhoneNumber(event.target.value);
+  };
 
   const handleCheckBoxClick = (name) => {
     setChecks((prevChecks) => {
@@ -126,15 +148,36 @@ function AlarmComponent() {
       return newChecks;
     });
   };
-  const allRequiredChecked = checks.terms1 && checks.terms2;
+  const allRequiredChecked =
+    checks.terms1 && checks.terms2 && phoneNumber.trim() !== "";
 
   const handleAlarmClick = () => {
     console.log("handleAlarmClick");
     setConsent(!consent);
   };
   const onClickConsent = () => {
-    //TODO: 사용자 이름이랑 전화번호 넘겨줘서 알림 신청하게 하는 API 연결
     console.log("알람 신청");
+    console.log("전화번호:", phoneNumber);
+    axios
+      .post(
+        `${process.env.REACT_APP_BASE_URL}/user/alarm-message/ok`,
+        { userPhoneNumber: phoneNumber },
+        {
+          headers: {
+            Authorization: "Bearer " + userToken,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log("알람 설정 신청 response", response);
+        setConsent(!consent);
+        setAlarm(!alarm);
+        openModal();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   const onClickAlarmCancle = () => {
     console.log("알람 취소");
@@ -147,6 +190,9 @@ function AlarmComponent() {
       })
       .then((response) => {
         console.log("알람 설정 취소 response", response);
+        setConsent(!consent);
+        setAlarm(!alarm);
+        openModal();
       })
       .catch((error) => {
         console.log(error);
@@ -206,7 +252,7 @@ function AlarmComponent() {
                   (필수) 이용약관
                 </NoCenterHorizontal>
                 <NoCenterHorizontal
-                  style={{ marginBottom: "15px", width: "240px" }}
+                  style={{ marginBottom: "30px", width: "240px" }}
                 >
                   <CheckBox
                     checked={checks.marketing}
@@ -215,6 +261,22 @@ function AlarmComponent() {
                   (선택) 마케팅 활용 및 공급사 상품 및 배송을 위한 개인정보 제
                   3자 제공 동의
                 </NoCenterHorizontal>
+
+                <NoCenterVertical
+                  style={{
+                    marginBottom: "15px",
+                    marginLeft: "32px",
+                    fontSize: "12px",
+                  }}
+                >
+                  * 필수) 알림톡을 받을 전화번호를 입력해주세요!
+                  <InputField
+                    type="tel"
+                    value={phoneNumber}
+                    onChange={handleInputChange}
+                    placeholder="-없이 전화번호를 입력하세요"
+                  />
+                </NoCenterVertical>
                 <SubmitButton
                   disabled={!allRequiredChecked}
                   onClick={onClickConsent}
@@ -252,6 +314,15 @@ function AlarmComponent() {
         </>
       ) : (
         <></>
+      )}
+      {isModalOpen && (
+        <ModalComponent closeModal={closeModal}>
+          {alarm ? (
+            <p>알림톡 신청이 취소되었어요!</p>
+          ) : (
+            <p>알림톡 신청이 완료되었어요!</p>
+          )}
+        </ModalComponent>
       )}
     </Wrapper>
   );
