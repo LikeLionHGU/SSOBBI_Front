@@ -86,7 +86,7 @@ function CreatePage() {
   function writeBtnClick() {
     setConsumptions((prev) =>
       prev
-        .filter((itm) => itm.category !== undefined && itm.amount !== undefined)
+        .filter((itm) => itm.category !== "" && itm.amount !== 0)
         .map((itm) => {
           const target = targetAmount.find((t) => t.category === itm.category);
           if (target) {
@@ -118,7 +118,7 @@ function CreatePage() {
         id: keyCounter + 1,
         focus: true,
         isLast: true,
-        category: " ",
+        category: "",
         amount: 0,
       },
     ]);
