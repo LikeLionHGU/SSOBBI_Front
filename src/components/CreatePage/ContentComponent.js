@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { contentState } from "../../store/atom";
-import { useRecoilState } from "recoil";
+import { contentState, userData } from "../../store/atom";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 const TextCount = styled.p`
   position: absolute;
@@ -24,6 +24,7 @@ const StyledTextarea = styled.textarea`
 
 function ContentComponent() {
   const [content, setContent] = useRecoilState(contentState); // 기록 페이지 데이터 관리 recoil
+  const userInfo = useRecoilValue(userData);
   const handleInputChange = (e) => {
     if (e.target.value.length <= "200") {
       setContent(e.target.value);
@@ -34,7 +35,8 @@ function ContentComponent() {
   return (
     <div style={{ marginBottom: "44px" }}>
       <p>
-        OO님의 <strong>행복 지수에 가장 큰 영향을 준 사건은 무엇인가요</strong>
+        {userInfo.name}님의{" "}
+        <strong>행복 지수에 가장 큰 영향을 준 사건은 무엇인가요</strong>
         (그 순간을 구체적으로 작성해주세요)
       </p>
       <div style={{ position: "relative" }}>

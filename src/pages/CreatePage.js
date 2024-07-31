@@ -7,6 +7,7 @@ import {
   tokenState,
   happinessRateState,
   contentState,
+  userData,
 } from "../store/atom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { useEffect, useState } from "react";
@@ -82,11 +83,13 @@ function CreatePage() {
   const setContent = useSetRecoilState(contentState);
   const [keyCounter, setKeyCounter] = useState(1); // id 1씩 증가시키기 위한 useState
   const navigate = useNavigate();
+  const [updateWording, setUpdateWording] = useState(null);
+  const userInfo = useRecoilValue(userData);
 
   function writeBtnClick() {
     setConsumptions((prev) =>
       prev
-        .filter((itm) => itm.category !== undefined && itm.amount !== undefined)
+        .filter((itm) => itm.category !== "" && itm.amount !== 0)
         .map((itm) => {
           const target = targetAmount.find((t) => t.category === itm.category);
           if (target) {
@@ -113,7 +116,14 @@ function CreatePage() {
   function handleAddBtnClick() {
     setConsumptions((prev) => [
       ...prev.map((itm) => ({ ...itm, focus: false, isLast: false })),
-      { key: keyCounter + 1, id: keyCounter + 1, focus: true, isLast: true },
+      {
+        key: keyCounter + 1,
+        id: keyCounter + 1,
+        focus: true,
+        isLast: true,
+        category: "",
+        amount: 0,
+      },
     ]);
     setKeyCounter((prev) => prev + 1);
   }
@@ -151,35 +161,50 @@ function CreatePage() {
       })
       .then((response) => {
         const data = response.data;
+        let newArr;
         if (data.isRecorded) {
           setHappiness(data.happinessRate);
           setContent(data.content);
-          const newArr = data.consumptions.map((itm, idx, arr) => ({
-            key: idx,
-            id: idx,
-            category: itm.category,
-            amount: itm.amount,
-            focus: false,
-            isLast: idx === arr.length - 1,
-          }));
-          setConsumptions(newArr);
+          setUpdateWording("수정하기");
+          if (data.consumptions.length > 0) {
+            newArr = data.consumptions.map((itm, idx, arr) => ({
+              key: idx,
+              id: idx,
+              category: itm.category,
+              amount: itm.amount,
+              focus: false,
+              isLast: idx === arr.length - 1,
+            }));
+          } else {
+            newArr = [
+              {
+                key: 1,
+                id: 1,
+                category: "",
+                amount: 0,
+                focus: false,
+                isLast: true,
+              },
+            ];
+          }
           setId(data.id);
         } else {
           setHappiness(0);
           setContent(" ");
-          const newArr = [
+          newArr = [
             {
               key: 1,
               id: 1,
-              category: " ",
+              category: "",
               amount: 0,
               focus: false,
               isLast: true,
             },
           ];
-          setConsumptions(newArr);
           setId(null);
+          setUpdateWording("기록하기");
         }
+        setConsumptions(newArr);
       })
       .catch((error) => {
         console.log(error);
@@ -235,7 +260,7 @@ function CreatePage() {
                 <ContentComponent />
                 <div>
                   <p style={{ marginTop: "16px" }}>
-                    OO님의{" "}
+                    {userInfo.name}님의{" "}
                     <strong>
                       {month}월 {day}일 소비를 입력해주세요
                     </strong>
@@ -243,23 +268,21 @@ function CreatePage() {
                   <BtnInputWrapper>
                     <Vertical>
                       {consumptions.map((item) => (
-                        <>
-                          <ConsumptionIndexComponent
-                            key={item.id}
-                            id={item.id}
-                            category={item.category}
-                            amount={item.amount}
-                            handleAddBtnClick={handleAddBtnClick}
-                            focus={item.focus}
-                            isLast={item.isLast}
-                            options={options}
-                          />
-                        </>
+                        <ConsumptionIndexComponent
+                          key={item.id}
+                          id={item.id}
+                          category={item.category}
+                          amount={item.amount}
+                          handleAddBtnClick={handleAddBtnClick}
+                          focus={item.focus}
+                          isLast={item.isLast}
+                          options={options}
+                        />
                       ))}
                     </Vertical>
                   </BtnInputWrapper>
                 </div>
-                <SubmitBtn onClick={writeBtnClick}>기록하기</SubmitBtn>
+                <SubmitBtn onClick={writeBtnClick}>{updateWording}</SubmitBtn>
               </div>
             </Vertical>
             <NoCenterVertical style={{ marginLeft: "28px", height: "100vh" }}>

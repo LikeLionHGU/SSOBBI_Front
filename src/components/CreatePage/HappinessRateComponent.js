@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { happinessRateState } from "../../store/atom";
-import { useRecoilState } from "recoil";
+import { happinessRateState, userData } from "../../store/atom";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 const InputWrapper = styled.div`
   width: 533px;
@@ -53,10 +53,11 @@ const StyledInput = styled.input`
 
 function HappinessRateComponent({ month, day }) {
   const [happinessRate, setHappinessRate] = useRecoilState(happinessRateState); // 행복 지수 관리 recoil
+  const userInfo = useRecoilValue(userData);
   return (
     <div style={{ marginTop: "70px", marginBottom: "44px" }}>
       <p>
-        OO님의{" "}
+        {userInfo.name}님의{" "}
         <strong>
           {month}월 {day}일 행복 지수를 알고 싶어요
         </strong>
