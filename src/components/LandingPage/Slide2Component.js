@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import LandingMoneyImg2 from "../../imgs/LandingMoney2.svg";
+import LandingMoneyImg2 from "../../imgs/LandingMoney2.png";
 import {
   NoCenterHorizontal,
   NoCenterVertical,
@@ -53,7 +53,7 @@ const IntroBT = styled.button`
   cursor: pointer;
 `;
 const MoneyImg = styled.img`
-  width: 450px;
+  width: 400px;
   height: 343px;
 `;
 
