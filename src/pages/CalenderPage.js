@@ -11,6 +11,7 @@ import CalenderComponent from "../components/CalenderPage/CalenderComponent";
 import MainCalenderComponent from "../components/MainPage/CalenderComponent";
 import MonthComponent from "../components/CalenderPage/MonthComponent";
 import CategoryDetailComponent from "../components/CalenderPage/CategoryDetailComponent";
+import TooltipComponent from "../components/CalenderPage/TooltipComponent";
 import ScatterChartsComponent from "../components/CalenderPage/ScatterChartsComponent";
 import {
   Horizontal,
@@ -18,6 +19,7 @@ import {
   NoCenterHorizontal,
   NoCenterVertical,
 } from "../styles/CommunalStyle";
+import InfoCircleImg from "../imgs/InfoCircle.svg";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 
 import LogoImg from "../imgs/Logo.png";
@@ -68,6 +70,11 @@ const HappyBox = styled.div`
   justify-content: center;
   background-color: #fcfffe;
 `;
+const TooltipBtn = styled.button`
+  background-color: white;
+  border: none;
+  cursor: pointer;
+`;
 
 function CalenderPage() {
   const location = useLocation();
@@ -86,6 +93,7 @@ function CalenderPage() {
   const [dailyData, setDailyData] = useState(null);
   const [monthlyData, setMonthlyData] = useState(null);
   const [happinessRate, setHappinessRate] = useState(null);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   useEffect(() => {
     const fetchMonthData = async () => {
@@ -246,6 +254,17 @@ function CalenderPage() {
               <SubTitle style={{ marginLeft: "30px" }}>
                 한나님의 {selectedMonth}월{" "}
                 <span style={{ fontFamily: "SUITMedium" }}> 감정별 소비 </span>
+                <div className="container">
+                  <TooltipComponent infoText="hello world" show={showTooltip}>
+                    <TooltipBtn
+                      className="btn"
+                      onMouseEnter={() => setShowTooltip(true)}
+                      onMouseLeave={() => setShowTooltip(false)}
+                    >
+                      <img src={InfoCircleImg} alt="infoCircle" />
+                    </TooltipBtn>
+                  </TooltipComponent>
+                </div>
               </SubTitle>
               <HappyBox style={{ marginLeft: "30px" }}>
                 <ScatterChartsComponent happinessRateData={happinessRate} />
