@@ -82,6 +82,7 @@ function CreatePage() {
   const setContent = useSetRecoilState(contentState);
   const [keyCounter, setKeyCounter] = useState(1); // id 1씩 증가시키기 위한 useState
   const navigate = useNavigate();
+  const [updateWording, setUpdateWording] = useState(null);
 
   function writeBtnClick() {
     setConsumptions((prev) =>
@@ -158,24 +159,37 @@ function CreatePage() {
       })
       .then((response) => {
         const data = response.data;
-        if (data.isRecorded && data.consumptions.length !== 0) {
+        let newArr;
+        if (data.isRecorded) {
           setHappiness(data.happinessRate);
           setContent(data.content);
-          const newArr = data.consumptions.map((itm, idx, arr) => ({
-            key: idx,
-            id: idx,
-            category: itm.category,
-            amount: itm.amount,
-            focus: false,
-            isLast: idx === arr.length - 1,
-          }));
-          setConsumptions(newArr);
+          setUpdateWording("수정하기");
+          if (data.consumptions.length > 0) {
+            newArr = data.consumptions.map((itm, idx, arr) => ({
+              key: idx,
+              id: idx,
+              category: itm.category,
+              amount: itm.amount,
+              focus: false,
+              isLast: idx === arr.length - 1,
+            }));
+          } else {
+            newArr = [
+              {
+                key: 1,
+                id: 1,
+                category: "",
+                amount: 0,
+                focus: false,
+                isLast: true,
+              },
+            ];
+          }
           setId(data.id);
-          console.log("AAA");
         } else {
           setHappiness(0);
           setContent(" ");
-          const newArr = [
+          newArr = [
             {
               key: 1,
               id: 1,
@@ -185,9 +199,10 @@ function CreatePage() {
               isLast: true,
             },
           ];
-          setConsumptions(newArr);
           setId(null);
+          setUpdateWording("기록하기");
         }
+        setConsumptions(newArr);
       })
       .catch((error) => {
         console.log(error);
@@ -246,23 +261,21 @@ function CreatePage() {
                 <BtnInputWrapper>
                   <Vertical>
                     {consumptions.map((item) => (
-                      <>
-                        <ConsumptionIndexComponent
-                          key={item.id}
-                          id={item.id}
-                          category={item.category}
-                          amount={item.amount}
-                          handleAddBtnClick={handleAddBtnClick}
-                          focus={item.focus}
-                          isLast={item.isLast}
-                          options={options}
-                        />
-                      </>
+                      <ConsumptionIndexComponent
+                        key={item.id}
+                        id={item.id}
+                        category={item.category}
+                        amount={item.amount}
+                        handleAddBtnClick={handleAddBtnClick}
+                        focus={item.focus}
+                        isLast={item.isLast}
+                        options={options}
+                      />
                     ))}
                   </Vertical>
                 </BtnInputWrapper>
               </div>
-              <SubmitBtn onClick={writeBtnClick}>기록하기</SubmitBtn>
+              <SubmitBtn onClick={writeBtnClick}>{updateWording}</SubmitBtn>
             </div>
           </Vertical>
           <NoCenterVertical style={{ marginLeft: "28px", height: "100vh" }}>
