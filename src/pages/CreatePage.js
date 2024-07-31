@@ -158,7 +158,7 @@ function CreatePage() {
       })
       .then((response) => {
         const data = response.data;
-        if (data.isRecorded) {
+        if (data.isRecorded && data.consumptions.length !== 0) {
           setHappiness(data.happinessRate);
           setContent(data.content);
           const newArr = data.consumptions.map((itm, idx, arr) => ({
@@ -179,7 +179,7 @@ function CreatePage() {
             {
               key: 1,
               id: 1,
-              category: " ",
+              category: "",
               amount: 0,
               focus: false,
               isLast: true,
