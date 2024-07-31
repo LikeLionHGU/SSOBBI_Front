@@ -7,6 +7,7 @@ import {
   tokenState,
   happinessRateState,
   contentState,
+  userData,
 } from "../store/atom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { useEffect, useState } from "react";
@@ -83,6 +84,7 @@ function CreatePage() {
   const [keyCounter, setKeyCounter] = useState(1); // id 1씩 증가시키기 위한 useState
   const navigate = useNavigate();
   const [updateWording, setUpdateWording] = useState(null);
+  const userInfo = useRecoilValue(userData);
 
   function writeBtnClick() {
     setConsumptions((prev) =>
@@ -210,80 +212,82 @@ function CreatePage() {
   }, [selectDate, userToken, setHappiness, setContent, setConsumptions]);
 
   return (
-    <Horizontal style={{ height: "100vh", overflowY: "hidden" }}>
-      <MenuBarComponent menu={"note"} />
-      <NoCenterVertical
-        style={{
-          height: "100vh",
-          justifyContent: "flex-start",
-          marginTop: "40px",
-        }}
-      >
-        <NoCenterHorizontal>
-          <Horizontal
-            style={{
-              justifyContent: "flex-start",
-              marginLeft: "25px",
-              marginTop: "30px",
-            }}
-          >
-            <Logo src={LogoImg} />
-            <Title>SSOBBI</Title>
-          </Horizontal>
-          <DropDownComponent />
-        </NoCenterHorizontal>
-        <NoCenterHorizontal>
-          <Vertical
-            style={{
-              justifyContent: "flex-start",
-              alignItems: "flex-start",
-              height: "100vh",
-              marginRight: "28px;",
-            }}
-          >
-            <div
+    options && (
+      <Horizontal style={{ height: "100vh", overflowY: "hidden" }}>
+        <MenuBarComponent menu={"note"} />
+        <NoCenterVertical
+          style={{
+            height: "100vh",
+            justifyContent: "flex-start",
+            marginTop: "40px",
+          }}
+        >
+          <NoCenterHorizontal>
+            <Horizontal
               style={{
-                overflowY: "scroll",
-                height: "700px",
-                paddingLeft: "45px",
-                paddingRight: "60px",
+                justifyContent: "flex-start",
+                marginLeft: "25px",
+                marginTop: "30px",
               }}
             >
-              <HappinessRateComponent month={month} day={day} />
-              <ContentComponent />
-              <div>
-                <p style={{ marginTop: "16px" }}>
-                  OO님의{" "}
-                  <strong>
-                    {month}월 {day}일 소비를 입력해주세요
-                  </strong>
-                </p>
-                <BtnInputWrapper>
-                  <Vertical>
-                    {consumptions.map((item) => (
-                      <ConsumptionIndexComponent
-                        key={item.id}
-                        id={item.id}
-                        category={item.category}
-                        amount={item.amount}
-                        handleAddBtnClick={handleAddBtnClick}
-                        focus={item.focus}
-                        isLast={item.isLast}
-                        options={options}
-                      />
-                    ))}
-                  </Vertical>
-                </BtnInputWrapper>
+              <Logo src={LogoImg} />
+              <Title>SSOBBI</Title>
+            </Horizontal>
+            <DropDownComponent />
+          </NoCenterHorizontal>
+          <NoCenterHorizontal>
+            <Vertical
+              style={{
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
+                height: "100vh",
+                marginRight: "28px;",
+              }}
+            >
+              <div
+                style={{
+                  overflowY: "scroll",
+                  height: "700px",
+                  paddingLeft: "45px",
+                  paddingRight: "60px",
+                }}
+              >
+                <HappinessRateComponent month={month} day={day} />
+                <ContentComponent />
+                <div>
+                  <p style={{ marginTop: "16px" }}>
+                    {userInfo.name}님의{" "}
+                    <strong>
+                      {month}월 {day}일 소비를 입력해주세요
+                    </strong>
+                  </p>
+                  <BtnInputWrapper>
+                    <Vertical>
+                      {consumptions.map((item) => (
+                        <ConsumptionIndexComponent
+                          key={item.id}
+                          id={item.id}
+                          category={item.category}
+                          amount={item.amount}
+                          handleAddBtnClick={handleAddBtnClick}
+                          focus={item.focus}
+                          isLast={item.isLast}
+                          options={options}
+                        />
+                      ))}
+                    </Vertical>
+                  </BtnInputWrapper>
+                </div>
+                <SubmitBtn onClick={writeBtnClick}>{updateWording}</SubmitBtn>
               </div>
-              <SubmitBtn onClick={writeBtnClick}>{updateWording}</SubmitBtn>
-            </div>
-          </Vertical>
-          <NoCenterVertical style={{ marginLeft: "28px", height: "100vh" }}>
-            <CalenderComponent setSelectDate={setSelectDate} />
-          </NoCenterVertical>
-        </NoCenterHorizontal>
-      </NoCenterVertical>
-    </Horizontal>
+            </Vertical>
+            <NoCenterVertical style={{ marginLeft: "28px", height: "100vh" }}>
+              <CalenderComponent setSelectDate={setSelectDate} />
+            </NoCenterVertical>
+          </NoCenterHorizontal>
+        </NoCenterVertical>
+      </Horizontal>
+    )
   );
 }
 
