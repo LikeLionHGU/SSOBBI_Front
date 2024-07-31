@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import styled from "styled-components";
 import moment from "moment";
 import axios from "axios";
@@ -178,8 +178,12 @@ function CalenderPage() {
                 marginTop: "30px",
               }}
             >
-              <Logo src={LogoImg} />
-              <Title>SSOBBI</Title>
+              <a href="/ssobbi">
+                <Logo src={LogoImg} />
+              </a>
+              <a href="/ssobbi" style={{ textDecoration: "none" }}>
+                <Title>SSOBBI</Title>
+              </a>
             </Horizontal>
             <DropDownComponent />
           </NoCenterHorizontal>

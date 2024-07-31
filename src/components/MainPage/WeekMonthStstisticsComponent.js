@@ -190,6 +190,18 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
                       {monthData.overConsumptionRate}
                     </span>{" "}
                     %
+                    <p
+                      style={{
+                        marginBottom: "-30px",
+                        marginLeft: "30%",
+                        fontSize: "12px",
+                        color: "#19844A",
+                        margin: 0,
+                      }}
+                    >
+                      ({monthData.totalOverConsumptionCount}건 /
+                      {monthData.totalConsumptionCount}건)
+                    </p>
                   </>
                 ) : (
                   <span style={{ fontSize: "18px", color: "#19844A" }}>
@@ -221,6 +233,18 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
                       {weekData.overConsumptionRate}
                     </span>{" "}
                     %
+                    <p
+                      style={{
+                        marginBottom: "-30px",
+                        marginLeft: "30%",
+                        fontSize: "12px",
+                        color: "#19844A",
+                        margin: 0,
+                      }}
+                    >
+                      ({weekData.totalOverConsumptionCount}건 /
+                      {weekData.totalConsumptionCount}건)
+                    </p>
                   </>
                 ) : (
                   <span style={{ fontSize: "18px", color: "#19844A" }}>

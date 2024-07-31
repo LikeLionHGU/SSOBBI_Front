@@ -168,8 +168,12 @@ function MyPage() {
                 marginTop: "30px",
               }}
             >
-              <Logo src={LogoImg} />
-              <Title>SSOBBI</Title>
+              <a href="/ssobbi">
+                <Logo src={LogoImg} />
+              </a>
+              <a href="/ssobbi" style={{ textDecoration: "none" }}>
+                <Title>SSOBBI</Title>
+              </a>
             </Horizontal>
             <DropDownComponent />
           </NoCenterHorizontal>
