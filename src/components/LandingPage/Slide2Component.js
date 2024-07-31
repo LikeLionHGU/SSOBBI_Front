@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import LandingMoneyImg2 from "../../imgs/LandingMoney2.svg";
+import LandingMoneyImg2 from "../../imgs/LandingMoney2.png";
 import {
   NoCenterHorizontal,
   NoCenterVertical,
