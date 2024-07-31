@@ -24,8 +24,6 @@ import { useNavigate } from "react-router-dom";
 import LogoImg from "../imgs/Logo.png";
 import axios from "axios";
 
-//TODO: API명세서 보고 다시 수정하기
-
 const BtnInputWrapper = styled.div`
   display: flex;
   align-items: flex-end;
@@ -79,43 +77,47 @@ function CreatePage() {
   const [options, setOptions] = useState(null);
   const userToken = useRecoilValue(tokenState);
   const [consumptions, setConsumptions] = useRecoilState(consumptionIndexState);
+  const [id, setId] = useState(null);
   const setHappiness = useSetRecoilState(happinessRateState);
   const setContent = useSetRecoilState(contentState);
-  const [inputCmpnt, setInputCmpnt] = useState(null); //inputComponent
-  const [keyCounter, setKeyCounter] = useState(consumptions.length + 1); // id 1씩 증가시키기 위한 useState
+  const [keyCounter, setKeyCounter] = useState(1); // id 1씩 증가시키기 위한 useState
   const navigate = useNavigate();
+
   function writeBtnClick() {
     setConsumptions((prev) =>
       prev
         .filter((itm) => itm.category !== undefined && itm.amount !== undefined)
         .map((itm) => {
-          // 현재 아이템과 일치하는 targetAmount 항목 찾기
           const target = targetAmount.find((t) => t.category === itm.category);
-          // 일치하는 targetAmount 항목이 있으면 아이템을 업데이트
           if (target) {
-            console.log(target);
             return {
               category: itm.category,
               targetAmount: target.amount,
               amount: convertToInt(itm.amount),
             };
           }
-          // 일치하는 항목이 없으면 원래 아이템을 반환
           return itm;
         })
     );
-    navigate("/ssobbi/create/check", {
-      state: { date: selectDate },
-    });
+    if (id !== null) {
+      navigate(`/ssobbi/create/check?id=${id}`, {
+        state: { date: selectDate },
+      });
+    } else {
+      navigate("/ssobbi/create/check", {
+        state: { date: selectDate },
+      });
+    }
   }
+
   function handleAddBtnClick() {
-    setInputCmpnt((prev) => [
+    setConsumptions((prev) => [
       ...prev.map((itm) => ({ ...itm, focus: false, isLast: false })),
       { key: keyCounter + 1, id: keyCounter + 1, focus: true, isLast: true },
     ]);
     setKeyCounter((prev) => prev + 1);
-    console.log(inputCmpnt);
   }
+
   useEffect(() => {
     const apiUrl =
       process.env.REACT_APP_BASE_URL + "/category/monthly/TargetAmount";
@@ -134,21 +136,10 @@ function CreatePage() {
       .catch((error) => {
         console.log(error);
       });
-  }, []); // 화면 처음 렌더링 될 때 기본 데이터 불러와서 화면에 띄우기, 이후 백엔드 api와 연결할 때 코드 똑같이 복사
-  useEffect(() => {
-    const existData = consumptions.map((itm, idx, arr) => ({
-      key: itm.id,
-      id: itm.id,
-      category: itm.category,
-      amount: itm.amount,
-      focus: false,
-      isLast: idx === arr.length - 1,
-    }));
-    const newData = [{ key: "1", id: "1" }];
+  }, [userToken]); // userToken이 변경될 때마다 API 호출
 
-    setInputCmpnt(consumptions.length === 0 ? newData : existData);
-  }, [consumptions]);
   useEffect(() => {
+    setConsumptions([]);
     const apiUrl =
       process.env.REACT_APP_BASE_URL + `/records/daily/${selectDate}`;
     axios
@@ -164,22 +155,37 @@ function CreatePage() {
           setHappiness(data.happinessRate);
           setContent(data.content);
           const newArr = data.consumptions.map((itm, idx, arr) => ({
-            key: itm.id,
-            id: itm.id,
+            key: idx,
+            id: idx,
             category: itm.category,
             amount: itm.amount,
             focus: false,
             isLast: idx === arr.length - 1,
           }));
-          console.log(newArr);
           setConsumptions(newArr);
-          setInputCmpnt(newArr);
+          setId(data.id);
+        } else {
+          setHappiness(0);
+          setContent(" ");
+          const newArr = [
+            {
+              key: 1,
+              id: 1,
+              category: " ",
+              amount: 0,
+              focus: false,
+              isLast: true,
+            },
+          ];
+          setConsumptions(newArr);
+          setId(null);
         }
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [selectDate]);
+  }, [selectDate, userToken, setHappiness, setContent, setConsumptions]);
+
   return (
     <Horizontal style={{ height: "100vh", overflowY: "hidden" }}>
       <MenuBarComponent menu={"note"} />
@@ -231,8 +237,8 @@ function CreatePage() {
                 </p>
                 <BtnInputWrapper>
                   <Vertical>
-                    {inputCmpnt &&
-                      inputCmpnt.map((item) => (
+                    {consumptions.map((item) => (
+                      <>
                         <ConsumptionIndexComponent
                           key={item.id}
                           id={item.id}
@@ -243,7 +249,8 @@ function CreatePage() {
                           isLast={item.isLast}
                           options={options}
                         />
-                      ))}
+                      </>
+                    ))}
                   </Vertical>
                 </BtnInputWrapper>
               </div>
@@ -263,6 +270,5 @@ export default CreatePage;
 
 function convertToInt(numberString) {
   const numberWithoutCommas = numberString.replace(/,/g, "");
-  const number = parseInt(numberWithoutCommas, 10);
-  return number;
+  return parseInt(numberWithoutCommas, 10);
 }
