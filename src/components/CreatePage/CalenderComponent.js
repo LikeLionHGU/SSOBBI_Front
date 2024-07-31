@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "../../styles/Calender.css";
@@ -72,6 +71,7 @@ function Calender({ setSelectDate }) {
       .catch((error) => {
         console.log(error);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [month]);
   return (
     <CalenderWrapper>
@@ -96,10 +96,14 @@ function Calender({ setSelectDate }) {
           ) {
             html.push(<StyledToday key={"today"}>{todayDate}</StyledToday>);
           }
-          if (
-            attendDay.find((x) => x.date === moment(date).format("YYYY-MM-DD"))
-          ) {
-            html.push(<StyledDot key={moment(date).format("YYYY-MM-DD")} />);
+          if (attendDay) {
+            if (
+              attendDay.find(
+                (x) => x.date === moment(date).format("YYYY-MM-DD")
+              )
+            ) {
+              html.push(<StyledDot key={moment(date).format("YYYY-MM-DD")} />);
+            }
           }
           return <>{html}</>;
         }}
