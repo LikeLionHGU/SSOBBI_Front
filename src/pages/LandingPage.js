@@ -68,8 +68,12 @@ const LandingPage = () => {
             marginLeft: "100px",
           }}
         >
-          <Logo src={LogoImg} />
-          <Title>SSOBBI</Title>
+          <a href="/ssobbi">
+            <Logo src={LogoImg} />
+          </a>
+          <a href="/ssobbi" style={{ textDecoration: "none" }}>
+            <Title>SSOBBI</Title>
+          </a>
         </Horizontal>
         <LogIn onClick={handleLoginClick}>카카오톡 로그인</LogIn>
       </Horizontal>
