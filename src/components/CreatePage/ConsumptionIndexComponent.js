@@ -93,7 +93,7 @@ const Vertical = styled.div`
 
 function ConsumptionIndexComponent(props) {
   const [categoryInput, setCategoryInput] = useState(props.category); // 카테고리 inputValue useState
-  const [priceInput, setPriceInput] = useState(props.consumption); // 가격 inputValue useState
+  const [priceInput, setPriceInput] = useState(convertStringNum(props.amount)); // 가격 inputValue useState
   const [isFocus, setIsFocus] = useState(false); // 카테고리 focus 관리
   const [isPriceEnter, setIsPriceEnter] = useState(false); // 가격 입력 유무 관리 recoil
   const categoryRef = useRef("");
@@ -106,7 +106,7 @@ function ConsumptionIndexComponent(props) {
     priceRef.current.focus();
   }
 
-  const handleInputsChange = useCallback(() => {
+  function handleInputsChange() {
     const id = props.id;
 
     setConsumptionIndex((prev) => {
@@ -133,13 +133,13 @@ function ConsumptionIndexComponent(props) {
 
       return updatedConsumption;
     });
-  }, [categoryInput, priceInput, props.id, setConsumptionIndex]);
+  }
 
   function handlePriceInputChange(e) {
     const { value } = e.target;
     // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
     const onlyNumber = value.replace(/[^0-9]/g, "");
-    const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
+    const formattedNumber = convertStringNum(onlyNumber);
     setPriceInput(formattedNumber === "0" ? "" : formattedNumber);
     setIsPriceEnter(onlyNumber ? true : false);
   }
@@ -160,7 +160,7 @@ function ConsumptionIndexComponent(props) {
 
   useEffect(() => {
     handleInputsChange();
-  }, [categoryInput, priceInput, handleInputsChange]);
+  }, [categoryInput, priceInput]);
 
   return (
     <Horizontal style={{ marginTop: "16px", justifyContent: "flex-start" }}>
@@ -237,3 +237,8 @@ function ConsumptionIndexComponent(props) {
 }
 
 export default ConsumptionIndexComponent;
+
+function convertStringNum(onlyNumber) {
+  const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
+  return formattedNumber;
+}

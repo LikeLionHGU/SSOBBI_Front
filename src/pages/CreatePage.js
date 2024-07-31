@@ -24,7 +24,7 @@ import { useNavigate } from "react-router-dom";
 import LogoImg from "../imgs/Logo.png";
 import axios from "axios";
 
-//TODO: API명세서 보고 다시 수정하기
+//TODO: 잔재 데이터 삭제
 
 const BtnInputWrapper = styled.div`
   display: flex;
@@ -81,7 +81,6 @@ function CreatePage() {
   const [consumptions, setConsumptions] = useRecoilState(consumptionIndexState);
   const setHappiness = useSetRecoilState(happinessRateState);
   const setContent = useSetRecoilState(contentState);
-  const [inputCmpnt, setInputCmpnt] = useState(null); //inputComponent
   const [keyCounter, setKeyCounter] = useState(consumptions.length + 1); // id 1씩 증가시키기 위한 useState
   const navigate = useNavigate();
   function writeBtnClick() {
@@ -109,12 +108,11 @@ function CreatePage() {
     });
   }
   function handleAddBtnClick() {
-    setInputCmpnt((prev) => [
+    setConsumptions((prev) => [
       ...prev.map((itm) => ({ ...itm, focus: false, isLast: false })),
       { key: keyCounter + 1, id: keyCounter + 1, focus: true, isLast: true },
     ]);
     setKeyCounter((prev) => prev + 1);
-    console.log(inputCmpnt);
   }
   useEffect(() => {
     const apiUrl =
@@ -136,19 +134,6 @@ function CreatePage() {
       });
   }, []); // 화면 처음 렌더링 될 때 기본 데이터 불러와서 화면에 띄우기, 이후 백엔드 api와 연결할 때 코드 똑같이 복사
   useEffect(() => {
-    const existData = consumptions.map((itm, idx, arr) => ({
-      key: itm.id,
-      id: itm.id,
-      category: itm.category,
-      amount: itm.amount,
-      focus: false,
-      isLast: idx === arr.length - 1,
-    }));
-    const newData = [{ key: "1", id: "1" }];
-
-    setInputCmpnt(consumptions.length === 0 ? newData : existData);
-  }, [consumptions]);
-  useEffect(() => {
     const apiUrl =
       process.env.REACT_APP_BASE_URL + `/records/daily/${selectDate}`;
     axios
@@ -160,26 +145,42 @@ function CreatePage() {
       })
       .then((response) => {
         const data = response.data;
+        let newArr;
         if (data.isRecorded) {
           setHappiness(data.happinessRate);
           setContent(data.content);
-          const newArr = data.consumptions.map((itm, idx, arr) => ({
-            key: itm.id,
-            id: itm.id,
+          newArr = data.consumptions.map((itm, idx, arr) => ({
+            key: idx,
+            id: idx,
             category: itm.category,
             amount: itm.amount,
             focus: false,
             isLast: idx === arr.length - 1,
           }));
-          console.log(newArr);
-          setConsumptions(newArr);
-          setInputCmpnt(newArr);
+        } else {
+          newArr = [
+            {
+              key: "1",
+              id: "1",
+              category: " ",
+              amount: 0,
+              focus: false,
+              isLast: true,
+            },
+          ];
+          setHappiness(0);
+          setContent("");
         }
+        console.log(newArr);
+        setConsumptions(newArr);
       })
       .catch((error) => {
         console.log(error);
       });
   }, [selectDate]);
+  // useEffect(() => {
+  //   console.log(consumptions);
+  // }, [consumptions]);
   return (
     <Horizontal style={{ height: "100vh", overflowY: "hidden" }}>
       <MenuBarComponent menu={"note"} />
@@ -231,19 +232,18 @@ function CreatePage() {
                 </p>
                 <BtnInputWrapper>
                   <Vertical>
-                    {inputCmpnt &&
-                      inputCmpnt.map((item) => (
-                        <ConsumptionIndexComponent
-                          key={item.id}
-                          id={item.id}
-                          category={item.category}
-                          amount={item.amount}
-                          handleAddBtnClick={handleAddBtnClick}
-                          focus={item.focus}
-                          isLast={item.isLast}
-                          options={options}
-                        />
-                      ))}
+                    {consumptions.map((item) => (
+                      <ConsumptionIndexComponent
+                        key={item.id}
+                        id={item.id}
+                        category={item.category}
+                        amount={item.amount}
+                        handleAddBtnClick={handleAddBtnClick}
+                        focus={item.focus}
+                        isLast={item.isLast}
+                        options={options}
+                      />
+                    ))}
                   </Vertical>
                 </BtnInputWrapper>
               </div>
