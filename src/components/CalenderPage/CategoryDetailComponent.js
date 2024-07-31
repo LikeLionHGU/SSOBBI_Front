@@ -1,3 +1,7 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { tokenState } from "../../store/atom";
 import styled from "styled-components";
 import {
   NoCenterHorizontal,
@@ -97,20 +101,48 @@ const overspentData = [
     goal: 5000,
   },
 ];
+const colors = ["#D2F9E4", "#D0FAF8", "#CDEEF9"];
+const sizes = [
+  "100px",
+  "95px",
+  "90px",
+  "85px",
+  "80px",
+  "75px",
+  "70px",
+  "65px",
+  "60px",
+];
 
-function CategoryDetailComponent() {
-  const colors = ["#D2F9E4", "#D0FAF8", "#CDEEF9"];
-  const sizes = [
-    "100px",
-    "95px",
-    "90px",
-    "85px",
-    "80px",
-    "75px",
-    "70px",
-    "65px",
-    "60px",
-  ];
+function CategoryDetailComponent({ apiMonth }) {
+  const userToken = useRecoilValue(tokenState);
+  // const [overspentData, setOverspentData] = useState(null);
+
+  //TODO: API 개발 배포 완료시 연결
+  // useEffect(() => {
+  //   const fetchOverspentData = async () => {
+  //     try {
+  //       const overspent = await axios.get(
+  //         `${process.env.REACT_APP_BASE_URL}/consumptions/monthly/category`,
+  //         {
+  //           headers: {
+  //             Authorization: "Bearer " + userToken,
+  //           },
+  //         }
+  //       );
+  //       setOverspentData(
+  //         overspent.data.monthlyConsumptionsAndTargetsByCategory
+  //       );
+  //       console.log(
+  //         "setOverspentData: ",
+  //         overspent.data.monthlyConsumptionsAndTargetsByCategory
+  //       );
+  //     } catch (err) {
+  //       console.log("error: ", err);
+  //     }
+  //   };
+  //   fetchOverspentData();
+  // }, []);
   return (
     <>
       <NoCenterHorizontal
@@ -123,8 +155,8 @@ function CategoryDetailComponent() {
         }}
       >
         {overspentData.map((item, index) => {
-          const goalPercentage = item.goal / 100;
-          const usedPercentage = (item.used / item.goal) * 10;
+          const targetPercentage = item.target / 100;
+          const consumptionPercentage = (item.consumption / item.target) * 10;
           return (
             <Box>
               <TagCircle
@@ -139,16 +171,16 @@ function CategoryDetailComponent() {
                 <NoCenterHorizontal>
                   <GraphText>목표 금액</GraphText>
                   <BarContainer>
-                    <Bar bgColor={"#AFFFD4"} width={goalPercentage} />
+                    <Bar bgColor={"#AFFFD4"} width={targetPercentage} />
                   </BarContainer>
-                  <GraphText>{item.goal}원</GraphText>
+                  <GraphText>{item.target}원</GraphText>
                 </NoCenterHorizontal>
                 <NoCenterHorizontal>
                   <GraphText> 사용 금액 </GraphText>
                   <BarContainer>
-                    <Bar bgColor={"#19844A"} width={usedPercentage} />
+                    <Bar bgColor={"#19844A"} width={consumptionPercentage} />
                   </BarContainer>
-                  <GraphText>{item.used}원</GraphText>
+                  <GraphText>{item.consumption}원</GraphText>
                 </NoCenterHorizontal>
               </Graph>
             </Box>

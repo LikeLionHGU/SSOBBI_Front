@@ -18,6 +18,7 @@ import {
   NoCenterHorizontal,
   NoCenterVertical,
 } from "../styles/CommunalStyle";
+import { MdOutlineArrowBackIosNew } from "react-icons/md";
 
 import LogoImg from "../imgs/Logo.png";
 
@@ -35,6 +36,9 @@ const SubTitle = styled.p`
   color: ${(props) => props.theme.colors.COLORBlack};
   font-family: "SUITLight";
   font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 const Logo = styled.img`
   width: 35px;
@@ -67,7 +71,7 @@ const HappyBox = styled.div`
 
 function CalenderPage() {
   const location = useLocation();
-  console.log("location.state?.detailDate", location.state.detailDate);
+  console.log("location.state?.detailDate", location.state?.detailDate);
   const selectedDate = location.state?.detailDate
     ? moment(location.state.detailDate, "YYYY-MM-DD").format("YYYY-MM-DD")
     : moment().format("YYYY-MM-DD");
@@ -100,8 +104,10 @@ function CalenderPage() {
         console.log("error: ", err);
       }
     };
+    //ToDo: 데이터 없을때 500에러 발견
     const fetchHappyData = async () => {
       const happyDate = apiMonth.substring(0, 7);
+      console.log("happyDate", happyDate);
       try {
         const happiness = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/records/monthly/${happyDate}/summary/by-happiness-rate`,
@@ -135,30 +141,14 @@ function CalenderPage() {
     fetchMonthData();
     fetchHappyData();
     fetchDayilyData();
-  }, [selectedMonth]);
+  }, [selectedMonth, apiMonth]);
 
   const handleMonthChange = (month) => {
     setSelectedMonth(month);
-    //TODO: 데이터 반영이 늦게됨. 추후 확인 필요
-    axios
-      .get(
-        `${process.env.REACT_APP_BASE_URL}/records/daily/${apiMonth}/summary`,
-        {
-          headers: {
-            Authorization: "Bearer " + userToken,
-          },
-        }
-      )
-      .then((response) => {
-        setDailyData(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
   };
 
   const handleDetailCPChange = () => {
-    setDetailCP(true);
+    setDetailCP(!detailCP);
   };
   return (
     <>
@@ -190,18 +180,22 @@ function CalenderPage() {
               <Vertical
                 style={{
                   alignItems: "flex-start",
-                  marginLeft: "30px",
-                  marginRight: "20px",
+                  marginLeft: "20px",
+                  marginRight: "30px",
                 }}
               >
                 <SubTitle>
+                  <MdOutlineArrowBackIosNew
+                    onClick={handleDetailCPChange}
+                    style={{ cursor: "pointer", marginRight: "6px" }}
+                  />
                   한나님의 {selectedMonth}월{" "}
-                  <span style={{ fontFamily: "SUITMedium" }}>
+                  <span style={{ fontFamily: "SUITMedium", marginLeft: "4px" }}>
                     {" "}
-                    카테고리별 소비{" "}
+                    카테고리별 소비
                   </span>
                 </SubTitle>
-                <CategoryDetailComponent />
+                <CategoryDetailComponent apiMonth={apiMonth} />
               </Vertical>
               <MainCalenderComponent onMonthChange={handleMonthChange} />
             </NoCenterHorizontal>
