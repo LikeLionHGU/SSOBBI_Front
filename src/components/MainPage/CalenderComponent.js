@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { tokenState } from "../../store/atom";
 import axios from "axios";
@@ -66,11 +66,12 @@ const CheckPoint = styled.img`
   margin-top: -15px;
 `;
 
-const DetailBT = styled(Link)`
+const DetailBT = styled.button`
   font-family: "SUITLight";
   font-size: 10px;
   width: 100%;
   height: 34px;
+  border: none;
   border-radius: 0 0 20px 20px;
   display: flex;
   justify-content: center;
@@ -84,8 +85,10 @@ const DetailBT = styled(Link)`
 
 function Calender() {
   const today = new Date();
+  const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(null);
   const [attendDay, setAttendDay] = useState(null);
+  const [formatDay, setFormatDay] = useState(null);
   const userToken = useRecoilValue(tokenState);
   useEffect(() => {
     const selectedMonth = selectedDate
@@ -111,8 +114,8 @@ function Calender() {
   }, []);
   const [data, setData] = useState(0);
   const handleDateChange = (e) => {
-    const formattedDate = moment(e).format("DD");
-    setSelectedDate(formattedDate);
+    setFormatDay(moment(e).format("DD"));
+    setSelectedDate(moment(e).format("YYYY-MM-DD"));
     // const foundDate = attendDay.find(
     //   (itm) => itm.date === moment(e).format("YYYY-MM-DD")
     // );
@@ -139,6 +142,13 @@ function Calender() {
         console.log(error);
       });
   };
+  const handleDetailClick = () => {
+    console.log("Navigating with date:", selectedDate);
+    const detailDate = moment(selectedDate).format("YYYY-MM-DD");
+    navigate("/ssobbi/calender", {
+      state: { detailDate: detailDate },
+    });
+  };
   return (
     <CalenderWrapper>
       <Calendar
@@ -151,6 +161,11 @@ function Calender() {
         next2Label={null} // +1년 & +10년 이동 버튼 숨기기
         prev2Label={null} // -1년 & -10년 이동 버튼 숨기기
         minDetail="year" // 10년단위 년도 숨기기
+        tileDisabled={({ date, view }) =>
+          view === "month" &&
+          (date > today ||
+            !attendDay?.includes(moment(date).format("YYYY-MM-DD")))
+        }
         tileContent={({ date, view }) => {
           let html = [];
           if (
@@ -174,11 +189,11 @@ function Calender() {
           <SSOBBIBox>
             <CheckPoint src={CheckImg} />
             <p>
-              아이코! {selectedDate}일에{" "}
+              아이코! {formatDay}일에{" "}
               <span style={{ fontWeight: "bold" }}>{data}번</span> 과소비
               했어요.
             </p>
-            <DetailBT to="/ssobbi/calender">소비 내역 확인하기</DetailBT>
+            <DetailBT onClick={handleDetailClick}>소비 내역 확인하기</DetailBT>
           </SSOBBIBox>
         </>
       )}
