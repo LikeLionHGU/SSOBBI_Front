@@ -113,7 +113,14 @@ function CreatePage() {
   function handleAddBtnClick() {
     setConsumptions((prev) => [
       ...prev.map((itm) => ({ ...itm, focus: false, isLast: false })),
-      { key: keyCounter + 1, id: keyCounter + 1, focus: true, isLast: true },
+      {
+        key: keyCounter + 1,
+        id: keyCounter + 1,
+        focus: true,
+        isLast: true,
+        category: " ",
+        amount: 0,
+      },
     ]);
     setKeyCounter((prev) => prev + 1);
   }
@@ -164,6 +171,7 @@ function CreatePage() {
           }));
           setConsumptions(newArr);
           setId(data.id);
+          console.log("AAA");
         } else {
           setHappiness(0);
           setContent(" ");

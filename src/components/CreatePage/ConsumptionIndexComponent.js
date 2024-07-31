@@ -153,9 +153,11 @@ function ConsumptionIndexComponent(props) {
   }
 
   useEffect(() => {
-    setIsPriceEnter(props.amount ? true : false);
     if (props.focus === true) categoryRef.current.focus();
-  }, [props.focus, props.amount, setIsPriceEnter]);
+  }, [props.focus]);
+  useEffect(() => {
+    setIsPriceEnter(props.amount ? true : false);
+  }, [props.amount, setIsPriceEnter]);
   // 맨 처음 렌더링될때 포커스 맞추기 + 소비 이미 있으면 + 버튼 띄우기
 
   useEffect(() => {
