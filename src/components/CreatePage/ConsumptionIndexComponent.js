@@ -106,7 +106,7 @@ function ConsumptionIndexComponent(props) {
     priceRef.current.focus();
   }
 
-  function handleInputsChange() {
+  const handleInputsChange = useCallback(() => {
     const id = props.id;
 
     setConsumptionIndex((prev) => {
@@ -133,13 +133,13 @@ function ConsumptionIndexComponent(props) {
 
       return updatedConsumption;
     });
-  }
+  }, [categoryInput, priceInput, props.id, setConsumptionIndex]);
 
   function handlePriceInputChange(e) {
     const { value } = e.target;
     // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
     const onlyNumber = value.replace(/[^0-9]/g, "");
-    const formattedNumber = convertStringNum(onlyNumber);
+    const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
     setPriceInput(formattedNumber === "0" ? "" : formattedNumber);
     setIsPriceEnter(onlyNumber ? true : false);
   }
@@ -160,85 +160,87 @@ function ConsumptionIndexComponent(props) {
 
   useEffect(() => {
     handleInputsChange();
-  }, [categoryInput, priceInput]);
+  }, [categoryInput, priceInput, handleInputsChange]);
 
   return (
-    <Horizontal style={{ marginTop: "16px", justifyContent: "flex-start" }}>
-      <Vertical>
-        <CategoryInput
-          id="category"
-          ref={categoryRef}
-          autoComplete="off"
-          placeholder="카테고리"
-          onChange={(e) => setCategoryInput(e.target.value)}
-          onFocus={() => setIsFocus(true)}
-          onBlur={(e) => {
-            const categorySelects = document.querySelectorAll("select");
-            var isSelectTag = false;
+    props && (
+      <Horizontal style={{ marginTop: "16px", justifyContent: "flex-start" }}>
+        <Vertical>
+          <CategoryInput
+            id="category"
+            ref={categoryRef}
+            autoComplete="off"
+            placeholder="카테고리"
+            onChange={(e) => setCategoryInput(e.target.value)}
+            onFocus={() => setIsFocus(true)}
+            onBlur={(e) => {
+              const categorySelects = document.querySelectorAll("select");
+              var isSelectTag = false;
 
-            for (const select of categorySelects) {
-              if (e.relatedTarget === select) isSelectTag = true;
-            }
+              for (const select of categorySelects) {
+                if (e.relatedTarget === select) isSelectTag = true;
+              }
 
-            if (e.relatedTarget === null || !isSelectTag) {
-              setIsFocus(false);
+              if (e.relatedTarget === null || !isSelectTag) {
+                setIsFocus(false);
 
-              var isOptionData = false;
-              props.options.map((itm) => {
-                if (categoryInput === itm) isOptionData = true;
-              });
-              if (!isOptionData) setCategoryInput("");
-            }
-          }}
-          value={categoryInput}
-        ></CategoryInput>
-        {isFocus && (
-          <StyledSelect id="search" size="4" onChange={handleSelectChange}>
-            {!categoryInput && // 포커스 돼있을때만
-              props.options.map((itm) => (
-                <StyledOption key={itm} value={itm}>
-                  {itm}
-                </StyledOption>
-              ))}
-            {categoryInput && // inputValue에 어떤 값이 들어있을 때
-              props.options
-                .filter((itm) =>
-                  itm.toLowerCase().includes(categoryInput.toLowerCase())
-                )
-                .map((itm) => (
+                var isOptionData = false;
+                props.options.map((itm) => {
+                  if (categoryInput === itm) isOptionData = true;
+                });
+                if (!isOptionData) setCategoryInput("");
+              }
+            }}
+            value={categoryInput}
+          ></CategoryInput>
+          {isFocus && (
+            <StyledSelect id="search" size="4" onChange={handleSelectChange}>
+              {!categoryInput && // 포커스 돼있을때만
+                props.options.map((itm) => (
                   <StyledOption key={itm} value={itm}>
                     {itm}
                   </StyledOption>
                 ))}
-          </StyledSelect>
+              {categoryInput && // inputValue에 어떤 값이 들어있을 때
+                props.options
+                  .filter((itm) =>
+                    itm.toLowerCase().includes(categoryInput.toLowerCase())
+                  )
+                  .map((itm) => (
+                    <StyledOption key={itm} value={itm}>
+                      {itm}
+                    </StyledOption>
+                  ))}
+            </StyledSelect>
+          )}
+        </Vertical>
+        <PriceInput
+          id="priceInput"
+          ref={priceRef}
+          onChange={handlePriceInputChange}
+          value={priceInput}
+          autoComplete="off"
+          onKeyDown={activeEnter}
+          placeholder="금액"
+        ></PriceInput>
+        {props.isLast === false && (
+          <ManageBtn onClick={handleRmvBtnClick} id="rmvBtn">
+            <img src={RmvBtnImg} alt="removeImg" id="rmvBtn" />
+          </ManageBtn>
         )}
-      </Vertical>
-      <PriceInput
-        id="priceInput"
-        ref={priceRef}
-        onChange={handlePriceInputChange}
-        value={priceInput}
-        autoComplete="off"
-        onKeyDown={activeEnter}
-        placeholder="금액"
-      ></PriceInput>
-      {props.isLast === false && (
-        <ManageBtn onClick={handleRmvBtnClick} id="rmvBtn">
-          <img src={RmvBtnImg} alt="removeImg" id="rmvBtn" />
-        </ManageBtn>
-      )}
-      {props.isLast === true && isPriceEnter === true && (
-        <ManageBtn onClick={props.handleAddBtnClick} id="addBtn">
-          <img src={AddBtnImg} alt="addImg" id="addBtn" />
-        </ManageBtn>
-      )}
-    </Horizontal>
+        {props.isLast === true && isPriceEnter === true && (
+          <ManageBtn onClick={props.handleAddBtnClick} id="addBtn">
+            <img src={AddBtnImg} alt="addImg" id="addBtn" />
+          </ManageBtn>
+        )}
+      </Horizontal>
+    )
   );
 }
-
-export default ConsumptionIndexComponent;
 
 function convertStringNum(onlyNumber) {
   const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
   return formattedNumber;
 }
+
+export default ConsumptionIndexComponent;

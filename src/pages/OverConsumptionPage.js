@@ -69,28 +69,54 @@ function OverConsumptionPage() {
   const userToken = useRecoilValue(tokenState);
   const navigate = useNavigate();
   function handleBtnClick() {
-    const apiUrl = process.env.REACT_APP_BASE_URL + "/records";
-    const newArr = {
-      happinessRate: happinessRate,
-      content: content,
-      date: selectedDate,
-      consumptions: consumptions,
-    };
-    console.log("기록하기 위해 넘겨질 데이터 확인", newArr);
-    axios
-      .post(apiUrl, newArr, {
-        headers: {
-          Authorization: "Bearer " + userToken,
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        console.log("기록하기 성공", response);
-        navigate("/ssobbi");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const searchParams = new URLSearchParams(location.search);
+    const id = searchParams.get("id");
+    console.log(id);
+    if (id !== null) {
+      const apiUrl = process.env.REACT_APP_BASE_URL + `/records/${id}`;
+      const newArr = {
+        happinessRate: happinessRate,
+        content: content,
+        consumptions: consumptions,
+      };
+      axios
+        .put(apiUrl, newArr, {
+          headers: {
+            Authorization: "Bearer " + userToken,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          console.log("기록하기 성공", response);
+          navigate("/ssobbi");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      const apiUrl = process.env.REACT_APP_BASE_URL + "/records";
+      const newArr = {
+        happinessRate: happinessRate,
+        content: content,
+        date: selectedDate,
+        consumptions: consumptions,
+      };
+      console.log("기록하기 위해 넘겨질 데이터 확인", newArr);
+      axios
+        .post(apiUrl, newArr, {
+          headers: {
+            Authorization: "Bearer " + userToken,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          console.log("기록하기 성공", response);
+          navigate("/ssobbi");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
   useEffect(() => {
     setConsumptions((prev) =>
