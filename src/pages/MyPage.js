@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import MenuBarComponent from "../components/MainPage/MenuBarComponent";
 import {
   Horizontal,
-  Vertical,
   NoCenterVertical,
   NoCenterHorizontal,
 } from "../styles/CommunalStyle";
@@ -48,86 +47,73 @@ const Title = styled.p`
   margin: 0;
   margin-top: 10px;
 `;
+
 const Logo = styled.img`
   width: 35px;
   height: 35px;
   margin-right: 15px;
 `;
 
+const ScrollContainer = styled.div`
+  overflow-y: scroll;
+  height: 700px;
+  padding-left: 33px;
+  padding-right: 210px;
+`;
+
 function MyPage() {
   const userToken = useRecoilValue(tokenState);
   const [isUpdating, setIsUpdating] = useState(false);
-  const [amount, setAmount] = useState(null);
-  const [categories, setCategories] = useState(null);
+  const [amount, setAmount] = useState([]);
   const [isMinimumCategory, setIsMinimumCategory] = useState(false);
+
   function handleAmountBtnClick() {
     setIsUpdating(true);
   }
+
   function handleAddBtnClick() {
+    const data = [
+      ...amount.map((itm) => ({ ...itm, isLast: false })),
+      { category: "", amount: 0, isLast: true },
+    ];
+
+    console.log(data);
     setAmount((prev) => [
       ...prev.map((itm) => ({ ...itm, isLast: false })),
-      { category: "", amount: "", isLast: true },
+      { category: "", amount: 0, isLast: true },
     ]);
     setIsMinimumCategory(false);
   }
-  function haveSameCategory(array1, array2) {
-    // 배열의 길이가 다르면 동일할 수 없으므로 false 반환
-    if (array1.length !== array2.length) {
-      return false;
-    }
-    const category1 = new Set(array1.map((item) => item.category));
-    const category2 = new Set(array2.map((item) => item.category));
-    if (category1.size !== category2.size) {
-      return false;
-    }
-    for (const category of category1) {
-      if (!category2.has(category)) {
-        return false;
-      }
-    }
-    return true;
-  }
+
   function handleLoadBtnClick() {
     const apiUrl =
       process.env.REACT_APP_BASE_URL + "/category/monthly/TargetAmount";
-    const data = amount.map((itm) => ({
-      category: itm.category,
-      amount: itm.amount,
-    }));
+
+    const data = amount
+      .filter((itm) => itm.category !== "" && itm.amount !== 0)
+      .map((itm) => ({
+        category: itm.category,
+        amount: itm.amount,
+      }));
 
     const newArr = { requests: data };
-    if (haveSameCategory(data, categories)) {
-      axios
-        .patch(apiUrl, newArr, {
-          headers: {
-            Authorization: "Bearer " + userToken,
-            "Content-Type": "application/json",
-          },
-        })
-        .then((response) => {
-          console.log(response);
-          if (response) setIsUpdating(false);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      axios
-        .post(apiUrl, newArr, {
-          headers: {
-            Authorization: "Bearer " + userToken,
-            "Content-Type": "application/json",
-          },
-        })
-        .then((response) => {
-          console.log(response);
-          if (response) setIsUpdating(false);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+    console.log(newArr);
+    axios
+      .post(apiUrl, newArr, {
+        headers: {
+          Authorization: "Bearer " + userToken,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        if (response) setIsUpdating(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
+
   useEffect(() => {
     const apiUrl =
       process.env.REACT_APP_BASE_URL + "/category/monthly/TargetAmount";
@@ -145,20 +131,22 @@ function MyPage() {
           isLast: idx === arr.length - 1,
         }));
         setAmount(data);
-        setCategories(data.map((itm) => ({ category: itm.category })));
       })
       .catch((error) => {
         console.log(error);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isUpdating]);
+
   return (
     amount && (
-      <Horizontal style={{ height: "100vh", overflow: "hidden" }}>
+      <Horizontal style={{ height: "100vh" }}>
         <MenuBarComponent menu={"profile"} />
-        <Vertical
+        <NoCenterVertical
           style={{
-            alignItems: "flex-start",
+            height: "100vh",
+            justifyContent: "flex-start",
+            marginTop: "40px",
           }}
         >
           <NoCenterHorizontal>
@@ -184,19 +172,8 @@ function MyPage() {
               paddingTop: "43px",
             }}
           >
-            <NoCenterVertical
-              style={{
-                alignItems: "flex-start",
-              }}
-            >
-              <div
-                style={{
-                  overflowY: "scroll",
-                  height: "700px",
-                  paddingLeft: "33px",
-                  paddingRight: "210px",
-                }}
-              >
+            <NoCenterVertical style={{ alignItems: "flex-start" }}>
+              <ScrollContainer>
                 <ProfileComponent />
                 <MonthIncomeComponent />
                 <div
@@ -220,27 +197,27 @@ function MyPage() {
                       />
                     ))}
                   </div>
-                  {isUpdating === false && (
+                  {!isUpdating && (
                     <AmountUpdateBtn onClick={handleAmountBtnClick}>
                       수정하기
                     </AmountUpdateBtn>
                   )}
-                  {isUpdating === true && (
+                  {isUpdating && (
                     <AmountUpdateBtn onClick={handleLoadBtnClick}>
                       저장하기
                     </AmountUpdateBtn>
                   )}
                 </div>
-                {isMinimumCategory === true && (
+                {isMinimumCategory && (
                   <ErrorMessage>카테고리는 최소 2개 이상 있어야함</ErrorMessage>
                 )}
-              </div>
+              </ScrollContainer>
             </NoCenterVertical>
             <NoCenterVertical style={{ marginLeft: "56px" }}>
               <AlarmComponent />
             </NoCenterVertical>
           </Horizontal>
-        </Vertical>
+        </NoCenterVertical>
       </Horizontal>
     )
   );

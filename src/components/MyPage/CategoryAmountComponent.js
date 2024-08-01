@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Horizontal } from "../../styles/CommunalStyle";
 import styled from "styled-components";
 import AddBtnImg from "../../imgs/AddBtnImg.svg";
@@ -71,8 +71,8 @@ function CategoryAmountComponent({
   isLast,
   handleAddBtnClick,
 }) {
-  const [category, setCategory] = useState(data.category);
-  const [price, setPrice] = useState(convertStringNum(data.amount));
+  const [category, setCategory] = useState(null);
+  const [price, setPrice] = useState(convertStringNum(null));
   function removeBtnClick() {
     if (amount.length > 2) {
       setAmount((prev) => prev.filter((itm) => itm.category !== data.category));
@@ -82,15 +82,34 @@ function CategoryAmountComponent({
     }
   }
   function handleCategoryChange(e) {
-    setCategory(e.target.value);
-    setAmount((prev) =>
-      prev.map((itm) =>
-        itm.category === data.category
-          ? { ...itm, category: e.target.value }
-          : itm
-      )
-    );
+    const newCategory = e.target.value;
+    setCategory(newCategory);
+
+    setAmount((prev) => {
+      // Update the existing category if found
+      let categoryExists = false;
+      const updatedAmount = prev.map((itm) => {
+        if (itm.category === category) {
+          categoryExists = true;
+          return {
+            ...itm,
+            category: newCategory,
+          };
+        }
+        return itm;
+      });
+
+      if (!categoryExists) {
+        updatedAmount.push({
+          category: newCategory,
+          amount: 0,
+        });
+      }
+
+      return updatedAmount;
+    });
   }
+
   function handlePriceChange(e) {
     const { value } = e.target;
     // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
@@ -105,6 +124,10 @@ function CategoryAmountComponent({
       )
     );
   }
+  useEffect(() => {
+    setCategory(data.category);
+    setPrice(data.amount);
+  }, [data]);
   return (
     <Horizontal style={{ marginTop: "14px", justifyContent: "flex-start" }}>
       <CategoryInput
