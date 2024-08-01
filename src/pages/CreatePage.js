@@ -2,6 +2,7 @@ import styled from "styled-components";
 import HappinessRateComponent from "../components/CreatePage/HappinessRateComponent";
 import ContentComponent from "../components/CreatePage/ContentComponent";
 import ConsumptionIndexComponent from "../components/CreatePage/ConsumptionIndexComponent";
+import ModalComponent from "../components/IncomePage/ModalComponent";
 import {
   consumptionIndexState,
   tokenState,
@@ -9,7 +10,7 @@ import {
   contentState,
   userData,
 } from "../store/atom";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
 import MenuBarComponent from "../components/MainPage/MenuBarComponent";
 import DropDownComponent from "../components/MainPage/DropDownComponent";
@@ -24,6 +25,7 @@ import CalenderComponent from "../components/CreatePage/CalenderComponent";
 import { useNavigate } from "react-router-dom";
 import LogoImg from "../imgs/Logo.png";
 import axios from "axios";
+import CompleteModalComponent from "../components/CreatePage/CompleteModalComponent";
 
 const BtnInputWrapper = styled.div`
   display: flex;
@@ -92,6 +94,7 @@ function CreatePage() {
   const [updateWording, setUpdateWording] = useState(null);
   const userInfo = useRecoilValue(userData);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   function writeBtnClick() {
     let dataLength = consumptions.filter(
@@ -147,6 +150,7 @@ function CreatePage() {
         .then((response) => {
           console.log(response);
           setShowErrorMessage(false);
+          setShowModal(true);
         })
         .catch((error) => {
           console.log(error);
@@ -255,6 +259,11 @@ function CreatePage() {
   return (
     options && (
       <Horizontal style={{ height: "100vh", overflowY: "hidden" }}>
+        {showModal && (
+          <ModalComponent closeModal={() => setShowModal(false)}>
+            <CompleteModalComponent closeModal={() => setShowModal(false)} />
+          </ModalComponent>
+        )}
         <MenuBarComponent menu={"note"} />
         <NoCenterVertical
           style={{
