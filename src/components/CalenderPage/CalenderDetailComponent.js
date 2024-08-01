@@ -128,6 +128,7 @@ function CalenderDetailComponent({ onMonthChange, setApiMonth }) {
         console.log(error);
       });
   };
+  // eslint-disable-next-line no-unused-vars
   const handleDetailClick = () => {
     console.log("Navigating with date:", selectedDate);
     const detailDate = moment(selectedDate).format("YYYY-MM-DD");

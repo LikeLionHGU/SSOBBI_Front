@@ -137,7 +137,6 @@ function MyPage() {
         console.log(error);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    console.log("userInfo", userInfo);
   }, [isUpdating]);
 
   return (
