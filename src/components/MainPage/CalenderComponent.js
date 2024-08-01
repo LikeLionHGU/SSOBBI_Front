@@ -15,7 +15,7 @@ const CalenderWrapper = styled.div`
   height: 630px;
   background-color: #f2f6f4;
   border-radius: 20px;
-  margin-top: 65px;
+  margin-top: 35px;
   display: flex;
   flex-direction: column;
   align-items: center;

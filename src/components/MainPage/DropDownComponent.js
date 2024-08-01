@@ -11,6 +11,7 @@ const DropdownContainer = styled.div`
   text-align: center;
   width: 250px;
   cursor: pointer;
+  margin-top: 30px;
 `;
 
 const Menu = styled.div`

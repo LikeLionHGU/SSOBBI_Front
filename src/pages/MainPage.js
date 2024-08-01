@@ -127,7 +127,7 @@ function MainPage() {
           </NoCenterHorizontal>
           <NoCenterHorizontal
             style={{
-              height: "750px",
+              height: "800px",
               overflowY: "scroll",
             }}
           >
@@ -136,7 +136,6 @@ function MainPage() {
                 alignItems: "flex-start",
                 marginLeft: "30px",
                 marginRight: "55px",
-                paddingTop: "30px",
                 paddingBottom: "20px",
               }}
             >
