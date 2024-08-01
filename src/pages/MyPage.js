@@ -93,7 +93,7 @@ function MyPage() {
       .filter((itm) => itm.category !== "" && itm.amount !== 0)
       .map((itm) => ({
         category: itm.category,
-        amount: itm.amount,
+        amount: convertToInt(itm.amount),
       }));
 
     const newArr = { requests: data };
@@ -127,7 +127,7 @@ function MyPage() {
       .then((response) => {
         const data = response.data.responses.map((itm, idx, arr) => ({
           category: itm.category,
-          amount: itm.amount,
+          amount: convertStringNum(itm.amount),
           isLast: idx === arr.length - 1,
         }));
         setAmount(data);
@@ -224,3 +224,14 @@ function MyPage() {
 }
 
 export default MyPage;
+
+function convertToInt(numberString) {
+  const numberWithoutCommas = numberString.replace(/,/g, "");
+  const number = parseInt(numberWithoutCommas, 10);
+  return number;
+}
+
+function convertStringNum(onlyNumber) {
+  const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
+  return formattedNumber;
+}

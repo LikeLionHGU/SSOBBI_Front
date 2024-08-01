@@ -109,7 +109,7 @@ function MonthIncomeComponent() {
       .catch((error) => {
         console.log(error);
       });
-  }, [isUpdating]);
+  }, [isUpdating, userToken]);
   return (
     <Vertical style={{ alignItems: "flex-start" }}>
       <Title>
