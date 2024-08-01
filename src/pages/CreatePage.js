@@ -2,6 +2,7 @@ import styled from "styled-components";
 import HappinessRateComponent from "../components/CreatePage/HappinessRateComponent";
 import ContentComponent from "../components/CreatePage/ContentComponent";
 import ConsumptionIndexComponent from "../components/CreatePage/ConsumptionIndexComponent";
+import ModalComponent from "../components/IncomePage/ModalComponent";
 import {
   consumptionIndexState,
   tokenState,
@@ -9,7 +10,7 @@ import {
   contentState,
   userData,
 } from "../store/atom";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
 import MenuBarComponent from "../components/MainPage/MenuBarComponent";
 import DropDownComponent from "../components/MainPage/DropDownComponent";
@@ -24,6 +25,7 @@ import CalenderComponent from "../components/CreatePage/CalenderComponent";
 import { useNavigate } from "react-router-dom";
 import LogoImg from "../imgs/Logo.png";
 import axios from "axios";
+import CompleteModalComponent from "../components/CreatePage/CompleteModalComponent";
 
 const BtnInputWrapper = styled.div`
   display: flex;
@@ -70,6 +72,12 @@ const SubmitBtn = styled.button`
   }
 `;
 
+const ErrorMessage = styled.p`
+  font-family: "SUITMedium";
+  font-size: 16px;
+  color: red;
+`;
+
 function CreatePage() {
   const [selectDate, setSelectDate] = useState(moment().format("YYYY-MM-DD"));
   const month = selectDate.slice(5, 7).padStart(2, "0");
@@ -79,37 +87,74 @@ function CreatePage() {
   const userToken = useRecoilValue(tokenState);
   const [consumptions, setConsumptions] = useRecoilState(consumptionIndexState);
   const [id, setId] = useState(null);
-  const setHappiness = useSetRecoilState(happinessRateState);
-  const setContent = useSetRecoilState(contentState);
+  const [happinessRate, setHappiness] = useRecoilState(happinessRateState);
+  const [content, setContent] = useRecoilState(contentState);
   const [keyCounter, setKeyCounter] = useState(1); // id 1씩 증가시키기 위한 useState
   const navigate = useNavigate();
   const [updateWording, setUpdateWording] = useState(null);
   const userInfo = useRecoilValue(userData);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   function writeBtnClick() {
-    setConsumptions((prev) =>
-      prev
-        .filter((itm) => itm.category !== "" && itm.amount !== 0)
-        .map((itm) => {
-          const target = targetAmount.find((t) => t.category === itm.category);
-          if (target) {
-            return {
-              category: itm.category,
-              targetAmount: target.amount,
-              amount: convertToInt(itm.amount),
-            };
-          }
-          return itm;
-        })
-    );
-    if (id !== null) {
-      navigate(`/ssobbi/create/check?id=${id}`, {
-        state: { date: selectDate },
-      });
+    let dataLength = consumptions.filter(
+      (itm) => itm.category !== "" && itm.amount !== 0
+    ).length;
+
+    if (dataLength === 0 && showErrorMessage === false) {
+      setShowErrorMessage(true);
+      return;
+    }
+
+    if (dataLength !== 0) {
+      setConsumptions((prev) =>
+        prev
+          .filter((itm) => itm.category !== "" && itm.amount !== 0)
+          .map((itm) => {
+            const target = targetAmount.find(
+              (t) => t.category === itm.category
+            );
+            if (target) {
+              return {
+                category: itm.category,
+                targetAmount: target.amount,
+                amount: convertToInt(itm.amount),
+              };
+            }
+            return itm;
+          })
+      );
+      if (id !== null) {
+        navigate(`/ssobbi/create/check?id=${id}`, {
+          state: { date: selectDate },
+        });
+      } else {
+        navigate("/ssobbi/create/check", {
+          state: { date: selectDate },
+        });
+      }
     } else {
-      navigate("/ssobbi/create/check", {
-        state: { date: selectDate },
-      });
+      const apiUrl = process.env.REACT_APP_BASE_URL + "/records";
+      const newArr = {
+        happinessRate: happinessRate,
+        content: content,
+        date: selectDate,
+        consumptions: [],
+      };
+      axios
+        .post(apiUrl, newArr, {
+          headers: {
+            Authorization: "Bearer " + userToken,
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          setShowErrorMessage(false);
+          setShowModal(true);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }
 
@@ -214,6 +259,11 @@ function CreatePage() {
   return (
     options && (
       <Horizontal style={{ height: "100vh", overflowY: "hidden" }}>
+        {showModal && (
+          <ModalComponent closeModal={() => setShowModal(false)}>
+            <CompleteModalComponent closeModal={() => setShowModal(false)} />
+          </ModalComponent>
+        )}
         <MenuBarComponent menu={"note"} />
         <NoCenterVertical
           style={{
@@ -279,6 +329,9 @@ function CreatePage() {
                           options={options}
                         />
                       ))}
+                      {showErrorMessage && (
+                        <ErrorMessage>소비항목이 정말 없나요?</ErrorMessage>
+                      )}
                     </Vertical>
                   </BtnInputWrapper>
                 </div>

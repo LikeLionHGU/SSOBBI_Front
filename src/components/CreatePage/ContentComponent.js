@@ -10,8 +10,8 @@ const TextCount = styled.p`
   color: gray;
 `;
 const StyledTextarea = styled.textarea`
-  width: 803px;
-  height: 142px;
+  width: 743px;
+  height: 82px;
   resize: none;
   &:focus {
     outline: none;
@@ -20,6 +20,9 @@ const StyledTextarea = styled.textarea`
     0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
   border: none;
   border-radius: 10px;
+  font-family: "SUITLight";
+  font-size: 14px;
+  padding: 30px;
 `;
 
 function ContentComponent() {

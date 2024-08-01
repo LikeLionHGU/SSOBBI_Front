@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   consumptionIndexState,
@@ -6,6 +6,7 @@ import {
   contentState,
   tokenState,
 } from "../store/atom";
+import { IoIosArrowBack } from "react-icons/io";
 import MenuBarComponent from "../components/MainPage/MenuBarComponent";
 import InfoCircleImg from "../imgs/InfoCircle.svg";
 import {
@@ -19,6 +20,8 @@ import TooltipComponent from "../components/OverConsumptionPage/TooltipComponent
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import ModalComponent from "../components/IncomePage/ModalComponent";
+import CompleteModalComponent from "../components/CreatePage/CompleteModalComponent";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -60,6 +63,21 @@ const StyledBtn = styled.button`
   right: 30px;
 `;
 
+const BackBtn = styled.button`
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-color: white;
+  margin-right: 20px;
+  cursor: pointer;
+  margin-bottom: 5px;
+
+  > svg {
+    width: 30px;
+    height: 30px;
+  }
+`;
+
 function OverConsumptionPage() {
   const location = useLocation();
   const selectedDate = location.state.date;
@@ -68,6 +86,7 @@ function OverConsumptionPage() {
   const content = useRecoilValue(contentState);
   const userToken = useRecoilValue(tokenState);
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
   function handleBtnClick() {
     const searchParams = new URLSearchParams(location.search);
     const id = searchParams.get("id");
@@ -88,7 +107,7 @@ function OverConsumptionPage() {
         })
         .then((response) => {
           console.log("기록하기 성공", response);
-          navigate("/ssobbi");
+          setShowModal(true);
         })
         .catch((error) => {
           console.log(error);
@@ -111,7 +130,7 @@ function OverConsumptionPage() {
         })
         .then((response) => {
           console.log("기록하기 성공", response);
-          navigate("/ssobbi");
+          setShowModal(true);
         })
         .catch((error) => {
           console.log(error);
@@ -128,6 +147,11 @@ function OverConsumptionPage() {
   }, []);
   return (
     <Horizontal style={{ height: "100vh", alignItems: "flex-start" }}>
+      {showModal && (
+        <ModalComponent>
+          <CompleteModalComponent closeModal={() => navigate("/ssobbi")} />
+        </ModalComponent>
+      )}
       <MenuBarComponent menu={"note"} />
       <Vertical
         style={{
@@ -140,6 +164,9 @@ function OverConsumptionPage() {
         <div style={{ height: "158px" }} />
         <Wrapper>
           <TitleWrapper>
+            <BackBtn onClick={() => navigate(-1)}>
+              <IoIosArrowBack />
+            </BackBtn>
             <p style={{ marginTop: "16px" }}>
               쏘삐가 생각하는 OO님의 <span>과소비 내역</span>이 맞는지
               확인해주세요
