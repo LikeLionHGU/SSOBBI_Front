@@ -11,6 +11,7 @@ const DropdownContainer = styled.div`
   text-align: center;
   width: 250px;
   cursor: pointer;
+  margin-top: 30px;
 `;
 
 const Menu = styled.div`
@@ -101,7 +102,7 @@ const DropDownComponent = () => {
       <Menu isDropped={myPageIsOpen}>
         <Ul>
           <Li>
-            <LinkWrapper href="/ssobbi/income">마이페이지</LinkWrapper>
+            <LinkWrapper href="/ssobbi/mypage">마이페이지</LinkWrapper>
           </Li>
           <Li onClick={logoutClickHandler}>
             <LinkWrapper href="/">로그아웃</LinkWrapper>

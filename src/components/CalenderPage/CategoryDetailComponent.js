@@ -1,7 +1,4 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useRecoilValue } from "recoil";
-import { tokenState } from "../../store/atom";
+import React from "react";
 import styled from "styled-components";
 import { NoCenterHorizontal } from "../../styles/CommunalStyle";
 
@@ -66,38 +63,6 @@ const Bar = styled.div`
   width: ${(props) => props.width}%;
 `;
 
-// const overspentData = [
-//   {
-//     category: "식비",
-//     used: 3000,
-//     goal: 1000,
-//   },
-//   {
-//     category: "교통비",
-//     used: 2400,
-//     goal: 100,
-//   },
-//   {
-//     category: "쇼핑",
-//     used: 300000,
-//     goal: 1000,
-//   },
-//   {
-//     category: "댄스학원",
-//     used: 45000,
-//     goal: 5000,
-//   },
-//   {
-//     category: "댄스학원",
-//     used: 45000,
-//     goal: 5000,
-//   },
-//   {
-//     category: "댄스학원",
-//     used: 45000,
-//     goal: 5000,
-//   },
-// ];
 const colors = ["#D2F9E4", "#D0FAF8", "#CDEEF9"];
 const sizes = [
   "100px",
@@ -111,41 +76,13 @@ const sizes = [
   "60px",
 ];
 
-function CategoryDetailComponent({ apiMonth }) {
-  const userToken = useRecoilValue(tokenState);
-  const [overspentData, setOverspentData] = useState(null);
-
-  //TODO: API 개발 배포 완료시 연결
-  useEffect(() => {
-    const fetchOverspentData = async () => {
-      try {
-        const overspent = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/consumptions/${apiMonth}/category`,
-          {
-            headers: {
-              Authorization: "Bearer " + userToken,
-            },
-          }
-        );
-        setOverspentData(
-          overspent.data.monthlyConsumptionsAndTargetsByCategory
-        );
-        console.log(
-          "setOverspentData: ",
-          overspent.data.monthlyConsumptionsAndTargetsByCategory
-        );
-      } catch (err) {
-        console.log("error: ", err);
-      }
-    };
-    fetchOverspentData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+function CategoryDetailComponent({ userIncome, overspentData }) {
   return (
     <>
       <NoCenterHorizontal
         style={{
           flexWrap: "wrap",
+          alignItems: "flex-start",
           width: "850px",
           height: "600px",
           overflowY: "scroll",
@@ -153,8 +90,8 @@ function CategoryDetailComponent({ apiMonth }) {
         }}
       >
         {overspentData?.map((item, index) => {
-          const targetPercentage = item.target / 100;
-          const consumptionPercentage = (item.consumption / item.target) * 10;
+          const targetPercentage = (item.target / userIncome) * 800;
+          const consumptionPercentage = item.consumption / targetPercentage;
           return (
             <Box>
               <TagCircle
