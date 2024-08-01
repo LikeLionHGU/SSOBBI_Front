@@ -2,6 +2,8 @@ import styled from "styled-components";
 import GaugeComponent from "react-gauge-component";
 
 import { Horizontal } from "../../styles/CommunalStyle";
+import { useRecoilValue } from "recoil";
+import { userData } from "../../store/atom";
 
 const Title = styled.p`
   color: ${(props) => props.theme.colors.COLORBlack};
@@ -40,10 +42,12 @@ const TagBox = styled.div`
 
 const colors = ["#BEFEDB", "#C4FAF7", "#BDEFFF", "#C1FFAC"];
 function DayStatisticsComponent({ dayData }) {
+  const userInfo = useRecoilValue(userData);
   return (
     <>
       <Title>
-        한나님의 <span style={{ fontFamily: "SUITMedium" }}>오늘의 기록 </span>
+        {userInfo.name}님의{" "}
+        <span style={{ fontFamily: "SUITMedium" }}>오늘의 기록 </span>
       </Title>
       <Horizontal>
         <Box>

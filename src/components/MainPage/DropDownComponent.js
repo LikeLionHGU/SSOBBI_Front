@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { UserTokenState, tokenState } from "../../store/atom";
-import { useSetRecoilState } from "recoil";
+import { UserTokenState, tokenState, userData } from "../../store/atom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import useDetectClose from "../../hooks/useDetectClose";
 import { SlArrowUp, SlArrowDown } from "react-icons/sl";
 import LogoImg from "../../imgs/Logo.png";
@@ -84,6 +84,7 @@ const DropDownComponent = () => {
   const [myPageIsOpen, myPageRef, myPageHandler] = useDetectClose(false);
   const setUserToken = useSetRecoilState(UserTokenState);
   const setToken = useSetRecoilState(tokenState);
+  const userInfo = useRecoilValue(userData);
 
   const logoutClickHandler = () => {
     localStorage.removeItem("recoil-persist");
@@ -96,7 +97,8 @@ const DropDownComponent = () => {
     <DropdownContainer>
       <Horizontal onClick={myPageHandler} ref={myPageRef}>
         <Logo src={LogoImg} />
-        이한나 <Icon>{myPageIsOpen ? <SlArrowUp /> : <SlArrowDown />}</Icon>
+        {userInfo.name}{" "}
+        <Icon>{myPageIsOpen ? <SlArrowUp /> : <SlArrowDown />}</Icon>
       </Horizontal>
       <Menu isDropped={myPageIsOpen}>
         <Ul>

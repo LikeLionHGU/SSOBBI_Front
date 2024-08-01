@@ -4,7 +4,7 @@ import styled from "styled-components";
 import moment from "moment";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
-import { tokenState } from "../store/atom";
+import { tokenState, userData } from "../store/atom";
 import DropDownComponent from "../components/MainPage/DropDownComponent";
 import MenuBarComponent from "../components/MainPage/MenuBarComponent";
 import CalenderComponent from "../components/CalenderPage/CalenderComponent";
@@ -159,6 +159,8 @@ function CalenderPage() {
   const handleDetailCPChange = () => {
     setDetailCP(!detailCP);
   };
+
+  const userInfo = useRecoilValue(userData);
   return (
     <>
       <Horizontal style={{ height: "100vh", overflowY: "hidden" }}>
@@ -202,7 +204,7 @@ function CalenderPage() {
                     onClick={handleDetailCPChange}
                     style={{ cursor: "pointer", marginRight: "6px" }}
                   />
-                  한나님의 {selectedMonth}월{" "}
+                  {userInfo.name}님의 {selectedMonth}월{" "}
                   <span style={{ fontFamily: "SUITMedium", marginLeft: "4px" }}>
                     {" "}
                     카테고리별 소비
@@ -227,7 +229,7 @@ function CalenderPage() {
                   }}
                 >
                   <SubTitle>
-                    한나님의 {selectedMonth}월{" "}
+                    {userInfo.name}님의 {selectedMonth}월{" "}
                     <span style={{ fontFamily: "SUITMedium" }}> 소비 </span>
                   </SubTitle>
                   <MonthComponent
@@ -257,7 +259,7 @@ function CalenderPage() {
                 />
               </NoCenterHorizontal>
               <SubTitle style={{ marginLeft: "30px" }}>
-                한나님의 {selectedMonth}월{" "}
+                {userInfo.name}님의 {selectedMonth}월{" "}
                 <span style={{ fontFamily: "SUITMedium" }}> 감정별 소비 </span>
                 <div className="container">
                   <TooltipComponent infoText="hello world" show={showTooltip}>
