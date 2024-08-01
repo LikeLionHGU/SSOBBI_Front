@@ -205,7 +205,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
                   </>
                 ) : (
                   <span style={{ fontSize: "18px", color: "#19844A" }}>
-                    기록이 없습니다.
+                    과소비 내역이 없습니다!
                   </span>
                 )}
               </p>
@@ -248,7 +248,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
                   </>
                 ) : (
                   <span style={{ fontSize: "18px", color: "#19844A" }}>
-                    기록이 없습니다.
+                    과소비 내역이 없습니다!
                   </span>
                 )}
               </p>
@@ -259,7 +259,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
           {isMonthly ? (
             <>
               이번달 과소비 항목 Top4
-              {monthData?.topFourOverConsumptionCategories ? (
+              {monthData?.topFourOverConsumptionCategories?.length > 0 ? (
                 <Horizontal>
                   {monthData.topFourOverConsumptionCategories.map(
                     (item, index) => {
@@ -288,14 +288,14 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
                     marginBottom: "43px",
                   }}
                 >
-                  기록이 없습니다.
+                  과소비 내역이 없습니다!
                 </span>
               )}
             </>
           ) : (
             <>
               이번주 과소비 항목 Top4
-              {weekData.topFourOverConsumptionCategories ? (
+              {weekData.topFourOverConsumptionCategories.length > 0 ? (
                 <Horizontal>
                   {weekData.topFourOverConsumptionCategories.map(
                     (item, index) => {
@@ -324,7 +324,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
                     marginBottom: "43px",
                   }}
                 >
-                  기록이 없습니다.
+                  과소비 내역이 없습니다!
                 </span>
               )}
             </>
