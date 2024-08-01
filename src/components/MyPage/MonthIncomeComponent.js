@@ -59,7 +59,7 @@ const InputBtnWrapper = styled.div`
   width: 100%;
 `;
 
-function MonthIncomeComponent() {
+function MonthIncomeComponent({ userInfo }) {
   const [income, setIncome] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
   const userToken = useRecoilValue(tokenState);
@@ -113,7 +113,7 @@ function MonthIncomeComponent() {
   return (
     <Vertical style={{ alignItems: "flex-start" }}>
       <Title>
-        소비님의 <span>한달 수입</span>
+        {userInfo.name}님의 <span>한달 수입</span>
       </Title>
       <InputBtnWrapper>
         <div style={{ position: "relative" }}>
