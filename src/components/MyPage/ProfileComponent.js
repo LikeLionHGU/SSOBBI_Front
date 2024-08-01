@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { tokenState } from "../../store/atom";
-import { useRecoilValue } from "recoil";
+import { tokenState, userData } from "../../store/atom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import UpdateImg from "../../imgs/PencilFill.svg";
 import axios from "axios";
 
@@ -62,29 +62,12 @@ const StyledInput = styled.input`
     props.readOnly ? "1px solid black" : "2px solid #2AA663"};
 `;
 
-const LogoutBtn = styled.button`
-  margin-right: 30px;
-  width: 65px;
-  height: 21px;
-  border: none;
-  background-color: white;
-  cursor: pointer;
-  font-family: "SUITLight";
-  font-size: 15px;
-  color: #939393;
-`;
-
 function ProfileComponent({ userInfo }) {
+  const setUserInfo = useSetRecoilState(userData);
   const phoneNumRef = useRef("");
-  const [phoneNum, setPhoneNum] = useState("");
+  const [phoneNum, setPhoneNum] = useState(userInfo.phoneNumber);
   const [isUpdating, setIsUpdating] = useState(false);
   const userToken = useRecoilValue(tokenState);
-
-  useEffect(() => {
-    if (userInfo.phoneNumber) {
-      setPhoneNum(userInfo.phoneNumber);
-    }
-  }, [userInfo.phoneNumber]);
 
   const handleBtnClick = () => {
     setIsUpdating(true);
@@ -118,7 +101,12 @@ function ProfileComponent({ userInfo }) {
         },
       })
       .then((response) => {
+        setUserInfo((prevUserInfo) => ({
+          ...prevUserInfo,
+          phoneNumber: response.data.phoneNumber,
+        }));
         setIsUpdating(false);
+        console.log("전번 수정: ", response);
       })
       .catch((error) => {
         console.log(error);
@@ -152,11 +140,14 @@ function ProfileComponent({ userInfo }) {
                 onKeyDown={activeEnter}
                 onBlur={phoneNumSubmit}
               />
-              {phoneNum && (
-                <button onClick={handleBtnClick}>
-                  <img src={UpdateImg} alt="updateImg" />
-                </button>
-              )}
+              {phoneNum &&
+                (isUpdating ? (
+                  <></>
+                ) : (
+                  <button onClick={handleBtnClick}>
+                    <img src={UpdateImg} alt="updateImg" />
+                  </button>
+                ))}
             </div>
           ) : (
             <></>
