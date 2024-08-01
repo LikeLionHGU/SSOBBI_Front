@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { happinessRateState, userData } from "../../store/atom";
 import { useRecoilState, useRecoilValue } from "recoil";
+import { Horizontal } from "../../styles/CommunalStyle";
 
 const InputWrapper = styled.div`
   width: 533px;
@@ -51,6 +52,22 @@ const StyledInput = styled.input`
   }
 `;
 
+const StyledInput2 = styled.input`
+  width: 30px;
+  height: 50px;
+  box-shadow: 0px 12px 34px 0px rgba(0, 0, 0, 0.08),
+    0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
+  border-radius: 10px;
+  border: none;
+  margin-left: 10px;
+  font-family: "SUITLight";
+  font-size: 15px;
+  padding-left: 15px;
+  &:focus {
+    outline: 1px solid var(--70, #3fc87e);
+  }
+`;
+
 function HappinessRateComponent({ month, day }) {
   const [happinessRate, setHappinessRate] = useRecoilState(happinessRateState); // 행복 지수 관리 recoil
   const userInfo = useRecoilValue(userData);
@@ -62,25 +79,31 @@ function HappinessRateComponent({ month, day }) {
           {month}월 {day}일 행복 지수를 알고 싶어요
         </strong>
       </p>
-      <InputWrapper>
-        <StyledInput
-          type="range"
-          min="0"
-          max="100"
-          onChange={(e) => setHappinessRate(e.target.value)}
+      <Horizontal style={{ justifyContent: "flex-start" }}>
+        <InputWrapper>
+          <StyledInput
+            type="range"
+            min="0"
+            max="100"
+            onChange={(e) => setHappinessRate(e.target.value)}
+            value={happinessRate}
+          />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "90%",
+            }}
+          >
+            <StyledSpan>0</StyledSpan>
+            <StyledSpan>100</StyledSpan>
+          </div>
+        </InputWrapper>
+        <StyledInput2
           value={happinessRate}
+          onChange={(e) => setHappinessRate(e.target.value)}
         />
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "90%",
-          }}
-        >
-          <StyledSpan>0</StyledSpan>
-          <StyledSpan>100</StyledSpan>
-        </div>
-      </InputWrapper>
+      </Horizontal>
     </div>
   );
 }
