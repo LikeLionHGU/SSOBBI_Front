@@ -103,7 +103,8 @@ function MonthComponent({ monthlyData, month, onDetailCPChange }) {
         </Box>
         <Box>
           {month}월의 과소비 금액
-          {monthlyData?.totalOverConsumptionAmount ? (
+          {monthlyData?.totalOverConsumptionAmount ||
+          monthlyData?.totalOverConsumptionAmount === 0 ? (
             <p style={{ fontSize: "30px", fontWeight: "bold" }}>
               <span
                 style={{
@@ -125,7 +126,7 @@ function MonthComponent({ monthlyData, month, onDetailCPChange }) {
                 marginBottom: "45px",
               }}
             >
-              기록이 없습니다.
+              과소비 내역이 없습니다.
             </span>
           )}
         </Box>
@@ -133,7 +134,7 @@ function MonthComponent({ monthlyData, month, onDetailCPChange }) {
           style={{ marginRight: "0px", paddingTop: "20px", height: "172px" }}
         >
           이번달 과소비 항목 TOP4
-          {monthlyData?.topFourOverConsumptionCategories ? (
+          {monthlyData?.topFourOverConsumptionCategories?.length > 0 ? (
             <Horizontal>
               {monthlyData.topFourOverConsumptionCategories.map(
                 (item, index) => {
@@ -162,7 +163,7 @@ function MonthComponent({ monthlyData, month, onDetailCPChange }) {
                 marginBottom: "25px",
               }}
             >
-              기록이 없습니다.
+              과소비 내역이 없습니다.
             </span>
           )}
           <DetailBT onClick={onDetailCPChange}>
