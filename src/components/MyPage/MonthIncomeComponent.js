@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Vertical } from "../../styles/CommunalStyle";
 import styled from "styled-components";
 import axios from "axios";
@@ -66,7 +66,7 @@ function MonthIncomeComponent() {
   const incomeRef = useRef("");
 
   function handleSubmitBtnClick() {
-    const newArr = { requests: [{ income: convertToInt(income) }] };
+    const newArr = { income: convertToInt(income) };
     const apiUrl = process.env.REACT_APP_BASE_URL + "/user/monthly/income";
     console.log(newArr);
     axios
@@ -91,22 +91,25 @@ function MonthIncomeComponent() {
     setIncome(formattedNumber);
   }
 
-  // useEffect(() => {
-  //   axios
-  //     .get(apiUrl, {
-  //       headers: {
-  //         Authorization: "Bearer " + userToken,
-  //         "Content-Type": "application/json",
-  //       },
-  //     })
-  //     .then((response) => {
-  //       if (response) setIsUpdating(false);
-  //       console.log(response);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // })
+  useEffect(() => {
+    const apiUrl = process.env.REACT_APP_BASE_URL + "/user/monthly/income";
+    axios
+      .get(apiUrl, {
+        headers: {
+          Authorization: "Bearer " + userToken,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        const formattedNumber = new Intl.NumberFormat().format(
+          response.data.income
+        );
+        setIncome(formattedNumber);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [isUpdating]);
   return (
     <Vertical style={{ alignItems: "flex-start" }}>
       <Title>
