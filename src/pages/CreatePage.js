@@ -70,6 +70,12 @@ const SubmitBtn = styled.button`
   }
 `;
 
+const ErrorMessage = styled.p`
+  font-family: "SUITMedium";
+  font-size: 16px;
+  color: red;
+`;
+
 function CreatePage() {
   const [selectDate, setSelectDate] = useState(moment().format("YYYY-MM-DD"));
   const month = selectDate.slice(5, 7).padStart(2, "0");
@@ -79,37 +85,72 @@ function CreatePage() {
   const userToken = useRecoilValue(tokenState);
   const [consumptions, setConsumptions] = useRecoilState(consumptionIndexState);
   const [id, setId] = useState(null);
-  const setHappiness = useSetRecoilState(happinessRateState);
-  const setContent = useSetRecoilState(contentState);
+  const [happinessRate, setHappiness] = useRecoilState(happinessRateState);
+  const [content, setContent] = useRecoilState(contentState);
   const [keyCounter, setKeyCounter] = useState(1); // id 1씩 증가시키기 위한 useState
   const navigate = useNavigate();
   const [updateWording, setUpdateWording] = useState(null);
   const userInfo = useRecoilValue(userData);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   function writeBtnClick() {
-    setConsumptions((prev) =>
-      prev
-        .filter((itm) => itm.category !== "" && itm.amount !== 0)
-        .map((itm) => {
-          const target = targetAmount.find((t) => t.category === itm.category);
-          if (target) {
-            return {
-              category: itm.category,
-              targetAmount: target.amount,
-              amount: convertToInt(itm.amount),
-            };
-          }
-          return itm;
-        })
-    );
-    if (id !== null) {
-      navigate(`/ssobbi/create/check?id=${id}`, {
-        state: { date: selectDate },
-      });
+    let dataLength = consumptions.filter(
+      (itm) => itm.category !== "" && itm.amount !== 0
+    ).length;
+
+    if (dataLength === 0 && showErrorMessage === false) {
+      setShowErrorMessage(true);
+      return;
+    }
+
+    if (dataLength !== 0) {
+      setConsumptions((prev) =>
+        prev
+          .filter((itm) => itm.category !== "" && itm.amount !== 0)
+          .map((itm) => {
+            const target = targetAmount.find(
+              (t) => t.category === itm.category
+            );
+            if (target) {
+              return {
+                category: itm.category,
+                targetAmount: target.amount,
+                amount: convertToInt(itm.amount),
+              };
+            }
+            return itm;
+          })
+      );
+      if (id !== null) {
+        navigate(`/ssobbi/create/check?id=${id}`, {
+          state: { date: selectDate },
+        });
+      } else {
+        navigate("/ssobbi/create/check", {
+          state: { date: selectDate },
+        });
+      }
     } else {
-      navigate("/ssobbi/create/check", {
-        state: { date: selectDate },
-      });
+      const apiUrl = process.env.REACT_APP_BASE_URL + "/records";
+      const newArr = {
+        happinessRate: happinessRate,
+        content: content,
+        date: selectDate,
+        consumptions: [],
+      };
+      axios
+        .post(apiUrl, newArr, {
+          headers: {
+            Authorization: "Bearer " + userToken,
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          setShowErrorMessage(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }
 
@@ -279,6 +320,9 @@ function CreatePage() {
                           options={options}
                         />
                       ))}
+                      {showErrorMessage && (
+                        <ErrorMessage>소비항목이 정말 없나요?</ErrorMessage>
+                      )}
                     </Vertical>
                   </BtnInputWrapper>
                 </div>
