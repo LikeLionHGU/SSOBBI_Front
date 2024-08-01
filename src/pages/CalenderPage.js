@@ -8,7 +8,7 @@ import { tokenState } from "../store/atom";
 import DropDownComponent from "../components/MainPage/DropDownComponent";
 import MenuBarComponent from "../components/MainPage/MenuBarComponent";
 import CalenderComponent from "../components/CalenderPage/CalenderComponent";
-import MainCalenderComponent from "../components/MainPage/CalenderComponent";
+import CalenderDetailComponent from "../components/CalenderPage/CalenderDetailComponent";
 import MonthComponent from "../components/CalenderPage/MonthComponent";
 import CategoryDetailComponent from "../components/CalenderPage/CategoryDetailComponent";
 import TooltipComponent from "../components/CalenderPage/TooltipComponent";
@@ -94,6 +94,8 @@ function CalenderPage() {
   const [monthlyData, setMonthlyData] = useState(null);
   const [happinessRate, setHappinessRate] = useState(null);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [overspentData, setOverspentData] = useState(null);
+  const [userIncome, setUserIncome] = useState(null);
 
   useEffect(() => {
     const fetchMonthData = async () => {
@@ -112,7 +114,6 @@ function CalenderPage() {
         console.log("error: ", err);
       }
     };
-    //ToDo: 데이터 없을때 500에러 발견
     const fetchHappyData = async () => {
       const happyDate = apiMonth.substring(0, 7);
       console.log("happyDate", happyDate);
@@ -146,9 +147,29 @@ function CalenderPage() {
         console.log("error: ", err);
       }
     };
+    const fetchOverspentData = async () => {
+      try {
+        const overspent = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/consumptions/${apiMonth}/category`,
+          {
+            headers: {
+              Authorization: "Bearer " + userToken,
+            },
+          }
+        );
+        setOverspentData(
+          overspent.data.monthlyConsumptionsAndTargetsByCategory
+        );
+        setUserIncome(overspent.data.userIncome);
+        console.log("setOverspentData", overspent.data);
+      } catch (err) {
+        console.log("error: ", err);
+      }
+    };
     fetchMonthData();
     fetchHappyData();
     fetchDayilyData();
+    fetchOverspentData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedMonth, apiMonth]);
 
@@ -207,9 +228,15 @@ function CalenderPage() {
                     카테고리별 소비
                   </span>
                 </SubTitle>
-                <CategoryDetailComponent apiMonth={apiMonth} />
+                <CategoryDetailComponent
+                  overspentData={overspentData}
+                  userIncome={userIncome}
+                />
               </Vertical>
-              <MainCalenderComponent onMonthChange={handleMonthChange} />
+              <CalenderDetailComponent
+                onMonthChange={handleMonthChange}
+                setApiMonth={setApiMonth}
+              />
             </NoCenterHorizontal>
           ) : (
             <Vertical
