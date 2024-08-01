@@ -74,7 +74,8 @@ function DayStatisticsComponent({ dayData }) {
           <p
             style={{ fontSize: "35px", fontWeight: "bold", marginTop: "20px" }}
           >
-            {dayData.totalOverConsumptionCount ? (
+            {dayData.totalOverConsumptionCount ||
+            dayData.totalOverConsumptionCount === 0 ? (
               <>
                 <span
                   style={{
@@ -97,7 +98,7 @@ function DayStatisticsComponent({ dayData }) {
         </Box>
         <Box>
           오늘 과소비 항목
-          {dayData.overConsumptionCategories ? (
+          {dayData.overConsumptionCategories?.length > 0 ? (
             <>
               <Horizontal
                 style={{ width: "200px", flexWrap: "wrap", marginTop: "15px" }}
@@ -118,7 +119,7 @@ function DayStatisticsComponent({ dayData }) {
                 color: "#19844A",
               }}
             >
-              오늘의 데이터 입력해주세요!
+              과소비 내역이 없습니다!
             </p>
           )}
         </Box>
