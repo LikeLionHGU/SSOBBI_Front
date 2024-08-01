@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { userData, tokenState } from "../../store/atom";
+import { tokenState } from "../../store/atom";
 import { useRecoilValue } from "recoil";
 import UpdateImg from "../../imgs/PencilFill.svg";
 import axios from "axios";
@@ -74,18 +74,17 @@ const LogoutBtn = styled.button`
   color: #939393;
 `;
 
-function ProfileComponent() {
-  const userInfo = useRecoilValue(userData);
+function ProfileComponent({ userInfo }) {
   const phoneNumRef = useRef("");
   const [phoneNum, setPhoneNum] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
   const userToken = useRecoilValue(tokenState);
 
   useEffect(() => {
-    if (userInfo.userPhoneNumber) {
-      setPhoneNum(userInfo.userPhoneNumber);
+    if (userInfo.phoneNumber) {
+      setPhoneNum(userInfo.phoneNumber);
     }
-  }, [userInfo.userPhoneNumber]);
+  }, [userInfo.phoneNumber]);
 
   const handleBtnClick = () => {
     setIsUpdating(true);
@@ -142,25 +141,29 @@ function ProfileComponent() {
         </Profile>
         <InfoWrapper>
           <span>{userInfo.name}</span>
-          <div>
-            <StyledInput
-              placeholder="010-0000-0000"
-              value={phoneNum}
-              onChange={handlePhoneNumChange}
-              readOnly={!isUpdating}
-              ref={phoneNumRef}
-              onKeyDown={activeEnter}
-              onBlur={phoneNumSubmit}
-            />
-            {phoneNum && (
-              <button onClick={handleBtnClick}>
-                <img src={UpdateImg} alt="updateImg" />
-              </button>
-            )}
-          </div>
+          {userInfo.phoneNumber ? (
+            <div>
+              <StyledInput
+                placeholder=""
+                value={phoneNum}
+                onChange={handlePhoneNumChange}
+                readOnly={!isUpdating}
+                ref={phoneNumRef}
+                onKeyDown={activeEnter}
+                onBlur={phoneNumSubmit}
+              />
+              {phoneNum && (
+                <button onClick={handleBtnClick}>
+                  <img src={UpdateImg} alt="updateImg" />
+                </button>
+              )}
+            </div>
+          ) : (
+            <></>
+          )}
         </InfoWrapper>
       </div>
-      <LogoutBtn>로그아웃</LogoutBtn>
+      {/* <LogoutBtn>로그아웃</LogoutBtn> */}
     </Wrapper>
   );
 }

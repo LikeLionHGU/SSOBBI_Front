@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useRecoilValue } from "recoil";
-import { tokenState } from "../../store/atom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { tokenState, userData } from "../../store/atom";
 import styled from "styled-components";
 import ModalComponent from "./ModalComponent";
 import AlarmImg from "../../imgs/alarmCheck.png";
@@ -106,11 +106,11 @@ const InputField = styled.input`
   margin-top: 6px;
 `;
 
-function AlarmComponent() {
+function AlarmComponent({ userInfo }) {
+  const setUserInfo = useSetRecoilState(userData);
   const userToken = useRecoilValue(tokenState);
   const [phoneNumber, setPhoneNumber] = useState("");
-  //TODO: API 불러와서 알람톡 신청 받고있는 사람인지 파악 후 setAlarm 초기값 세팅
-  const [alarm, setAlarm] = useState(true);
+  const [alarm, setAlarm] = useState(userInfo.phoneNumber ? false : true);
   const [consent, setConsent] = useState(false);
   const [checks, setChecks] = useState({
     all: false,
@@ -169,6 +169,10 @@ function AlarmComponent() {
       )
       .then((response) => {
         console.log("알람 설정 신청 response", response);
+        setUserInfo((prevUserInfo) => ({
+          ...prevUserInfo,
+          phoneNumber: response.data.phoneNumber,
+        }));
         setConsent(!consent);
         setAlarm(!alarm);
         openModal();
@@ -188,6 +192,10 @@ function AlarmComponent() {
       })
       .then((response) => {
         console.log("알람 설정 취소 response", response);
+        setUserInfo((prevUserInfo) => ({
+          ...prevUserInfo,
+          phoneNumber: response.data.phoneNumber,
+        }));
         setConsent(!consent);
         setAlarm(!alarm);
         openModal();

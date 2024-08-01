@@ -8,7 +8,7 @@ import {
 import ProfileComponent from "../components/MyPage/ProfileComponent";
 import MonthIncomeComponent from "../components/MyPage/MonthIncomeComponent";
 import CategoryAmountComponent from "../components/MyPage/CategoryAmountComponent";
-import { tokenState } from "../store/atom";
+import { userData, tokenState } from "../store/atom";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
@@ -62,6 +62,7 @@ const ScrollContainer = styled.div`
 `;
 
 function MyPage() {
+  const userInfo = useRecoilValue(userData);
   const userToken = useRecoilValue(tokenState);
   const [isUpdating, setIsUpdating] = useState(false);
   const [amount, setAmount] = useState([]);
@@ -136,6 +137,7 @@ function MyPage() {
         console.log(error);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    console.log("userInfo", userInfo);
   }, [isUpdating]);
 
   return (
@@ -174,8 +176,8 @@ function MyPage() {
           >
             <NoCenterVertical style={{ alignItems: "flex-start" }}>
               <ScrollContainer>
-                <ProfileComponent />
-                <MonthIncomeComponent />
+                <ProfileComponent userInfo={userInfo} />
+                <MonthIncomeComponent userInfo={userInfo} />
                 <div
                   style={{
                     display: "flex",
@@ -214,7 +216,7 @@ function MyPage() {
               </ScrollContainer>
             </NoCenterVertical>
             <NoCenterVertical style={{ marginLeft: "56px" }}>
-              <AlarmComponent />
+              <AlarmComponent userInfo={userInfo} />
             </NoCenterVertical>
           </Horizontal>
         </NoCenterVertical>
