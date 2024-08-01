@@ -4,6 +4,8 @@ import Switch from "react-switch";
 import GaugeComponent from "react-gauge-component";
 
 import { Horizontal, NoCenterHorizontal } from "../../styles/CommunalStyle";
+import { useRecoilValue } from "recoil";
+import { userData } from "../../store/atom";
 
 const ToggleContainer = styled.div`
   display: flex;
@@ -82,17 +84,19 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
     setIsMonthly(!isMonthly);
   };
 
+  const userInfo = useRecoilValue(userData);
+
   return (
     <>
       <NoCenterHorizontal>
         {isMonthly ? (
           <Title>
-            한나님의{" "}
+            {userInfo.name}님의{" "}
             <span style={{ fontFamily: "SUITMedium" }}>월간 기록 </span>
           </Title>
         ) : (
           <Title>
-            한나님의{" "}
+            {userInfo.name}님의{" "}
             <span style={{ fontFamily: "SUITMedium" }}>주간 기록 </span>
           </Title>
         )}
