@@ -116,7 +116,6 @@ function AlarmComponent({ userInfo }) {
     all: false,
     terms1: false,
     terms2: false,
-    marketing: false,
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => {
@@ -138,10 +137,8 @@ function AlarmComponent({ userInfo }) {
         const newValue = !prevChecks.all;
         newChecks.terms1 = newValue;
         newChecks.terms2 = newValue;
-        newChecks.marketing = newValue;
       } else {
-        newChecks.all =
-          newChecks.terms1 && newChecks.terms2 && newChecks.marketing;
+        newChecks.all = newChecks.terms1 && newChecks.terms2;
       }
       return newChecks;
     });
@@ -250,22 +247,12 @@ function AlarmComponent({ userInfo }) {
                   />{" "}
                   (필수) 이용약관
                 </NoCenterHorizontal>
-                <NoCenterHorizontal style={{ marginBottom: "15px" }}>
+                <NoCenterHorizontal style={{ marginBottom: "50px" }}>
                   <CheckBox
                     checked={checks.terms2}
                     onClick={() => handleCheckBoxClick("terms2")}
                   />{" "}
                   (필수) 이용약관
-                </NoCenterHorizontal>
-                <NoCenterHorizontal
-                  style={{ marginBottom: "30px", width: "240px" }}
-                >
-                  <CheckBox
-                    checked={checks.marketing}
-                    onClick={() => handleCheckBoxClick("marketing")}
-                  />{" "}
-                  (선택) 마케팅 활용 및 공급사 상품 및 배송을 위한 개인정보 제
-                  3자 제공 동의
                 </NoCenterHorizontal>
 
                 <NoCenterVertical

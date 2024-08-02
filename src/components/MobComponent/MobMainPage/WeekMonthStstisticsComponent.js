@@ -1,8 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
 import Switch from "react-switch";
-import GaugeComponent from "react-gauge-component";
-
 import { Horizontal } from "../../../styles/CommunalStyle";
 import { useRecoilValue } from "recoil";
 import { userData } from "../../../store/atom";
