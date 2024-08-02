@@ -2,7 +2,6 @@ import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { firstCategoryState, tokenState, userData } from "../../store/atom";
-import { Vertical } from "../../styles/CommunalStyle";
 import TargetAmountComponent from "./TargetAmountComponent";
 import axios from "axios";
 

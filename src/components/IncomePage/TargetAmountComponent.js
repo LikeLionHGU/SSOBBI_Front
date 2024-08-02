@@ -144,9 +144,3 @@ function TargetAmountComponent(props) {
 }
 
 export default TargetAmountComponent;
-
-function convertToInt(numberString) {
-  const numberWithoutCommas = numberString.replace(/,/g, "");
-  const number = parseInt(numberWithoutCommas, 10);
-  return number;
-}
