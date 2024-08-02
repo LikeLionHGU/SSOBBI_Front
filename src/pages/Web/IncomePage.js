@@ -30,9 +30,9 @@ const Title = styled.p`
 const Wrapper = styled.div`
   display: flex;
   width: 100%;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-evenly;
+  flex-direction: row;
 `;
 
 export default function IncomePage() {

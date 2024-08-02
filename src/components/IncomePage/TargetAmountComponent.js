@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Horizontal } from "../../styles/CommunalStyle";
-import AddBtnImg from "../../imgs/AddBtnImg.svg";
-import RmvBtnImg from "../../imgs/RemoveBtnImg.svg";
 
 const CategoryInput = styled.input`
   &:focus {
@@ -18,25 +16,6 @@ const CategoryInput = styled.input`
   margin-right: 16px;
   font-family: "SUITLight";
   font-size: 20px;
-`;
-
-const ManageBtn = styled.button`
-  width: 60px;
-  height: 60px;
-  border-radius: 20px;
-  border: 1px solid
-    ${(props) => (props.id === "addBtn" ? "#2AA663" : "#939393")};
-  background: #fff;
-  box-shadow: 0px 12px 34px 0px rgba(0, 0, 0, 0.08),
-    0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
-  cursor: pointer;
-  margin-left: 16px;
-  &:hover {
-  }
-
-  > img {
-    width: 16px;
-  }
 `;
 
 const PriceInput = styled.input`
@@ -107,14 +86,6 @@ function TargetAmountComponent(props) {
     );
   }
 
-  function handleRmvBtnClick() {
-    const newArr = props.targetAmount.filter(
-      (itm) => itm.name !== props.category
-    );
-    props.setTargetAmount(newArr);
-    console.log(newArr);
-  }
-
   useEffect(() => {
     setCategoryInputValue(props.category);
     setPriceInputValue(props.amount);
@@ -128,16 +99,6 @@ function TargetAmountComponent(props) {
           onChange={handleCategoryChange}
         />
         <PriceInput value={priceInputValue} onChange={handlePriceInputChange} />
-        {props.isLast === false && (
-          <ManageBtn id="rmvBtn" onClick={handleRmvBtnClick}>
-            <img src={RmvBtnImg} alt="removeImg" id="rmvBtn" />
-          </ManageBtn>
-        )}
-        {props.isLast === true && (
-          <ManageBtn id="addBtn" onClick={props.handleAddBtnClick}>
-            <img src={AddBtnImg} alt="addImg" id="addBtn" />
-          </ManageBtn>
-        )}
       </Horizontal>
     </>
   );

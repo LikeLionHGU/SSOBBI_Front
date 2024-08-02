@@ -20,6 +20,7 @@ const StyledInput = styled.input`
   font-size: 16px;
   padding-left: 30px;
   margin: 20px 0;
+  opacity: 0.5;
 `;
 
 const Title = styled.p`
@@ -43,13 +44,6 @@ export default function FirstAmountComponent(props) {
     useRecoilState(firstCategoryState);
   const userInfo = useRecoilValue(userData);
   const userToken = useRecoilValue(tokenState);
-
-  function handleAddBtnClick() {
-    setCategoryAmount((prev) => [
-      ...prev.map((itm) => ({ ...itm, isLast: false })),
-      { name: "", consumption: "", isLast: true },
-    ]);
-  }
 
   function handleSubmitBtnClick() {
     const apiUrl =
@@ -80,20 +74,17 @@ export default function FirstAmountComponent(props) {
       <Title>
         {userInfo.name}님의 <span>한달 수입</span>
       </Title>
-      <StyledInput readOnly value={props.inputValue} />
+      <StyledInput readOnly value={props.inputValue} disabled />
       <Title>
         {userInfo.name}님의 <span>카테고리별 목표금액</span>
       </Title>
       {categoryAmount.map((itm) => (
         <>
-          <p>{itm.name}</p>
           <TargetAmountComponent
             category={itm.name}
             amount={itm.consumption}
             setTargetAmount={setCategoryAmount}
             targetAmount={categoryAmount}
-            isLast={itm.isLast}
-            handleAddBtnClick={handleAddBtnClick}
           />
         </>
       ))}
