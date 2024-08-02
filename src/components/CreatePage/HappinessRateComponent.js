@@ -16,6 +16,15 @@ const InputWrapper = styled.div`
   flex-direction: column;
 `;
 
+const Title = styled.p`
+  font-family: "SUITLight";
+  font-size: 20px;
+
+  > span {
+    font-family: "SUITMedium";
+  }
+`;
+
 const StyledSpan = styled.span`
   font-family: "SUITLight";
   font-weight: 400;
@@ -73,12 +82,12 @@ function HappinessRateComponent({ month, day }) {
   const userInfo = useRecoilValue(userData);
   return (
     <div style={{ marginTop: "70px", marginBottom: "44px" }}>
-      <p>
+      <Title>
         {userInfo.name}님의{" "}
-        <strong>
+        <span>
           {month}월 {day}일 행복 지수를 알고 싶어요
-        </strong>
-      </p>
+        </span>
+      </Title>
       <Horizontal style={{ justifyContent: "flex-start" }}>
         <InputWrapper>
           <StyledInput

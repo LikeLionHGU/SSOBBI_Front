@@ -72,6 +72,15 @@ const SubmitBtn = styled.button`
   }
 `;
 
+const Title2 = styled.p`
+  font-family: "SUITLight";
+  font-size: 20px;
+
+  > span {
+    font-family: "SUITMedium";
+  }
+`;
+
 const ErrorMessage = styled.p`
   font-family: "SUITMedium";
   font-size: 16px;
@@ -309,12 +318,12 @@ function CreatePage() {
                 <HappinessRateComponent month={month} day={day} />
                 <ContentComponent />
                 <div>
-                  <p style={{ marginTop: "16px" }}>
+                  <Title2 style={{ marginTop: "16px" }}>
                     {userInfo.name}님의{" "}
-                    <strong>
+                    <span>
                       {month}월 {day}일 소비를 입력해주세요
-                    </strong>
-                  </p>
+                    </span>
+                  </Title2>
                   <BtnInputWrapper>
                     <Vertical>
                       {consumptions.map((item) => (
