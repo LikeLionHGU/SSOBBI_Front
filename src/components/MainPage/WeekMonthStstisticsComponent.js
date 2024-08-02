@@ -299,7 +299,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
           ) : (
             <>
               이번주 과소비 항목 Top4
-              {weekData.topFourOverConsumptionCategories.length > 0 ? (
+              {weekData.topFourOverConsumptionCategories?.length > 0 ? (
                 <Horizontal>
                   {weekData.topFourOverConsumptionCategories.map(
                     (item, index) => {
