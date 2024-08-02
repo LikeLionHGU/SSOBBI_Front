@@ -16,7 +16,7 @@ import {
   NoCenterVertical,
 } from "../../styles/CommunalStyle";
 import LogoImg from "../../imgs/Logo.png";
-import MobMenuBarComponent from "../../components/MainPage/Mob/MobMenuBarComponent";
+import MobMenuBarComponent from "../Mob/MobMenuBarComponent";
 
 const MobileV = styled.p`
   width: 375px;
