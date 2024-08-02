@@ -8,7 +8,18 @@ const TextCount = styled.p`
   right: 10px;
   bottom: 0;
   color: gray;
+  font-family: "SUITLight";
 `;
+
+const Title = styled.p`
+  font-family: "SUITLight";
+  font-size: 20px;
+
+  > span {
+    font-family: "SUITMedium";
+  }
+`;
+
 const StyledTextarea = styled.textarea`
   width: 743px;
   height: 82px;
@@ -37,11 +48,11 @@ function ContentComponent() {
   };
   return (
     <div style={{ marginBottom: "44px" }}>
-      <p>
+      <Title>
         {userInfo.name}님의{" "}
-        <strong>행복 지수에 가장 큰 영향을 준 사건은 무엇인가요</strong>
+        <span>행복 지수에 가장 큰 영향을 준 사건은 무엇인가요</span>
         (그 순간을 구체적으로 작성해주세요)
-      </p>
+      </Title>
       <div style={{ position: "relative" }}>
         <StyledTextarea
           id="content"
