@@ -38,3 +38,8 @@ export const userData = atom({
   default: null,
   effects_UNSTABLE: [persistAtom],
 });
+
+export const firstCategoryState = atom({
+  key: "firstCategory",
+  default: [],
+});

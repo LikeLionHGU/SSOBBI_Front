@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Horizontal } from "../../styles/CommunalStyle";
 import AddBtnImg from "../../imgs/AddBtnImg.svg";
@@ -60,8 +60,37 @@ const PriceInput = styled.input`
 `;
 
 function TargetAmountComponent(props) {
-  const formattedNum = new Intl.NumberFormat().format(props.amount);
-  const [priceInputValue, setPriceInputValue] = useState(formattedNum);
+  const [priceInputValue, setPriceInputValue] = useState(props.amount);
+  const [categoryInputValue, setCategoryInputValue] = useState(props.category);
+
+  function handleCategoryChange(e) {
+    const newCategory = e.target.value;
+
+    props.setTargetAmount((prev) => {
+      // Update the existing category if found
+      let categoryExists = false;
+      const updatedAmount = prev.map((itm) => {
+        if (itm.name === categoryInputValue) {
+          categoryExists = true;
+          return {
+            ...itm,
+            name: newCategory,
+          };
+        }
+        return itm;
+      });
+
+      if (!categoryExists) {
+        updatedAmount.push({
+          name: newCategory,
+          consumption: 0,
+        });
+      }
+
+      return updatedAmount;
+    });
+    setCategoryInputValue(newCategory);
+  }
 
   function handlePriceInputChange(e) {
     const { value } = e.target;
@@ -71,23 +100,33 @@ function TargetAmountComponent(props) {
     setPriceInputValue(formattedNumber);
     props.setTargetAmount((prev) =>
       prev.map((item) =>
-        item.category === props.category
-          ? { ...item, amount: props.convertToInt(value) }
+        item.name === props.category
+          ? { ...item, consumption: formattedNumber }
           : item
       )
     );
   }
 
   function handleRmvBtnClick() {
-    props.setTargetAmount((prev) =>
-      prev.filter((item) => item.category !== props.category)
+    const newArr = props.targetAmount.filter(
+      (itm) => itm.name !== props.category
     );
+    props.setTargetAmount(newArr);
+    console.log(newArr);
   }
+
+  useEffect(() => {
+    setCategoryInputValue(props.category);
+    setPriceInputValue(props.amount);
+  }, [props]);
 
   return (
     <>
       <Horizontal style={{ marginTop: "14px", justifyContent: "flex-start" }}>
-        <CategoryInput value={props.category} />
+        <CategoryInput
+          value={categoryInputValue}
+          onChange={handleCategoryChange}
+        />
         <PriceInput value={priceInputValue} onChange={handlePriceInputChange} />
         {props.isLast === false && (
           <ManageBtn id="rmvBtn" onClick={handleRmvBtnClick}>
@@ -105,3 +144,9 @@ function TargetAmountComponent(props) {
 }
 
 export default TargetAmountComponent;
+
+function convertToInt(numberString) {
+  const numberWithoutCommas = numberString.replace(/,/g, "");
+  const number = parseInt(numberWithoutCommas, 10);
+  return number;
+}

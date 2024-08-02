@@ -109,7 +109,7 @@ function CreatePage() {
     if (dataLength !== 0) {
       setConsumptions((prev) =>
         prev
-          .filter((itm) => itm.category !== "" && itm.amount !== 0)
+          .filter((itm) => itm.category !== "" && itm.amount !== "0")
           .map((itm) => {
             const target = targetAmount.find(
               (t) => t.category === itm.category
@@ -318,16 +318,18 @@ function CreatePage() {
                   <BtnInputWrapper>
                     <Vertical>
                       {consumptions.map((item) => (
-                        <ConsumptionIndexComponent
-                          key={item.id}
-                          id={item.id}
-                          category={item.category}
-                          amount={item.amount}
-                          handleAddBtnClick={handleAddBtnClick}
-                          focus={item.focus}
-                          isLast={item.isLast}
-                          options={options}
-                        />
+                        <>
+                          <ConsumptionIndexComponent
+                            key={item.id}
+                            id={item.id}
+                            category={item.category}
+                            amount={item.amount}
+                            handleAddBtnClick={handleAddBtnClick}
+                            focus={item.focus}
+                            isLast={item.isLast}
+                            options={options}
+                          />
+                        </>
                       ))}
                       {showErrorMessage && (
                         <ErrorMessage>소비항목이 정말 없나요?</ErrorMessage>
