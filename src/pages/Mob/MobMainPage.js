@@ -16,6 +16,7 @@ import {
   NoCenterVertical,
 } from "../../styles/CommunalStyle";
 import LogoImg from "../../imgs/Logo.png";
+import MobMenuBarComponent from "../../components/MainPage/Mob/MobMenuBarComponent";
 
 const MobileV = styled.p`
   width: 375px;
@@ -145,6 +146,7 @@ function MobMainPage() {
               monthData={monthlyData}
             />
           </Vertical>
+          <MobMenuBarComponent menu={"home"} />
         </NoCenterVertical>
       </MobileV>
     </>
