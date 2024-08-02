@@ -193,7 +193,7 @@ function CalenderPage() {
             marginTop: "40px",
           }}
         >
-          <NoCenterHorizontal style={{ marginBottom: "30px" }}>
+          <NoCenterHorizontal style={{ marginBottom: "17px" }}>
             <Horizontal
               style={{
                 justifyContent: "flex-start",
