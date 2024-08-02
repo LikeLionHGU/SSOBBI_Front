@@ -9,7 +9,7 @@ const CategoryInput = styled.input`
   width: 115px;
   height: 60px;
   text-align: center;
-  border-radius: 10px;
+  border-radius: 20px;
   border: none;
   box-shadow: 0px 12px 34px 0px rgba(0, 0, 0, 0.08),
     0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
@@ -23,10 +23,11 @@ const PriceInput = styled.input`
     text-align: left;
     padding-left: 24px;
   }
-  text-align: center;
-  width: 236px;
+  text-align: left;
+  padding-left: 30px;
+  width: 240px;
   height: 60px;
-  border-radius: 10px;
+  border-radius: 20px;
   border: none;
   box-shadow: 0px 12px 34px 0px rgba(0, 0, 0, 0.08),
     0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
@@ -36,6 +37,14 @@ const PriceInput = styled.input`
   }
   font-family: "SUITLight";
   font-size: 20px;
+`;
+
+const Unit = styled.span`
+  position: absolute;
+  font-family: "SUITLight";
+  font-size: 20px;
+  top: 37%;
+  right: 21px;
 `;
 
 function TargetAmountComponent(props) {
@@ -93,12 +102,19 @@ function TargetAmountComponent(props) {
 
   return (
     <>
-      <Horizontal style={{ marginTop: "14px", justifyContent: "flex-start" }}>
+      <Horizontal
+        style={{
+          marginTop: "14px",
+          justifyContent: "flex-start",
+          position: "relative",
+        }}
+      >
         <CategoryInput
           value={categoryInputValue}
           onChange={handleCategoryChange}
         />
         <PriceInput value={priceInputValue} onChange={handlePriceInputChange} />
+        <Unit>원</Unit>
       </Horizontal>
     </>
   );

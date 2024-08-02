@@ -26,7 +26,7 @@ const StyledInput = styled.input`
     0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
   border: none;
   font-family: "SUITLight";
-  font-size: 16px;
+  font-size: 20px;
   padding-left: 30px;
   margin: 20px 0;
 `;
@@ -211,9 +211,16 @@ function convertStringNum(onlyNumber) {
 function CategoryAmountInput(props) {
   return (
     <>
-      <Horizontal style={{ marginTop: "14px", justifyContent: "flex-start" }}>
+      <Horizontal
+        style={{
+          marginTop: "14px",
+          justifyContent: "flex-start",
+          position: "relative",
+        }}
+      >
         <CategoryInput value={props.category} readOnly />
         <PriceInput value={props.amount} readOnly />
+        <Unit>원</Unit>
       </Horizontal>
     </>
   );
