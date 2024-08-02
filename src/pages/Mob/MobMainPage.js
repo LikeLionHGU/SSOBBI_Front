@@ -3,49 +3,55 @@ import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import axios from "axios";
 import moment from "moment";
-import { tokenState } from "../store/atom";
-import DropDownComponent from "../components/MainPage/DropDownComponent";
-import CalenderComponent from "../components/MainPage/CalenderComponent";
-import DayStatisticsComponent from "../components/MainPage/DayStatisticsComponent";
-import WeekMonthStstisticsComponent from "../components/MainPage/WeekMonthStstisticsComponent";
-import MenuBarComponent from "../components/MainPage/MenuBarComponent";
+import { tokenState } from "../../store/atom";
+import DropDownComponent from "../../components/MainPage/DropDownComponent";
+import CalenderComponent from "../../components/MainPage/CalenderComponent";
+import DayStatisticsComponent from "../../components/MobComponent/MobMainPage/DayStatisticsComponent";
+import WeekMonthStstisticsComponent from "../../components/MobComponent/MobMainPage/WeekMonthStstisticsComponent";
+import MenuBarComponent from "../../components/MainPage/MenuBarComponent";
 import {
   Horizontal,
   Vertical,
   NoCenterHorizontal,
   NoCenterVertical,
-} from "../styles/CommunalStyle";
-import LogoImg from "../imgs/Logo.png";
+} from "../../styles/CommunalStyle";
+import LogoImg from "../../imgs/Logo.png";
+
+const MobileV = styled.p`
+  width: 375px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const Title = styled.p`
   color: ${(props) => props.theme.colors.COLORBlack};
   font-family: "RowdiesBold";
   font-weight: 700;
   font-style: normal;
-  font-size: 28px;
+  font-size: 16px;
   margin: 0;
-  margin-top: 10px;
 `;
 const Logo = styled.img`
-  width: 35px;
-  height: 35px;
-  margin-right: 15px;
+  width: 22px;
+  height: 22px;
+  margin-right: 10px;
 `;
 
 const Box = styled.div`
-  width: 820px;
-  height: 113px;
-  margin-top: 50px;
+  width: 318px;
+  height: 71px;
+  margin-top: 16px;
   border-radius: 20px;
-  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #fcfffe;
+  background-color: white;
+  font-size: 12px;
 `;
 
-function MainPage() {
+function MobMainPage() {
   const [loading, setLoading] = useState(true);
   const [dailyData, setDailyData] = useState(null);
   const [weeklyData, setWeeklyData] = useState(null);
@@ -99,11 +105,9 @@ function MainPage() {
   if (loading) return <p>Loading...</p>;
   return (
     <>
-      <Horizontal style={{ height: "100vh", overflowY: "hidden" }}>
-        <MenuBarComponent menu={"home"} />
+      <MobileV>
         <NoCenterVertical
           style={{
-            height: "100vh",
             justifyContent: "flex-start",
             marginTop: "40px",
           }}
@@ -123,39 +127,28 @@ function MainPage() {
                 <Title>SSOBBI</Title>
               </a>
             </Horizontal>
-            <DropDownComponent />
           </NoCenterHorizontal>
-          <NoCenterHorizontal
+
+          <Vertical
             style={{
-              height: "800px",
-              overflowY: "scroll",
+              paddingBottom: "20px",
             }}
           >
-            <Vertical
-              style={{
-                alignItems: "flex-start",
-                marginLeft: "30px",
-                marginRight: "55px",
-                paddingBottom: "20px",
-              }}
-            >
-              <DayStatisticsComponent dayData={dailyData} />
-              <Box>
-                {dailyData.content
-                  ? dailyData.content
-                  : "오늘의 일기를 남겨주세요!"}
-              </Box>
-              <WeekMonthStstisticsComponent
-                weekData={weeklyData}
-                monthData={monthlyData}
-              />
-            </Vertical>
-            <CalenderComponent />
-          </NoCenterHorizontal>
+            <DayStatisticsComponent dayData={dailyData} />
+            <Box>
+              {dailyData.content
+                ? dailyData.content
+                : "오늘의 일기를 남겨주세요!"}
+            </Box>
+            <WeekMonthStstisticsComponent
+              weekData={weeklyData}
+              monthData={monthlyData}
+            />
+          </Vertical>
         </NoCenterVertical>
-      </Horizontal>
+      </MobileV>
     </>
   );
 }
 /** 메인페이지 */
-export default MainPage;
+export default MobMainPage;

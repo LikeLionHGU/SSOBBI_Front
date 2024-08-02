@@ -5,23 +5,23 @@ import {
   happinessRateState,
   contentState,
   tokenState,
-} from "../store/atom";
+} from "../../store/atom";
 import { IoIosArrowBack } from "react-icons/io";
-import MenuBarComponent from "../components/MainPage/MenuBarComponent";
-import InfoCircleImg from "../imgs/InfoCircle.svg";
+import MenuBarComponent from "../../components/MainPage/MenuBarComponent";
+import InfoCircleImg from "../../imgs/InfoCircle.svg";
 import {
   Horizontal,
   Vertical,
   NoCenterVertical,
-} from "../styles/CommunalStyle";
-import CalenderComponent from "../components/CreatePage/CalenderComponent";
-import CheckComponent from "../components/OverConsumptionPage/CheckComponent";
-import TooltipComponent from "../components/OverConsumptionPage/TooltipComponent";
+} from "../../styles/CommunalStyle";
+import CalenderComponent from "../../components/CreatePage/CalenderComponent";
+import CheckComponent from "../../components/OverConsumptionPage/CheckComponent";
+import TooltipComponent from "../../components/OverConsumptionPage/TooltipComponent";
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-import ModalComponent from "../components/IncomePage/ModalComponent";
-import CompleteModalComponent from "../components/CreatePage/CompleteModalComponent";
+import ModalComponent from "../../components/IncomePage/ModalComponent";
+import CompleteModalComponent from "../../components/CreatePage/CompleteModalComponent";
 
 const Wrapper = styled.div`
   width: 100%;

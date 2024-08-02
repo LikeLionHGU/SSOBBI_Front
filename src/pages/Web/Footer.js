@@ -3,8 +3,8 @@ import {
   NoCenterHorizontal,
   NoCenterVertical,
   Horizontal,
-} from "../styles/CommunalStyle";
-import LogoImg from "../imgs/Logo.png";
+} from "../../styles/CommunalStyle";
+import LogoImg from "../../imgs/Logo.png";
 import { BsInstagram } from "react-icons/bs";
 
 const Title = styled.p`
