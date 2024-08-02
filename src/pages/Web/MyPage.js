@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-import MenuBarComponent from "../components/MainPage/MenuBarComponent";
+import MenuBarComponent from "../../components/MainPage/MenuBarComponent";
 import {
   Horizontal,
   NoCenterVertical,
   NoCenterHorizontal,
-} from "../styles/CommunalStyle";
-import ProfileComponent from "../components/MyPage/ProfileComponent";
-import MonthIncomeComponent from "../components/MyPage/MonthIncomeComponent";
-import CategoryAmountComponent from "../components/MyPage/CategoryAmountComponent";
-import { userData, tokenState } from "../store/atom";
+} from "../../styles/CommunalStyle";
+import ProfileComponent from "../../components/MyPage/ProfileComponent";
+import MonthIncomeComponent from "../../components/MyPage/MonthIncomeComponent";
+import CategoryAmountComponent from "../../components/MyPage/CategoryAmountComponent";
+import { userData, tokenState } from "../../store/atom";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import AlarmComponent from "../components/MyPage/AlarmComponent";
-import DropDownComponent from "../components/MainPage/DropDownComponent";
-import LogoImg from "../imgs/Logo.png";
+import AlarmComponent from "../../components/MyPage/AlarmComponent";
+import DropDownComponent from "../../components/MainPage/DropDownComponent";
+import LogoImg from "../../imgs/Logo.png";
 
 const AmountUpdateBtn = styled.button`
   display: inline-flex;

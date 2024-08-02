@@ -5,7 +5,7 @@ import { Horizontal, Vertical } from "../styles/CommunalStyle";
 import SliderComponent from "../components/LandingPage/SliderComponent";
 import Block1Component from "../components/LandingPage/Block1Component";
 import Block2Component from "../components/LandingPage/Block2Component";
-import Footer from "./Footer";
+import Footer from "./Web/Footer";
 
 const Title = styled.p`
   color: ${(props) => props.theme.colors.COLORBlack};

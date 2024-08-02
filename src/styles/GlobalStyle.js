@@ -72,4 +72,24 @@ export const GlobalStyle = createGlobalStyle`
         font-display: swap;
         src: url("RowdiesBold"), url(${RowdiesBold}) format('woff2'),
     }
+     /* 기본 페이지 스타일 */
+     .default-page {
+        display: block;
+    }
+
+    /* 모바일 페이지 스타일 */
+    .mobile-page {
+        display: none;
+    }
+
+    /* width가 1360px 이하일 때 스타일 변경 */
+    @media (max-width: 1350px) {
+        .default-page {
+            display: none;
+        }
+        .mobile-page {
+            display: block;
+            background-color: #F8FCF9;
+        }
+    }
 `;

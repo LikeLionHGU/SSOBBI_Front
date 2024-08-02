@@ -4,25 +4,25 @@ import styled from "styled-components";
 import moment from "moment";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
-import { tokenState, userData } from "../store/atom";
-import DropDownComponent from "../components/MainPage/DropDownComponent";
-import MenuBarComponent from "../components/MainPage/MenuBarComponent";
-import CalenderComponent from "../components/CalenderPage/CalenderComponent";
-import CalenderDetailComponent from "../components/CalenderPage/CalenderDetailComponent";
-import MonthComponent from "../components/CalenderPage/MonthComponent";
-import CategoryDetailComponent from "../components/CalenderPage/CategoryDetailComponent";
-import TooltipComponent from "../components/CalenderPage/TooltipComponent";
-import ScatterChartsComponent from "../components/CalenderPage/ScatterChartsComponent";
+import { tokenState, userData } from "../../store/atom";
+import DropDownComponent from "../../components/MainPage/DropDownComponent";
+import MenuBarComponent from "../../components/MainPage/MenuBarComponent";
+import CalenderComponent from "../../components/CalenderPage/CalenderComponent";
+import CalenderDetailComponent from "../../components/CalenderPage/CalenderDetailComponent";
+import MonthComponent from "../../components/CalenderPage/MonthComponent";
+import CategoryDetailComponent from "../../components/CalenderPage/CategoryDetailComponent";
+import TooltipComponent from "../../components/CalenderPage/TooltipComponent";
+import ScatterChartsComponent from "../../components/CalenderPage/ScatterChartsComponent";
 import {
   Horizontal,
   Vertical,
   NoCenterHorizontal,
   NoCenterVertical,
-} from "../styles/CommunalStyle";
-import InfoCircleImg from "../imgs/InfoCircle.svg";
+} from "../../styles/CommunalStyle";
+import InfoCircleImg from "../../imgs/InfoCircle.svg";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 
-import LogoImg from "../imgs/Logo.png";
+import LogoImg from "../../imgs/Logo.png";
 
 const Title = styled.p`
   color: ${(props) => props.theme.colors.COLORBlack};

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import IncomeInputComponent from "../components/IncomePage/IncomeInputComponent";
-import TargetAmountComponent from "../components/IncomePage/TargetAmountComponent";
-import ModalComponent from "../components/IncomePage/ModalComponent";
-import { Vertical } from "../styles/CommunalStyle";
+import IncomeInputComponent from "../../components/IncomePage/IncomeInputComponent";
+import TargetAmountComponent from "../../components/IncomePage/TargetAmountComponent";
+import ModalComponent from "../../components/IncomePage/ModalComponent";
+import { Vertical } from "../../styles/CommunalStyle";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import AlarmQuestionComponent from "../components/IncomePage/AlarmQuestionComponent";
-import EnterPhoneNumComponent from "../components/IncomePage/EnterPhoneNumComponent";
-import { tokenState } from "../store/atom";
+import AlarmQuestionComponent from "../../components/IncomePage/AlarmQuestionComponent";
+import EnterPhoneNumComponent from "../../components/IncomePage/EnterPhoneNumComponent";
+import { tokenState } from "../../store/atom";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 
