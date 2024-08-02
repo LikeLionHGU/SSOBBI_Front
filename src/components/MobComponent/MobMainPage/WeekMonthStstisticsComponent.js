@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Switch from "react-switch";
 import GaugeComponent from "react-gauge-component";
 
-import { Horizontal, NoCenterHorizontal } from "../../../styles/CommunalStyle";
+import { Horizontal } from "../../../styles/CommunalStyle";
 import { useRecoilValue } from "recoil";
 import { userData } from "../../../store/atom";
 
@@ -18,6 +18,7 @@ const Title = styled.p`
   color: ${(props) => props.theme.colors.COLORBlack};
   font-family: "SUITLight";
   font-size: 18px;
+  margin-left: -95px;
 `;
 const HappyBox = styled.div`
   font-family: "SUITLight";
@@ -244,6 +245,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
           {isMonthly ? (
             <>
               이번달 과소비 항목 Top4
+              <div style={{ marginTop: "10px" }} />
               {monthData?.topFourOverConsumptionCategories?.length > 0 ? (
                 <Horizontal>
                   {monthData.topFourOverConsumptionCategories.map(
@@ -263,6 +265,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
                       );
                     }
                   )}
+                  <div style={{ marginTop: "10px" }} />
                 </Horizontal>
               ) : (
                 <span
@@ -280,6 +283,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
           ) : (
             <>
               이번주 과소비 항목 Top4
+              <div style={{ marginTop: "10px" }} />
               {weekData.topFourOverConsumptionCategories?.length > 0 ? (
                 <Horizontal>
                   {weekData.topFourOverConsumptionCategories.map(
@@ -299,6 +303,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
                       );
                     }
                   )}
+                  <div style={{ marginTop: "10px" }} />
                 </Horizontal>
               ) : (
                 <span

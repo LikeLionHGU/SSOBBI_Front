@@ -4,11 +4,8 @@ import { useRecoilValue } from "recoil";
 import axios from "axios";
 import moment from "moment";
 import { tokenState } from "../../store/atom";
-import DropDownComponent from "../../components/MainPage/DropDownComponent";
-import CalenderComponent from "../../components/MainPage/CalenderComponent";
 import DayStatisticsComponent from "../../components/MobComponent/MobMainPage/DayStatisticsComponent";
 import WeekMonthStstisticsComponent from "../../components/MobComponent/MobMainPage/WeekMonthStstisticsComponent";
-import MenuBarComponent from "../../components/MainPage/MenuBarComponent";
 import {
   Horizontal,
   Vertical,
@@ -18,11 +15,12 @@ import {
 import LogoImg from "../../imgs/Logo.png";
 import MobMenuBarComponent from "../Mob/MobMenuBarComponent";
 
-const MobileV = styled.p`
+const MobileV = styled.div`
   width: 375px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-bottom: 70px;
 `;
 
 const Title = styled.p`
@@ -118,7 +116,6 @@ function MobMainPage() {
               style={{
                 justifyContent: "flex-start",
                 marginLeft: "25px",
-                marginTop: "30px",
               }}
             >
               <a href="/ssobbi">

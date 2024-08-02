@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import GaugeComponent from "react-gauge-component";
-
 import { Horizontal } from "../../../styles/CommunalStyle";
 import { useRecoilValue } from "recoil";
 import { userData } from "../../../store/atom";
@@ -9,6 +7,7 @@ const Title = styled.p`
   color: ${(props) => props.theme.colors.COLORBlack};
   font-family: "SUITLight";
   font-size: 18px;
+  margin-right: 120px;
 `;
 const HappyBox = styled.div`
   font-family: "SUITLight";
