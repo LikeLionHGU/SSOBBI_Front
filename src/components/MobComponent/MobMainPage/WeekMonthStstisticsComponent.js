@@ -3,38 +3,49 @@ import styled from "styled-components";
 import Switch from "react-switch";
 import GaugeComponent from "react-gauge-component";
 
-import { Horizontal, NoCenterHorizontal } from "../../styles/CommunalStyle";
+import { Horizontal, NoCenterHorizontal } from "../../../styles/CommunalStyle";
 import { useRecoilValue } from "recoil";
-import { userData } from "../../store/atom";
+import { userData } from "../../../store/atom";
 
 const ToggleContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   margin-left: 16px;
-  margin-top: 14px;
 `;
 
 const Title = styled.p`
   color: ${(props) => props.theme.colors.COLORBlack};
   font-family: "SUITLight";
-  font-size: 20px;
-  margin-top: 36px;
-`;
-
-const Box = styled.div`
-  font-family: "SUITLight";
   font-size: 18px;
-  width: 260px;
-  height: 192px;
-  margin-right: 20px;
+`;
+const HappyBox = styled.div`
+  font-family: "SUITLight";
+  font-size: 12px;
+  width: 320px;
+  height: 71px;
   border-radius: 20px;
-  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  background-color: #fcfffe;
+  background-color: white;
+`;
+const Box = styled.div`
+  font-family: "SUITLight";
+  font-size: 18px;
+  width: 150px;
+  height: 112px;
+  margin-top: 16px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  font-size: 12px;
 `;
 const CircleBox = styled.div`
   font-family: "SUITLight";
@@ -55,28 +66,28 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
   const [isMonthly, setIsMonthly] = useState(false);
   const circledatas = [
     {
-      size: "80px",
+      size: "37px",
       bcolor: "#ACFFD2",
-      font: "16px",
-      margin: "32px",
+      font: "8px",
+      margin: "10px",
     },
     {
-      size: "50px",
+      size: "22px",
       bcolor: "#ACFFFA",
-      font: "10px",
-      margin: "63px",
-    },
-    {
-      size: "65px",
-      bcolor: "#ACEBFF",
-      font: "12px",
+      font: "5px",
       margin: "30px",
     },
     {
-      size: "31px",
+      size: "30px",
+      bcolor: "#ACEBFF",
+      font: "6px",
+      margin: "13px",
+    },
+    {
+      size: "15px",
       bcolor: "#C1FFAC",
-      font: "8px",
-      margin: "72px",
+      font: "4px",
+      margin: "50px",
     },
   ];
 
@@ -88,7 +99,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
 
   return (
     <>
-      <NoCenterHorizontal>
+      <Horizontal>
         {isMonthly ? (
           <Title>
             {userInfo.name}님의{" "}
@@ -106,13 +117,14 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
             checked={isMonthly}
             onColor="#2AA663"
             onHandleColor="white"
-            handleDiameter={20}
+            handleDiameter={10}
             uncheckedIcon={
               <Horizontal
                 style={{
                   color: "white",
-                  fontSize: "10px",
-                  paddingTop: "10px",
+                  fontSize: "7px",
+                  paddingTop: "5px",
+                  marginLeft: "-4px",
                 }}
               >
                 월간보기
@@ -122,70 +134,40 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
               <Horizontal
                 style={{
                   color: "white",
-                  fontSize: "10px",
-                  paddingTop: "10px",
+                  fontSize: "7px",
+                  paddingTop: "5px",
+                  marginLeft: "4px",
                 }}
               >
                 주간보기
               </Horizontal>
             }
             //   boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-            //   activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-            height={31}
-            width={72}
+            // activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+            height={18}
+            width={47}
             className="react-switch"
             id="material-switch"
           />
         </ToggleContainer>
-      </NoCenterHorizontal>
+      </Horizontal>
+      <HappyBox>{isMonthly ? "이번달 행복지수" : "이번주 행복지수"}</HappyBox>
       <Horizontal>
-        <Box>
-          {isMonthly ? "이번달 행복지수" : "이번주 행복지수"}
-          <GaugeComponent
-            type="semicircle"
-            arc={{
-              colorArray: ["#D0FFE5", "#2AA663"],
-              padding: 0.01,
-              subArcs: [{ limit: 33 }, { limit: 66 }, { limit: 100 }],
-            }}
-            pointer={{
-              type: "arrow",
-              animationDelay: 0,
-            }}
-            value={
-              isMonthly
-                ? monthData?.happinessRate
-                  ? monthData.happinessRate
-                  : 0
-                : weekData?.happinessRate
-                ? weekData.happinessRate
-                : 0
-            }
-            style={{ height: "120px", width: "250px" }}
-            marginInPercent={{
-              top: 0.12,
-              bottom: 0.0,
-              left: 0.07,
-              right: 0.07,
-            }}
-          />
-        </Box>
         <Box>
           {isMonthly ? (
             <>
               이번달 과소비 비율
               <p
                 style={{
-                  fontSize: "35px",
+                  fontSize: "20px",
                   fontWeight: "bold",
-                  marginTop: "20px",
                 }}
               >
                 {monthData?.overConsumptionRate ? (
                   <>
                     <span
                       style={{
-                        fontSize: "60px",
+                        fontSize: "20px",
                         fontFamily: "SUITExtraBold",
                         fontWeight: "bold",
                         color: "#19844A",
@@ -198,7 +180,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
                       style={{
                         marginBottom: "-30px",
                         marginLeft: "30%",
-                        fontSize: "12px",
+                        fontSize: "8px",
                         color: "#19844A",
                         margin: 0,
                       }}
@@ -208,7 +190,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
                     </p>
                   </>
                 ) : (
-                  <span style={{ fontSize: "18px", color: "#19844A" }}>
+                  <span style={{ fontSize: "12px", color: "#19844A" }}>
                     과소비 내역이 없습니다!
                   </span>
                 )}
@@ -219,16 +201,15 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
               이번주 과소비 비율
               <p
                 style={{
-                  fontSize: "35px",
+                  fontSize: "20px",
                   fontWeight: "bold",
-                  marginTop: "20px",
                 }}
               >
                 {weekData.overConsumptionRate ? (
                   <>
                     <span
                       style={{
-                        fontSize: "60px",
+                        fontSize: "20px",
                         fontFamily: "SUITExtraBold",
                         fontWeight: "bold",
                         color: "#19844A",
@@ -241,7 +222,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
                       style={{
                         marginBottom: "-30px",
                         marginLeft: "30%",
-                        fontSize: "12px",
+                        fontSize: "8px",
                         color: "#19844A",
                         margin: 0,
                       }}
@@ -251,7 +232,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
                     </p>
                   </>
                 ) : (
-                  <span style={{ fontSize: "18px", color: "#19844A" }}>
+                  <span style={{ fontSize: "12px", color: "#19844A" }}>
                     과소비 내역이 없습니다!
                   </span>
                 )}

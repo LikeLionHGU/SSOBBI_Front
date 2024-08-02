@@ -6,13 +6,16 @@ import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "./styles/GlobalStyle";
 import AuthWrapper from "./hooks/AuthWrapper";
 import LandingPage from "./pages/LandingPage";
-import MainPage from "./pages/MainPage";
-import CreatePage from "./pages/CreatePage";
-import CalenderPage from "./pages/CalenderPage";
+import MainPage from "./pages/Web/MainPage";
+import CreatePage from "./pages/Web/CreatePage";
+import CalenderPage from "./pages/Web/CalenderPage";
 import KakaoLoginRedirect from "./pages/KakaoLoginRedirect";
-import IncomePage from "./pages/IncomePage";
-import OverConsumptionPage from "./pages/OverConsumptionPage";
-import MyPage from "./pages/MyPage";
+import IncomePage from "./pages/Web/IncomePage";
+import OverConsumptionPage from "./pages/Web/OverConsumptionPage";
+import MyPage from "./pages/Web/MyPage";
+
+//Mobile Version
+import MobMainPage from "./pages/Mob/MobMainPage";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +26,12 @@ const router = createBrowserRouter([
     path: "/ssobbi",
     element: (
       <AuthWrapper>
-        <MainPage />
+        <div className="default-page">
+          <MainPage />
+        </div>
+        <div className="mobile-page">
+          <MobMainPage />
+        </div>
       </AuthWrapper>
     ),
   },
@@ -31,7 +39,9 @@ const router = createBrowserRouter([
     path: "/ssobbi/create",
     element: (
       <AuthWrapper>
-        <CreatePage />
+        <div className="default-page">
+          <CreatePage />
+        </div>
       </AuthWrapper>
     ),
   },
@@ -39,7 +49,9 @@ const router = createBrowserRouter([
     path: "/ssobbi/calender",
     element: (
       <AuthWrapper>
-        <CalenderPage />
+        <div className="default-page">
+          <CalenderPage />
+        </div>
       </AuthWrapper>
     ),
   },
@@ -51,7 +63,9 @@ const router = createBrowserRouter([
     path: "/ssobbi/income",
     element: (
       <AuthWrapper>
-        <IncomePage />
+        <div className="default-page">
+          <IncomePage />
+        </div>
       </AuthWrapper>
     ),
   },
@@ -59,13 +73,21 @@ const router = createBrowserRouter([
     path: "/ssobbi/create/check",
     element: (
       <AuthWrapper>
-        <OverConsumptionPage />
+        <div className="default-page">
+          <OverConsumptionPage />
+        </div>
       </AuthWrapper>
     ),
   },
   {
     path: "/ssobbi/mypage",
-    element: <MyPage />,
+    element: (
+      <AuthWrapper>
+        <div className="default-page">
+          <MyPage />
+        </div>
+      </AuthWrapper>
+    ),
   },
 ]);
 

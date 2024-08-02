@@ -1,31 +1,31 @@
 import styled from "styled-components";
-import HappinessRateComponent from "../components/CreatePage/HappinessRateComponent";
-import ContentComponent from "../components/CreatePage/ContentComponent";
-import ConsumptionIndexComponent from "../components/CreatePage/ConsumptionIndexComponent";
-import ModalComponent from "../components/IncomePage/ModalComponent";
+import HappinessRateComponent from "../../components/CreatePage/HappinessRateComponent";
+import ContentComponent from "../../components/CreatePage/ContentComponent";
+import ConsumptionIndexComponent from "../../components/CreatePage/ConsumptionIndexComponent";
+import ModalComponent from "../../components/IncomePage/ModalComponent";
 import {
   consumptionIndexState,
   tokenState,
   happinessRateState,
   contentState,
   userData,
-} from "../store/atom";
+} from "../../store/atom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useEffect, useState } from "react";
-import MenuBarComponent from "../components/MainPage/MenuBarComponent";
-import DropDownComponent from "../components/MainPage/DropDownComponent";
+import MenuBarComponent from "../../components/MainPage/MenuBarComponent";
+import DropDownComponent from "../../components/MainPage/DropDownComponent";
 import moment from "moment";
 import {
   Horizontal,
   Vertical,
   NoCenterVertical,
   NoCenterHorizontal,
-} from "../styles/CommunalStyle";
-import CalenderComponent from "../components/CreatePage/CalenderComponent";
+} from "../../styles/CommunalStyle";
+import CalenderComponent from "../../components/CreatePage/CalenderComponent";
 import { useNavigate } from "react-router-dom";
-import LogoImg from "../imgs/Logo.png";
+import LogoImg from "../../imgs/Logo.png";
 import axios from "axios";
-import CompleteModalComponent from "../components/CreatePage/CompleteModalComponent";
+import CompleteModalComponent from "../../components/CreatePage/CompleteModalComponent";
 
 const BtnInputWrapper = styled.div`
   display: flex;
