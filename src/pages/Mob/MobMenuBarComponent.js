@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   width: 375px;
-  height: 100px;
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -16,6 +16,8 @@ const Wrapper = styled.div`
   border-radius: 16px 16px 0px 0px;
   background: var(--White, #fcfffe);
   box-shadow: 0px -2px 4px 0px rgba(57, 84, 111, 0.1);
+  position: fixed;
+  bottom: 0;
 `;
 
 const Icon = styled.div`

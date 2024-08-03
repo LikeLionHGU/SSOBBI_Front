@@ -11,13 +11,13 @@ const TooltipContainer = styled.div`
 `;
 
 const Tooltip = styled.div`
-  width: 257px;
-  height: 81.284px;
+  width: ${(props) => (props.version === "mobile" ? "180px" : "257px")};
+  height: ${(props) => (props.version === "mobile" ? "47px" : "81.284px")};
   background-color: #19844a;
   text-align: center;
   border-radius: 20px;
   position: absolute;
-  bottom: -90px;
+  bottom: ${(props) => (props.version === "mobile" ? "-60px" : "-90px")};
   right: -30px;
   transition: all 0.3s ease;
   opacity: ${(props) => (props.showTooltip === true ? 1 : 0)};
@@ -26,7 +26,6 @@ const Tooltip = styled.div`
   flex-direction: column;
   justify-content: center;
   font-family: "SUITLight";
-  font-size: 16px;
 
   .arrow {
     width: 0;
@@ -46,14 +45,17 @@ const Tooltip = styled.div`
     }
   }
 `;
-function TooltipComponent({ children, show }) {
+const Text = styled.p`
+  font-size: ${(props) => (props.version === "mobile" ? "12px" : "16px")};
+`;
+function TooltipComponent({ children, show, version }) {
   return (
     <TooltipContainer className="tooltip_container">
       {children}
 
-      <Tooltip showTooltip={show}>
-        <p>행복지수에 따른</p>
-        <p> 소비패턴을 확인해보세요 🤑 </p>
+      <Tooltip showTooltip={show} version={version}>
+        <Text version={version}>행복지수에 따른</Text>
+        <Text version={version}> 소비패턴을 확인해보세요 🤑 </Text>
         <div className="arrow" />
       </Tooltip>
     </TooltipContainer>
