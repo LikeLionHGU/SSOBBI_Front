@@ -86,6 +86,10 @@ export default function FirstAmountComponent(props) {
       category: itm.name,
       amount: convertToInt(itm.consumption),
     }));
+    props.setShowComponent(3);
+    props.setIsRunning(true);
+    props.setHandleProgress({ direction: "go", point: 66.6 });
+    // console.log(newArr);
     axios
       .post(apiUrl, newArr, {
         headers: {
@@ -95,9 +99,7 @@ export default function FirstAmountComponent(props) {
       })
       .then((response) => {
         console.log(response);
-        props.setIsRunning(true);
-        props.setShowComponent(3);
-        props.setHandleProgress({ direction: "go", point: 66.6 });
+        // props.setShowComponent(3);
       })
       .catch((error) => {
         console.log(error);
@@ -119,6 +121,7 @@ export default function FirstAmountComponent(props) {
         {categoryAmount.map((itm) => (
           <>
             <TargetAmountComponent
+              income={props.inputValue}
               category={itm.name}
               amount={itm.consumption}
               setTargetAmount={setCategoryAmount}

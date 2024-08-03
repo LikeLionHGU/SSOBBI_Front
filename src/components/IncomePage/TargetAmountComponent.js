@@ -84,15 +84,29 @@ function TargetAmountComponent(props) {
     const { value } = e.target;
     // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
     const onlyNumber = value.replace(/[^0-9]/g, "");
-    const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
-    setPriceInputValue(formattedNumber);
-    props.setTargetAmount((prev) =>
-      prev.map((item) =>
-        item.name === props.category
-          ? { ...item, consumption: formattedNumber }
-          : item
-      )
+    setPriceInputValue(convertStringNum(onlyNumber));
+
+    const arr = props.targetAmount.map((itm) =>
+      itm.name === props.category
+        ? { ...itm, consumption: convertStringNum(onlyNumber) }
+        : itm
     );
+    const sum = arr.reduce(
+      (acc, itm) =>
+        itm.name === "기타" ? acc : acc + convertToInt(itm.consumption),
+      0
+    );
+
+    const newArr = arr.map((itm) =>
+      itm.name === "기타"
+        ? {
+            ...itm,
+            consumption: convertStringNum(convertToInt(props.income) - sum),
+          }
+        : itm
+    );
+
+    props.setTargetAmount(newArr);
   }
 
   useEffect(() => {
@@ -121,3 +135,14 @@ function TargetAmountComponent(props) {
 }
 
 export default TargetAmountComponent;
+
+function convertToInt(numberString) {
+  const numberWithoutCommas = numberString.replace(/,/g, "");
+  const number = parseInt(numberWithoutCommas, 10);
+  return number;
+}
+
+function convertStringNum(onlyNumber) {
+  const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
+  return formattedNumber;
+}
