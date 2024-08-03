@@ -46,7 +46,7 @@ export default function IncomePage() {
   });
   return (
     <Vertical>
-      <NoCenterHorizontal>
+      <NoCenterHorizontal style={{ width: "1300px" }}>
         <Horizontal
           style={{
             justifyContent: "flex-start",
