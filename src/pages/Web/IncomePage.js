@@ -33,6 +33,7 @@ const Wrapper = styled.div`
   align-items: flex-end;
   justify-content: space-evenly;
   flex-direction: row;
+  margin-top: 72px;
 `;
 
 export default function IncomePage() {

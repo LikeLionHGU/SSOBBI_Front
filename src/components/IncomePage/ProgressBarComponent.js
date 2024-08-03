@@ -35,7 +35,7 @@ export default function ProgressBarComponent({ isRunning, handleProgress }) {
     }
   }, [filled, isRunning, handleProgress]);
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ marginTop: "54px" }}>
       <ProgressBar className="progressBar">
         <div
           style={{

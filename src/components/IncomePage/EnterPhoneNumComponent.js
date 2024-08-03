@@ -2,6 +2,10 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import ModalComponent from "./ModalComponent";
 import TermOfUseComponent from "./TermOfUseComponent";
+import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { tokenState } from "../../store/atom";
+import { useNavigate } from "react-router-dom";
 
 const Title = styled.p`
   font-family: "SUITMedium";
@@ -86,6 +90,8 @@ function EnterPhoneNumComponent() {
   const [phoneNum, setPhoneNum] = useState("");
   const [showBtn, setShowBtn] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const userToken = useRecoilValue(tokenState);
+  const navigate = useNavigate();
 
   function handleCheckboxChange(e) {
     const { id, checked } = e.target;
@@ -123,6 +129,25 @@ function EnterPhoneNumComponent() {
       );
     }
     setShowBtn(value.length === 11);
+  }
+
+  function handleSubmitBtn() {
+    const apiUrl = process.env.REACT_APP_BASE_URL + "/user/alarm-message/ok";
+    const newArr = { userPhoneNumber: removeHyphens(phoneNum) };
+    axios
+      .post(apiUrl, newArr, {
+        headers: {
+          Authorization: "Bearer " + userToken,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        navigate("/ssobbi");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
   return (
     <>
@@ -183,7 +208,7 @@ function EnterPhoneNumComponent() {
         />
       </div>
       <SubmitBtn
-        onClick={() => console.log("click")}
+        onClick={handleSubmitBtn}
         disabled={!showBtn}
         showBtn={showBtn}
       >
@@ -194,3 +219,7 @@ function EnterPhoneNumComponent() {
 }
 
 export default EnterPhoneNumComponent;
+
+function removeHyphens(phoneNumber) {
+  return phoneNumber.replace(/-/g, "");
+}
