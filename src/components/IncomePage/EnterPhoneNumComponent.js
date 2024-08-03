@@ -1,5 +1,7 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
+import ModalComponent from "./ModalComponent";
+import TermOfUseComponent from "./TermOfUseComponent";
 
 const Title = styled.p`
   font-family: "SUITMedium";
@@ -42,6 +44,17 @@ const InputSpanWrapper = styled.div`
   font-family: "SUITLight";
   font-size: 18px;
   margin: 10px 38px 0 38px;
+  position: relative;
+
+  > .info {
+    color: #999;
+    font-family: "SUITLight";
+    font-size: 18px;
+    border-bottom: 1px solid #999;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+  }
 `;
 
 const SubmitBtn = styled.button`
@@ -72,6 +85,7 @@ function EnterPhoneNumComponent() {
   const phoneNumRef = useRef("");
   const [phoneNum, setPhoneNum] = useState("");
   const [showBtn, setShowBtn] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   function handleCheckboxChange(e) {
     const { id, checked } = e.target;
@@ -112,12 +126,20 @@ function EnterPhoneNumComponent() {
   }
   return (
     <>
+      {showModal && (
+        <ModalComponent closeModal={() => setShowModal(false)}>
+          <TermOfUseComponent />
+        </ModalComponent>
+      )}
       <SubmitBtn style={{ opacity: "0" }} />
       <div>
         <Title>이용약관</Title>
         <InputsWrapper>
           <InputSpanWrapper
-            style={{ borderBottom: "1px solid black", paddingBottom: "5px;" }}
+            style={{
+              borderBottom: "1px solid #d9d9d9",
+              paddingBottom: "10px",
+            }}
           >
             <StyledInput
               type="checkbox"
@@ -135,6 +157,9 @@ function EnterPhoneNumComponent() {
               onChange={handleCheckboxChange}
             />
             <span>(필수) 이용약관</span>
+            <span className="info" onClick={() => setShowModal(true)}>
+              보기
+            </span>
           </InputSpanWrapper>
           <InputSpanWrapper>
             <StyledInput
@@ -144,6 +169,9 @@ function EnterPhoneNumComponent() {
               onChange={handleCheckboxChange}
             />
             <span>(필수) 개인정보 처리방침</span>
+            <span className="info" onClick={() => setShowModal(true)}>
+              보기
+            </span>
           </InputSpanWrapper>
         </InputsWrapper>
         <Title>알림톡 전화번호</Title>
