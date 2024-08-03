@@ -5,6 +5,8 @@ import styled from "styled-components";
 import MobMenuBarComponent from "./MobMenuBarComponent";
 import { Horizontal, NoCenterHorizontal } from "../../styles/CommunalStyle";
 import LogoImg from "../../imgs/Logo.png";
+import ContentComponent from "../../components/MobComponent/MobCreatePage/ContentComponent";
+import ConsumptionComponent from "../../components/MobComponent/MobCreatePage/ConsumptionComponent";
 
 const MobileV = styled.div`
   width: 375px;
@@ -16,6 +18,7 @@ const MobileV = styled.div`
     --mobile_bg,
     linear-gradient(280deg, #f7f7f7 56.16%, #ebf9f0 146.1%)
   );
+  /* height: 100vh; */
 `;
 
 const Logo = styled.img`
@@ -53,6 +56,8 @@ function MobCreatePage() {
           </Horizontal>
         </NoCenterHorizontal>
         <HappinessRateComponent />
+        <ContentComponent />
+        <ConsumptionComponent />
         <MobMenuBarComponent menu={"note"} />
       </Vertical>
     </MobileV>
