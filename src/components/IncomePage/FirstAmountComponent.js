@@ -86,9 +86,6 @@ export default function FirstAmountComponent(props) {
       category: itm.name,
       amount: convertToInt(itm.consumption),
     }));
-    props.setShowComponent(3);
-    props.setIsRunning(true);
-    props.setHandleProgress({ direction: "go", point: 66.6 });
     // console.log(newArr);
     axios
       .post(apiUrl, newArr, {
@@ -99,6 +96,9 @@ export default function FirstAmountComponent(props) {
       })
       .then((response) => {
         console.log(response);
+        props.setShowComponent(3);
+        props.setIsRunning(true);
+        props.setHandleProgress({ direction: "go", point: 66.6 });
         // props.setShowComponent(3);
       })
       .catch((error) => {
