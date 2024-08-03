@@ -106,7 +106,7 @@ export default function FirstAmountComponent(props) {
   }
   return (
     <>
-      <StyledBtn style={{ opacity: "0" }} />
+      <StyledBtn style={{ opacity: "0" }}>확인</StyledBtn>
       <Wrapper>
         <InputWrapper>
           <Title>

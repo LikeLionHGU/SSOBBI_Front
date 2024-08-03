@@ -166,7 +166,7 @@ export default function IncomeInputComponent(props) {
   }
   return (
     <>
-      <StyledBtn style={{ opacity: "0" }}></StyledBtn>
+      <StyledBtn style={{ opacity: "0" }}>확인</StyledBtn>
       <Wrapper>
         <InputWrapper>
           <Title>
