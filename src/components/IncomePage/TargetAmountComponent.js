@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Horizontal } from "../../styles/CommunalStyle";
-import AddBtnImg from "../../imgs/AddBtnImg.svg";
-import RmvBtnImg from "../../imgs/RemoveBtnImg.svg";
 
 const CategoryInput = styled.input`
   &:focus {
@@ -11,7 +9,7 @@ const CategoryInput = styled.input`
   width: 115px;
   height: 60px;
   text-align: center;
-  border-radius: 10px;
+  border-radius: 20px;
   border: none;
   box-shadow: 0px 12px 34px 0px rgba(0, 0, 0, 0.08),
     0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
@@ -20,34 +18,16 @@ const CategoryInput = styled.input`
   font-size: 20px;
 `;
 
-const ManageBtn = styled.button`
-  width: 60px;
-  height: 60px;
-  border-radius: 20px;
-  border: 1px solid
-    ${(props) => (props.id === "addBtn" ? "#2AA663" : "#939393")};
-  background: #fff;
-  box-shadow: 0px 12px 34px 0px rgba(0, 0, 0, 0.08),
-    0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
-  cursor: pointer;
-  margin-left: 16px;
-  &:hover {
-  }
-
-  > img {
-    width: 16px;
-  }
-`;
-
 const PriceInput = styled.input`
   &::placeholder {
     text-align: left;
     padding-left: 24px;
   }
-  text-align: center;
-  width: 236px;
+  text-align: left;
+  padding-left: 30px;
+  width: 240px;
   height: 60px;
-  border-radius: 10px;
+  border-radius: 20px;
   border: none;
   box-shadow: 0px 12px 34px 0px rgba(0, 0, 0, 0.08),
     0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
@@ -57,6 +37,14 @@ const PriceInput = styled.input`
   }
   font-family: "SUITLight";
   font-size: 20px;
+`;
+
+const Unit = styled.span`
+  position: absolute;
+  font-family: "SUITLight";
+  font-size: 20px;
+  top: 37%;
+  right: 21px;
 `;
 
 function TargetAmountComponent(props) {
@@ -96,23 +84,29 @@ function TargetAmountComponent(props) {
     const { value } = e.target;
     // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
     const onlyNumber = value.replace(/[^0-9]/g, "");
-    const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
-    setPriceInputValue(formattedNumber);
-    props.setTargetAmount((prev) =>
-      prev.map((item) =>
-        item.name === props.category
-          ? { ...item, consumption: formattedNumber }
-          : item
-      )
-    );
-  }
+    setPriceInputValue(convertStringNum(onlyNumber));
 
-  function handleRmvBtnClick() {
-    const newArr = props.targetAmount.filter(
-      (itm) => itm.name !== props.category
+    const arr = props.targetAmount.map((itm) =>
+      itm.name === props.category
+        ? { ...itm, consumption: convertStringNum(onlyNumber) }
+        : itm
     );
+    const sum = arr.reduce(
+      (acc, itm) =>
+        itm.name === "기타" ? acc : acc + convertToInt(itm.consumption),
+      0
+    );
+
+    const newArr = arr.map((itm) =>
+      itm.name === "기타"
+        ? {
+            ...itm,
+            consumption: convertStringNum(convertToInt(props.income) - sum),
+          }
+        : itm
+    );
+
     props.setTargetAmount(newArr);
-    console.log(newArr);
   }
 
   useEffect(() => {
@@ -122,25 +116,33 @@ function TargetAmountComponent(props) {
 
   return (
     <>
-      <Horizontal style={{ marginTop: "14px", justifyContent: "flex-start" }}>
+      <Horizontal
+        style={{
+          marginTop: "14px",
+          justifyContent: "flex-start",
+          position: "relative",
+        }}
+      >
         <CategoryInput
           value={categoryInputValue}
           onChange={handleCategoryChange}
         />
         <PriceInput value={priceInputValue} onChange={handlePriceInputChange} />
-        {props.isLast === false && (
-          <ManageBtn id="rmvBtn" onClick={handleRmvBtnClick}>
-            <img src={RmvBtnImg} alt="removeImg" id="rmvBtn" />
-          </ManageBtn>
-        )}
-        {props.isLast === true && (
-          <ManageBtn id="addBtn" onClick={props.handleAddBtnClick}>
-            <img src={AddBtnImg} alt="addImg" id="addBtn" />
-          </ManageBtn>
-        )}
+        <Unit>원</Unit>
       </Horizontal>
     </>
   );
 }
 
 export default TargetAmountComponent;
+
+function convertToInt(numberString) {
+  const numberWithoutCommas = numberString.replace(/,/g, "");
+  const number = parseInt(numberWithoutCommas, 10);
+  return number;
+}
+
+function convertStringNum(onlyNumber) {
+  const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
+  return formattedNumber;
+}

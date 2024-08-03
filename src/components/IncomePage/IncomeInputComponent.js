@@ -3,6 +3,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { firstCategoryState, tokenState, userData } from "../../store/atom";
 import styled from "styled-components";
 import axios from "axios";
+import { Horizontal } from "../../styles/CommunalStyle";
 
 const Title = styled.p`
   font-family: "SUITLight";
@@ -14,8 +15,8 @@ const Title = styled.p`
 `;
 
 const StyledInput = styled.input`
-  width: 800px;
-  height: 60px;
+  width: 371px;
+  height: 59px;
   border-radius: 20px;
   &:focus {
     outline: 1px solid var(--70, #3fc87e);
@@ -25,17 +26,14 @@ const StyledInput = styled.input`
     0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
   border: none;
   font-family: "SUITLight";
-  font-size: 16px;
+  font-size: 20px;
   padding-left: 30px;
   margin: 20px 0;
 `;
 
 const StyledBtn = styled.button`
-  padding-top: 14px;
-  padding-right: 20px;
-  padding-bottom: 14px;
-  padding-left: 16px;
   display: inline-flex;
+  padding: 12px 14px;
   justify-content: center;
   align-items: center;
   gap: 14px;
@@ -47,8 +45,10 @@ const StyledBtn = styled.button`
   border: none;
   cursor: pointer;
   &:hover {
-    transform: translateY(0px) scale(1.1);
+    transform: ${(props) =>
+      props.showBtn ? "translateY(0px) scale(1.05)" : ""};
   }
+  opacity: ${(props) => (props.showBtn ? "1" : "0.5")};
 `;
 
 const InputWrapper = styled.div`
@@ -62,19 +62,61 @@ const InputWrapper = styled.div`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: center;
 `;
 
-const ErrorMessage = styled.p`
+const Unit = styled.span`
+  position: absolute;
   font-family: "SUITLight";
-  font-size: "16px;";
-  color: red;
+  font-size: 20px;
+  top: 37%;
+  right: 21px;
 `;
+
+const CategoryInput = styled.input`
+  width: 115px;
+  height: 60px;
+  text-align: center;
+  border-radius: 20px;
+  border: none;
+  box-shadow: 0px 12px 34px 0px rgba(0, 0, 0, 0.08),
+    0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
+  margin-right: 16px;
+  font-family: "SUITLight";
+  font-size: 20px;
+  &:focus {
+    outline: none;
+  }
+  opacity: 0.5;
+`;
+
+const PriceInput = styled.input`
+  text-align: center;
+  width: 270px;
+  height: 60px;
+  border-radius: 20px;
+  border: none;
+  box-shadow: 0px 12px 34px 0px rgba(0, 0, 0, 0.08),
+    0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
+  font-family: "SUITLight";
+  font-size: 20px;
+  &:focus {
+    outline: none;
+  }
+  opacity: 0.5;
+`;
+
+const dummy = [
+  { category: "식비", amount: "0" },
+  { category: "문화", amount: "0" },
+  { category: "교통비", amount: "0" },
+  { category: "기타", amount: "0" },
+];
 
 export default function IncomeInputComponent(props) {
   const userInfo = useRecoilValue(userData);
-  const [showError, setShowError] = useState(false);
+  const [showBtn, setShowBtn] = useState(false);
   const userToken = useRecoilValue(tokenState);
   const setCategoryAmount = useSetRecoilState(firstCategoryState);
 
@@ -84,14 +126,18 @@ export default function IncomeInputComponent(props) {
     const onlyNumber = value.replace(/[^0-9]/g, "");
     const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
     props.setInputValue(formattedNumber);
+
+    if (formattedNumber === "0") setShowBtn(false);
+    else setShowBtn(true);
+  }
+
+  function handleEnterDown(e) {
+    if (e.key === "Enter") {
+      handleBtnClick();
+    }
   }
 
   function handleBtnClick() {
-    if (props.inputValue === "0") {
-      setShowError(true);
-      return;
-    }
-
     const apiUrl = process.env.REACT_APP_BASE_URL + "/user/monthly/income";
     const newArr = { income: convertToInt(props.inputValue) };
     console.log(newArr);
@@ -107,10 +153,9 @@ export default function IncomeInputComponent(props) {
         props.setShowComponent(2);
         props.setHandleProgress({ direction: "go", point: 33.3 });
         const array = response.data.userCategoryAndAmounts;
-        const newArr = array.map((itm, idx, arr) => ({
+        const newArr = array.map((itm) => ({
           ...itm,
           consumption: convertStringNum(itm.consumption),
-          isLast: idx === arr.length - 1,
         }));
         setCategoryAmount(newArr);
         console.log(newArr);
@@ -120,20 +165,35 @@ export default function IncomeInputComponent(props) {
       });
   }
   return (
-    <Wrapper>
-      <InputWrapper>
+    <>
+      <StyledBtn style={{ opacity: "0" }}></StyledBtn>
+      <Wrapper>
+        <InputWrapper>
+          <Title>
+            {userInfo.name}님의 <span>한달 수입</span>
+          </Title>
+          <div style={{ position: "relative" }}>
+            <StyledInput
+              value={props.inputValue}
+              onChange={handleInputChange}
+              onKeyDown={handleEnterDown}
+            />
+            <Unit>원</Unit>
+          </div>
+        </InputWrapper>
         <Title>
-          {userInfo.name}님의 <span>한달 수입</span>
+          {userInfo.name}님의 <span>카테고리별 목표금액</span>
         </Title>
-        <StyledInput
-          value={props.inputValue}
-          onChange={handleInputChange}
-          placeholder="한달 수입을 입력해주세요"
-        />
-      </InputWrapper>
-      {showError && <ErrorMessage>수입을 입력해주세요!</ErrorMessage>}
-      <StyledBtn onClick={handleBtnClick}>확인</StyledBtn>
-    </Wrapper>
+        <div>
+          {dummy.map((itm) => (
+            <CategoryAmountInput category={itm.category} amount={itm.amount} />
+          ))}
+        </div>
+      </Wrapper>
+      <StyledBtn onClick={handleBtnClick} disabled={!showBtn} showBtn={showBtn}>
+        확인
+      </StyledBtn>
+    </>
   );
 }
 
@@ -146,4 +206,22 @@ function convertToInt(numberString) {
 function convertStringNum(onlyNumber) {
   const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
   return formattedNumber;
+}
+
+function CategoryAmountInput(props) {
+  return (
+    <>
+      <Horizontal
+        style={{
+          marginTop: "14px",
+          justifyContent: "flex-start",
+          position: "relative",
+        }}
+      >
+        <CategoryInput value={props.category} readOnly />
+        <PriceInput value={props.amount} readOnly />
+        <Unit>원</Unit>
+      </Horizontal>
+    </>
+  );
 }
