@@ -17,6 +17,7 @@ import MyPage from "./pages/Web/MyPage";
 //Mobile Version
 import MobMainPage from "./pages/Mob/MobMainPage";
 import MobCalenderPage from "./pages/Mob/MobCalenderPage";
+import MobCreatePage from "./pages/Mob/MobCreatePage";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,9 @@ const router = createBrowserRouter([
       <AuthWrapper>
         <div className="default-page">
           <CreatePage />
+        </div>
+        <div className="mobile-page">
+          <MobCreatePage />
         </div>
       </AuthWrapper>
     ),
