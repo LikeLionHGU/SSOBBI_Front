@@ -6,7 +6,7 @@ import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { tokenState, userData } from "../../store/atom";
 import CalenderComponent from "../../components/CalenderPage/CalenderComponent";
-import CalenderDetailComponent from "../../components/CalenderPage/CalenderDetailComponent";
+// import CalenderDetailComponent from "../../components/CalenderPage/CalenderDetailComponent";
 import MonthComponent from "../../components/MobComponent/MobCalenderPage/MonthComponent";
 import CategoryDetailComponent from "../../components/MobComponent/MobCalenderPage/CategoryDetailComponent";
 import TooltipComponent from "../../components/CalenderPage/TooltipComponent";
