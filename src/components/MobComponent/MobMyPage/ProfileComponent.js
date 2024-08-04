@@ -2,11 +2,7 @@ import React, { useRef, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { tokenState, userData } from "../../../store/atom";
-import {
-  Horizontal,
-  NoCenterVertical,
-  Vertical,
-} from "../../../styles/CommunalStyle";
+import { Horizontal, NoCenterVertical } from "../../../styles/CommunalStyle";
 import axios from "axios";
 import UpdateImg from "../../../imgs/PencilFill.svg";
 

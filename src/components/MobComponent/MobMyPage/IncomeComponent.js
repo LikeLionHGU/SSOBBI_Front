@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Vertical } from "../../../styles/CommunalStyle";
+import { NoCenterVertical, Vertical } from "../../../styles/CommunalStyle";
 import styled from "styled-components";
 import axios from "axios";
 import { tokenState, userData } from "../../../store/atom";
 import { useRecoilValue } from "recoil";
 
 const MonthIncome = styled.input`
-  width: 226px;
+  width: 206px;
   height: 48px;
   border-radius: 20px;
   border: none;
@@ -43,15 +43,16 @@ const Unit = styled.span`
   font-family: "SUITLight";
   font-size: 14px;
   position: absolute;
-  right: 20px;
+  right: 110px;
   top: 15px;
 `;
 
 const InputBtnWrapper = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
+  position: relative;
 `;
 
 function IncomeComponent() {
@@ -107,10 +108,10 @@ function IncomeComponent() {
       });
   }, [isUpdating, userToken]);
   return (
-    <Vertical style={{ justifyContent: "" }}>
+    <div style={{ width: "319px", marginTop: "32px" }}>
       <Title>{userInfo.name}님의 한달 수입</Title>
-      <InputBtnWrapper>
-        <div style={{ position: "relative" }}>
+      <NoCenterVertical style={{ justifyContent: "" }}>
+        <InputBtnWrapper>
           <MonthIncome
             readOnly={!isUpdating}
             value={income}
@@ -118,8 +119,8 @@ function IncomeComponent() {
             ref={incomeRef}
           />
           <Unit>원</Unit>
-        </div>
-        {/* {isUpdating === false && (
+
+          {/* {isUpdating === false && (
           <UpdateBtn
             onClick={() => {
               setIsUpdating(true);
@@ -132,8 +133,9 @@ function IncomeComponent() {
         {isUpdating === true && (
           <UpdateBtn onClick={handleSubmitBtnClick}>저장하기</UpdateBtn>
         )} */}
-      </InputBtnWrapper>
-    </Vertical>
+        </InputBtnWrapper>
+      </NoCenterVertical>
+    </div>
   );
 }
 

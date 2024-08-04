@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {
   Horizontal,
   NoCenterHorizontal,
-  NoCenterVertical,
+  Vertical,
 } from "../../styles/CommunalStyle";
 import LogoImg from "../../imgs/Logo.png";
 import ProfileComponent from "../../components/MobComponent/MobMyPage/ProfileComponent";
@@ -38,6 +38,15 @@ const Title = styled.p`
   margin: 0;
 `;
 
+const Title2 = styled.p`
+  font-family: "SUITLight";
+`;
+
+const TitleAndInputWrapper = styled.div`
+  width: 319px;
+  margin-top: 32px;
+`;
+
 function MobMyPage() {
   const userToken = useRecoilValue(tokenState);
   const [amount, setAmount] = useState([]);
@@ -67,7 +76,7 @@ function MobMyPage() {
   }, [isUpdating]);
   return (
     <MobileV>
-      <NoCenterVertical
+      <Vertical
         style={{
           justifyContent: "flex-start",
           marginTop: "40px",
@@ -91,25 +100,28 @@ function MobMyPage() {
         </NoCenterHorizontal>
         <ProfileComponent />
         <IncomeComponent />
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          {amount.map((itm) => (
-            <CategoryAmountComponent
-              data={itm}
-              isUpdating={isUpdating}
-              amount={amount}
-              setAmount={setAmount}
-              isLast={itm.isLast}
-            />
-          ))}
-        </div>
+        <TitleAndInputWrapper>
+          <Title2>카테고리별 목표금액</Title2>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            {amount.map((itm) => (
+              <CategoryAmountComponent
+                data={itm}
+                isUpdating={isUpdating}
+                amount={amount}
+                setAmount={setAmount}
+                isLast={itm.isLast}
+              />
+            ))}
+          </div>
+        </TitleAndInputWrapper>
         <MobMenuBarComponent menu={"profile"} />
-      </NoCenterVertical>
+      </Vertical>
     </MobileV>
   );
 }
