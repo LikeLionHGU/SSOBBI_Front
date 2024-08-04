@@ -256,7 +256,12 @@ function CalenderPage() {
                 >
                   <SubTitle>
                     {userInfo.name}님의 {selectedMonth}월{" "}
-                    <span style={{ fontFamily: "SUITMedium" }}> 소비 </span>
+                    <span
+                      style={{ fontFamily: "SUITMedium", marginLeft: "5px" }}
+                    >
+                      {" "}
+                      소비{" "}
+                    </span>
                   </SubTitle>
                   <MonthComponent
                     monthlyData={monthlyData}
@@ -286,7 +291,10 @@ function CalenderPage() {
               </NoCenterHorizontal>
               <SubTitle style={{ marginLeft: "30px" }}>
                 {userInfo.name}님의 {selectedMonth}월{" "}
-                <span style={{ fontFamily: "SUITMedium" }}> 감정별 소비 </span>
+                <span style={{ fontFamily: "SUITMedium", marginLeft: "5px" }}>
+                  {" "}
+                  감정별 소비{" "}
+                </span>
                 <div className="container">
                   <TooltipComponent infoText="hello world" show={showTooltip}>
                     <TooltipBtn

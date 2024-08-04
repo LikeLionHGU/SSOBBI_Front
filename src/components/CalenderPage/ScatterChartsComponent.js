@@ -45,7 +45,7 @@ const ScatterChartsComponent = ({ happinessRateData }) => {
     chart: {
       type: "scatter",
       zoom: {
-        enabled: true,
+        enabled: false,
         type: "xy",
       },
     },

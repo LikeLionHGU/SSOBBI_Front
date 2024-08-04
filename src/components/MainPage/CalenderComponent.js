@@ -8,6 +8,7 @@ import "../../styles/Calender.css";
 import moment from "moment";
 import styled from "styled-components";
 import CheckImg from "../../imgs/CheckPoint.svg";
+import Check0Img from "../../imgs/alarmCheck0.png";
 
 // ToDo: 과소비 건수 확인하는 박스 부분부터 시작
 
@@ -53,14 +54,14 @@ const SSOBBIBox = styled.div`
   font-size: 14px;
   margin-top: 50px;
   text-align: center;
-  background-color: #f6f6fc;
+  background-color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
 `;
 
 const CheckPoint = styled.img`
-  width: 28px;
+  width: 25px;
   height: 28px;
   margin-left: 20px;
   margin-top: -15px;
@@ -78,12 +79,12 @@ const DetailBT = styled.button`
   flex-direction: column;
   align-items: center;
   color: white;
-  background-color: #ff4d4d;
+  background-color: ${(props) => (props.data === 0 ? "#19844A" : "#ff4d4d")};
   cursor: pointer;
   text-decoration: none;
 `;
 
-function Calender() {
+function Calender({ setApiDate }) {
   const today = new Date();
   const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(null);
@@ -117,6 +118,7 @@ function Calender() {
   const handleDateChange = (e) => {
     setFormatDay(moment(e).format("DD"));
     setSelectedDate(moment(e).format("YYYY-MM-DD"));
+    setApiDate(moment(e).format("YYYY-MM-DD"));
     // const foundDate = attendDay.find(
     //   (itm) => itm.date === moment(e).format("YYYY-MM-DD")
     // );
@@ -136,8 +138,12 @@ function Calender() {
         const totalOverConsumptionCount = response.data
           .totalOverConsumptionCount
           ? response.data.totalOverConsumptionCount
-          : 0;
+          : null;
         setData(totalOverConsumptionCount);
+        console.log(
+          "totalOverConsumptionCount확인 : ",
+          response.data.totalOverConsumptionCount
+        );
       })
       .catch((error) => {
         console.log(error);
@@ -150,19 +156,32 @@ function Calender() {
       state: { detailDate: detailDate },
     });
   };
-  const handleActiveStartDateChange = ({ activeStartDate }) => {
-    const lastDayOfMonth = new Date(
-      activeStartDate.getFullYear(),
-      activeStartDate.getMonth() + 1,
-      0
-    );
-    handleDateChange(lastDayOfMonth);
+  const handleActiveStartDateChange = ({ activeStartDate, action }) => {
+    let newDate;
+    if (action === "prev") {
+      newDate = new Date(
+        activeStartDate.getFullYear(),
+        activeStartDate.getMonth() + 1,
+        0
+      );
+    } else if (action === "next") {
+      newDate = new Date(
+        activeStartDate.getFullYear(),
+        activeStartDate.getMonth(),
+        1
+      );
+    }
+    handleDateChange(newDate);
   };
+  const maxDate = new Date(today.getFullYear(), today.getMonth() + 1, 0); // 오늘이 속한 달의 마지막 날
+
   return (
     <CalenderWrapper>
       <Calendar
         onChange={handleDateChange}
-        onActiveStartDateChange={handleActiveStartDateChange}
+        onActiveStartDateChange={(e) =>
+          handleActiveStartDateChange({ ...e, action: e.action })
+        }
         formatDay={(locale, date) => moment(date).format("D")} // 일 제거 숫자만 보이게
         formatYear={(locale, date) => moment(date).format("YYYY")} // 네비게이션 눌렀을때 숫자 년도만 보이게
         formatMonthYear={(locale, date) => moment(date).format("YYYY. MM")} // 네비게이션에서 2023. 12 이렇게 보이도록 설정
@@ -171,6 +190,7 @@ function Calender() {
         next2Label={null} // +1년 & +10년 이동 버튼 숨기기
         prev2Label={null} // -1년 & -10년 이동 버튼 숨기기
         minDetail="year" // 10년단위 년도 숨기기
+        maxDate={maxDate}
         tileDisabled={({ date, view }) =>
           view === "month" &&
           (date > today ||
@@ -194,16 +214,32 @@ function Calender() {
           return <>{html}</>;
         }}
       />
-      {selectedDate && (
+      {selectedDate && data && (
         <>
           <SSOBBIBox>
-            <CheckPoint src={CheckImg} />
-            <p>
-              아이코! {formatDay}일에{" "}
-              <span style={{ fontWeight: "bold" }}>{data}번</span> 과소비
-              했어요.
-            </p>
-            <DetailBT onClick={handleDetailClick}>소비 내역 확인하기</DetailBT>
+            {data === 0 ? (
+              <>
+                <CheckPoint src={Check0Img} />
+                <p>
+                  나이스! {formatDay}일에{" "}
+                  <span style={{ fontWeight: "bold" }}>{data}번</span>{" "}
+                  과소비했어요.
+                </p>
+              </>
+            ) : (
+              <>
+                <CheckPoint src={CheckImg} />
+                <p>
+                  아이코! {formatDay}일에{" "}
+                  <span style={{ fontWeight: "bold" }}>{data}번</span>{" "}
+                  과소비했어요.
+                </p>
+              </>
+            )}
+
+            <DetailBT onClick={handleDetailClick} data={data}>
+              소비 내역 확인하기
+            </DetailBT>
           </SSOBBIBox>
         </>
       )}

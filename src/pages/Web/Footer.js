@@ -62,7 +62,7 @@ export default function Footer() {
             쏘삐
           </Text>
           <a
-            href="https://www.instagram.com/sspbbi_official?igsh=ZnBpcjUwcTJqNHVq&utm_source=qr"
+            href="https://www.instagram.com/ssobbi_official?igsh=ZnBpcjUwcTJqNHVq&utm_source=qr"
             style={{ textDecoration: "none", width: "100px" }}
           >
             <Horizontal

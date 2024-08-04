@@ -113,7 +113,7 @@ function MonthComponent({ monthlyData, month, onDetailCPChange }) {
                   fontWeight: "bold",
                 }}
               >
-                {monthlyData.totalOverConsumptionAmount}
+                {monthlyData.totalOverConsumptionAmount.toLocaleString()}
               </span>
               {"   "}원
             </p>
