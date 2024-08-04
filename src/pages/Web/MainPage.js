@@ -51,12 +51,12 @@ function MainPage() {
   const [weeklyData, setWeeklyData] = useState(null);
   const [monthlyData, setMonthlyData] = useState(null);
   const userToken = useRecoilValue(tokenState);
-  const today = moment().format("YYYY-MM-DD");
+  const [apiDate, setApiDate] = useState(moment().format("YYYY-MM-DD"));
   useEffect(() => {
     const fetchData = async () => {
       try {
         const day = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/records/daily/${today}/summary`,
+          `${process.env.REACT_APP_BASE_URL}/records/daily/${apiDate}/summary`,
           {
             headers: {
               Authorization: "Bearer " + userToken,
@@ -65,7 +65,7 @@ function MainPage() {
         );
         setDailyData(day.data);
         const week = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/records/weekly/${today}/summary`,
+          `${process.env.REACT_APP_BASE_URL}/records/weekly/${apiDate}/summary`,
           {
             headers: {
               Authorization: "Bearer " + userToken,
@@ -74,7 +74,7 @@ function MainPage() {
         );
         setWeeklyData(week.data);
         const month = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/records/monthly/${today}/summary`,
+          `${process.env.REACT_APP_BASE_URL}/records/monthly/${apiDate}/summary`,
           {
             headers: {
               Authorization: "Bearer " + userToken,
@@ -95,7 +95,7 @@ function MainPage() {
       }
     };
     fetchData();
-  }, [userToken, today]);
+  }, [userToken, apiDate]);
   if (loading) return <p>Loading...</p>;
   return (
     <>
@@ -139,7 +139,7 @@ function MainPage() {
                 paddingBottom: "20px",
               }}
             >
-              <DayStatisticsComponent dayData={dailyData} />
+              <DayStatisticsComponent dayData={dailyData} apiDate={apiDate} />
               <Box>
                 {dailyData.content
                   ? dailyData.content
@@ -150,7 +150,7 @@ function MainPage() {
                 monthData={monthlyData}
               />
             </Vertical>
-            <CalenderComponent />
+            <CalenderComponent setApiDate={setApiDate} />
           </NoCenterHorizontal>
         </NoCenterVertical>
       </Horizontal>

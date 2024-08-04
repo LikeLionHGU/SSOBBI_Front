@@ -3,8 +3,8 @@ import {
   NoCenterHorizontal,
   NoCenterVertical,
   Horizontal,
-} from "../../styles/CommunalStyle";
-import LogoImg from "../../imgs/Logo.png";
+} from "../../../styles/CommunalStyle";
+import LogoImg from "../../../imgs/Logo.png";
 import { BsInstagram } from "react-icons/bs";
 
 const Title = styled.p`
@@ -12,18 +12,18 @@ const Title = styled.p`
   font-family: "RowdiesBold";
   font-weight: 700;
   font-style: normal;
-  font-size: 28px;
+  font-size: 15px;
   margin: 0;
   margin-top: 10px;
 `;
 const Logo = styled.img`
-  width: 35px;
-  height: 35px;
-  margin-right: 15px;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
 `;
 const Box = styled.div`
   width: 100%;
-  height: 480px;
+  height: 280px;
   margin-top: 100px;
   background-color: black;
 `;
@@ -31,23 +31,23 @@ const Text = styled.p`
   color: white;
   font-family: "RowdiesLight";
   font-style: normal;
-  font-size: 18px;
+  font-size: 12px;
   margin: 0;
   margin-top: 20px;
-  width: 340px;
+  width: 220px;
 `;
 const Insta = styled.p`
   color: white;
   font-family: "RowdiesLight";
   font-style: normal;
-  font-size: 18px;
+  font-size: 12px;
 `;
 
 export default function Footer() {
   return (
     <Box>
       <NoCenterHorizontal>
-        <NoCenterVertical style={{ marginTop: "110px", marginLeft: "90px" }}>
+        <NoCenterVertical style={{ marginTop: "60px", marginLeft: "20px" }}>
           <Horizontal
             style={{
               justifyContent: "flex-start",
@@ -68,13 +68,13 @@ export default function Footer() {
             <Horizontal
               style={{
                 justifyContent: "flex-start",
-                marginTop: "100px",
+                marginTop: "30px",
               }}
             >
               <BsInstagram
                 style={{
                   color: "white",
-                  marginRight: "15px",
+                  marginRight: "12px",
                 }}
               />
               <Insta>@SSOBBI</Insta>

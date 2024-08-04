@@ -74,20 +74,33 @@ function CalenderComponent({ onMonthChange, setApiMonth }) {
     onMonthChange(month);
     setApiMonth(moment(e).format("YYYY-MM-DD"));
   };
-  const handleActiveStartDateChange = ({ activeStartDate }) => {
-    const lastDayOfMonth = new Date(
-      activeStartDate.getFullYear(),
-      activeStartDate.getMonth() + 1,
-      0
-    );
-    handleDateChange(lastDayOfMonth);
+  const handleActiveStartDateChange = ({ activeStartDate, action }) => {
+    let newDate;
+    if (action === "prev") {
+      newDate = new Date(
+        activeStartDate.getFullYear(),
+        activeStartDate.getMonth() + 1,
+        0
+      );
+    } else if (action === "next") {
+      newDate = new Date(
+        activeStartDate.getFullYear(),
+        activeStartDate.getMonth(),
+        1
+      );
+    }
+    handleDateChange(newDate);
   };
+  const maxDate = new Date(today.getFullYear(), today.getMonth() + 1, 0); // 오늘이 속한 달의 마지막 날
+
   return (
     <div>
       <Calendar
         className="react-calendar-2"
         onChange={handleDateChange}
-        onActiveStartDateChange={handleActiveStartDateChange}
+        onActiveStartDateChange={(e) =>
+          handleActiveStartDateChange({ ...e, action: e.action })
+        }
         formatDay={(locale, date) => moment(date).format("D")} // 일 제거 숫자만 보이게
         formatYear={(locale, date) => moment(date).format("YYYY")} // 네비게이션 눌렀을때 숫자 년도만 보이게
         formatMonthYear={(locale, date) => moment(date).format("YYYY. MM")} // 네비게이션에서 2023. 12 이렇게 보이도록 설정
@@ -96,6 +109,7 @@ function CalenderComponent({ onMonthChange, setApiMonth }) {
         next2Label={null} // +1년 & +10년 이동 버튼 숨기기
         prev2Label={null} // -1년 & -10년 이동 버튼 숨기기
         minDetail="year" // 10년단위 년도 숨기기
+        maxDate={maxDate}
         tileDisabled={({ date, view }) => view === "month" && date > today}
         tileContent={({ date, view }) => {
           let html = [];

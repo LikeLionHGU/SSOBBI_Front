@@ -18,11 +18,21 @@ import MyPage from "./pages/Web/MyPage";
 import MobMainPage from "./pages/Mob/MobMainPage";
 import MobCalenderPage from "./pages/Mob/MobCalenderPage";
 import MobCreatePage from "./pages/Mob/MobCreatePage";
+import MobLandingPage from "./pages/Mob/MobLandingPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LandingPage />,
+    element: (
+      <>
+        <div className="default-page">
+          <LandingPage />
+        </div>
+        <div className="mobile-page">
+          <MobLandingPage />
+        </div>
+      </>
+    ),
   },
   {
     path: "/ssobbi",

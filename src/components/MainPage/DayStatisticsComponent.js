@@ -39,15 +39,39 @@ const TagBox = styled.div`
   background-color: ${({ color }) => color || "#BEFEDB"};
   margin: 5px;
 `;
+const formatApiDate = (apiDate) => {
+  const date = new Date(apiDate);
+  const monthNames = [
+    "1월",
+    "2월",
+    "3월",
+    "4월",
+    "5월",
+    "6월",
+    "7월",
+    "8월",
+    "9월",
+    "10월",
+    "11월",
+    "12월",
+  ];
+  const month = monthNames[date.getMonth()];
+  const day = date.getDate();
+  return `${month} ${day}일`;
+};
 
 const colors = ["#BEFEDB", "#C4FAF7", "#BDEFFF", "#C1FFAC"];
-function DayStatisticsComponent({ dayData }) {
+function DayStatisticsComponent({ dayData, apiDate }) {
   const userInfo = useRecoilValue(userData);
+  const formattedDate = formatApiDate(apiDate);
+
   return (
     <>
       <Title>
         {userInfo.name}님의{" "}
-        <span style={{ fontFamily: "SUITMedium" }}>오늘의 기록 </span>
+        <span style={{ fontFamily: "SUITMedium" }}>
+          {formattedDate}의 기록{" "}
+        </span>
       </Title>
       <Horizontal>
         <Box>
