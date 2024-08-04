@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {
   Horizontal,
   NoCenterHorizontal,
-  Vertical,
+  NoCenterVertical,
 } from "../../styles/CommunalStyle";
 import LogoImg from "../../imgs/Logo.png";
 import ProfileComponent from "../../components/MobComponent/MobMyPage/ProfileComponent";
@@ -15,15 +15,11 @@ import { tokenState } from "../../store/atom";
 import MobMenuBarComponent from "./MobMenuBarComponent";
 
 const MobileV = styled.div`
-  width: 375px;
+  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
   padding-bottom: 70px;
-  background: var(
-    --mobile_bg,
-    linear-gradient(280deg, #f7f7f7 56.16%, #ebf9f0 146.1%)
-  );
   /* height: 100vh; */
 `;
 
@@ -71,7 +67,13 @@ function MobMyPage() {
   }, [isUpdating]);
   return (
     <MobileV>
-      <Vertical>
+      <NoCenterVertical
+        style={{
+          justifyContent: "flex-start",
+          marginTop: "40px",
+          width: "375px",
+        }}
+      >
         <NoCenterHorizontal>
           <Horizontal
             style={{
@@ -107,7 +109,7 @@ function MobMyPage() {
           ))}
         </div>
         <MobMenuBarComponent menu={"profile"} />
-      </Vertical>
+      </NoCenterVertical>
     </MobileV>
   );
 }

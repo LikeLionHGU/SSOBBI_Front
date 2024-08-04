@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { NoCenterVertical } from "../../styles/CommunalStyle";
 import HappinessRateComponent from "../../components/MobComponent/MobCreatePage/HappinessRateComponent";
 import styled from "styled-components";

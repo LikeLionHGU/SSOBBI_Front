@@ -23,7 +23,7 @@ import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import LogoImg from "../../imgs/Logo.png";
 
 const MobileV = styled.div`
-  width: 375px;
+  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -209,6 +209,7 @@ function MobCalenderPage() {
           style={{
             justifyContent: "flex-start",
             marginTop: "40px",
+            width: "375px",
           }}
         >
           <NoCenterHorizontal>
