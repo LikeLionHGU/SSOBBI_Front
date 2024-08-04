@@ -11,11 +11,11 @@ import { IoLogOutOutline } from "react-icons/io5";
 
 const Menu = styled.div`
   background-color: ${(props) => props.theme.colors.COLOR70};
-  width: 85px;
+  width: 95px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   height: 100%;
   border-radius: 20px 20px 0 0;
   margin-top: 80px;
@@ -26,27 +26,37 @@ const StyledLink = styled(Link)`
   color: inherit;
 `;
 
+const MenuText = styled.p`
+  font-size: 12px;
+  color: ${(props) => (props.active ? props.theme.colors.COLOR80 : "#fff")};
+  margin: 0;
+  margin-top: 8px;
+`;
+
 const Icon = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 21px;
-  margin-bottom: 21px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   font-size: 20px;
   width: 60px;
-  margin-left: 18px;
-  padding-left: -20px;
-  padding-right: 18px;
-  height: 50px;
-  border-radius: 48% 0px 0px 48%;
+  margin-left: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
+  height: 65px;
+  border-radius: 0px 15px 15px 15px;
   background-color: ${(props) => (props.active ? "#fff" : "transparent")};
   color: ${(props) => (props.active ? props.theme.colors.COLOR80 : "#fff")};
   cursor: pointer;
-
   &:hover {
     background-color: #fff;
     color: ${(props) => props.theme.colors.COLOR80};
+
+    ${MenuText} {
+      color: ${(props) => props.theme.colors.COLOR80};
+    }
   }
 `;
 
@@ -67,49 +77,49 @@ const MenuBarComponent = ({ menu }) => {
   };
   return (
     <Menu>
-      <Icon
-        active={activeIcon === "home"}
-        onClick={() => handleIconClick("home")}
-        style={{ marginTop: "100px" }}
-      >
-        <StyledLink to="/ssobbi">
+      <StyledLink to="/ssobbi">
+        <Icon
+          active={activeIcon === "home"}
+          onClick={() => handleIconClick("home")}
+          style={{ marginTop: "100px" }}
+        >
           <FaHouseChimney />
-        </StyledLink>
-      </Icon>
-      <Icon
-        style={{ fontSize: "24px" }}
-        active={activeIcon === "profile"}
-        onClick={() => handleIconClick("profile")}
-      >
-        <StyledLink to="/ssobbi/mypage">
+          <MenuText active={activeIcon === "home"}>메인</MenuText>
+        </Icon>
+      </StyledLink>
+      <StyledLink to="/ssobbi/mypage">
+        <Icon
+          style={{ fontSize: "24px" }}
+          active={activeIcon === "profile"}
+          onClick={() => handleIconClick("profile")}
+        >
           <IoPersonCircleOutline />
-        </StyledLink>
-      </Icon>
-      <Icon
-        active={activeIcon === "calendar"}
-        onClick={() => handleIconClick("calendar")}
-      >
-        <StyledLink to="/ssobbi/calender">
+          <MenuText active={activeIcon === "profile"}>내정보</MenuText>
+        </Icon>
+      </StyledLink>
+      <StyledLink to="/ssobbi/calender">
+        <Icon
+          active={activeIcon === "calendar"}
+          onClick={() => handleIconClick("calendar")}
+        >
           <FaRegCalendarCheck />
-        </StyledLink>
-      </Icon>
-      <Icon
-        active={activeIcon === "note"}
-        onClick={() => handleIconClick("note")}
-      >
-        <StyledLink to="/ssobbi/create">
+          <MenuText active={activeIcon === "calendar"}>캘린더</MenuText>
+        </Icon>
+      </StyledLink>
+      <StyledLink to="/ssobbi/create">
+        <Icon
+          active={activeIcon === "note"}
+          onClick={() => handleIconClick("note")}
+        >
           <PiNotePencilFill />
-        </StyledLink>
-      </Icon>
-      <Icon
-        active={activeIcon === "logout"}
-        onClick={logoutClickHandler}
-        style={{ marginTop: "auto", marginBottom: "60px" }}
-      >
-        <StyledLink to="/">
+          <MenuText active={activeIcon === "note"}>기록</MenuText>
+        </Icon>
+      </StyledLink>
+      <StyledLink to="/" style={{ marginTop: "auto", marginBottom: "60px" }}>
+        <Icon active={activeIcon === "logout"} onClick={logoutClickHandler}>
           <IoLogOutOutline />
-        </StyledLink>
-      </Icon>
+        </Icon>
+      </StyledLink>
     </Menu>
   );
 };
