@@ -16,7 +16,7 @@ import LogoImg from "../../imgs/Logo.png";
 import MobMenuBarComponent from "../Mob/MobMenuBarComponent";
 
 const MobileV = styled.div`
-  width: 375px;
+  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -109,6 +109,7 @@ function MobMainPage() {
           style={{
             justifyContent: "flex-start",
             marginTop: "40px",
+            width: "375px",
           }}
         >
           <NoCenterHorizontal>

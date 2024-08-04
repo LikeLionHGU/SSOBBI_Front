@@ -10,7 +10,7 @@ import Block1Component from "../../components/MobComponent/LandingPage/Block1Com
 import Footer from "../../components/MobComponent/LandingPage/Footer";
 
 const MobileV = styled.div`
-  width: 375px;
+  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -59,6 +59,7 @@ const MobLandingPage = () => {
         style={{
           justifyContent: "flex-start",
           marginTop: "30px",
+          width: "375px",
         }}
       >
         <Horizontal

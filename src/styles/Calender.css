@@ -22,6 +22,9 @@
   margin-right: 20px;
   margin-top: 65px;
 }
+.react-calendar .react-calendar__navigation__label {
+  pointer-events: none; /* 월과 연도 제목 숨기기 */
+}
 .react-calendar-2 .react-calendar__navigation__label {
   pointer-events: none; /* 월과 연도 제목 숨기기 */
 }

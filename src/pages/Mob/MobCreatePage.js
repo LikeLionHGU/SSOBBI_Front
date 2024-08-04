@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect } from "react";
-import { Vertical } from "../../styles/CommunalStyle";
+import { NoCenterVertical } from "../../styles/CommunalStyle";
 import HappinessRateComponent from "../../components/MobComponent/MobCreatePage/HappinessRateComponent";
 import styled from "styled-components";
 import MobMenuBarComponent from "./MobMenuBarComponent";
@@ -19,15 +19,11 @@ import {
 } from "../../store/atom";
 
 const MobileV = styled.div`
-  width: 375px;
+  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
   padding-bottom: 70px;
-  background: var(
-    --mobile_bg,
-    linear-gradient(280deg, #f7f7f7 56.16%, #ebf9f0 146.1%)
-  );
   /* height: 100vh; */
 `;
 
@@ -84,7 +80,13 @@ function MobCreatePage() {
   }, []);
   return (
     <MobileV>
-      <Vertical>
+      <NoCenterVertical
+        style={{
+          justifyContent: "flex-start",
+          marginTop: "40px",
+          width: "375px",
+        }}
+      >
         <NoCenterHorizontal>
           <Horizontal
             style={{
@@ -100,11 +102,12 @@ function MobCreatePage() {
             </a>
           </Horizontal>
         </NoCenterHorizontal>
+
         <HappinessRateComponent />
         <ContentComponent />
         <ConsumptionComponent />
         <MobMenuBarComponent menu={"note"} />
-      </Vertical>
+      </NoCenterVertical>
     </MobileV>
   );
 }
