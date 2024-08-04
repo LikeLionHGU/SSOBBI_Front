@@ -215,7 +215,7 @@ function Calender({ setApiDate }) {
           return <>{html}</>;
         }}
       />
-      {selectedDate && data !== undefined && (
+      {selectedDate && data !== null && (
         <>
           <SSOBBIBox>
             {data === 0 ? (
