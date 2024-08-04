@@ -5,7 +5,6 @@ import TermOfUseComponent from "./TermOfUseComponent";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { tokenState } from "../../store/atom";
-import { useNavigate } from "react-router-dom";
 
 const Title = styled.p`
   font-family: "SUITMedium";
@@ -91,7 +90,6 @@ function EnterPhoneNumComponent() {
   const [showBtn, setShowBtn] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const userToken = useRecoilValue(tokenState);
-  const navigate = useNavigate();
 
   function handleCheckboxChange(e) {
     const { id, checked } = e.target;
@@ -122,7 +120,6 @@ function EnterPhoneNumComponent() {
       setPhoneNum(value);
     } else if (value.length <= 7) {
       setPhoneNum(`${value.slice(0, 3)}-${value.slice(3)}`);
-      console.log("22");
     } else if (value.length <= 11) {
       setPhoneNum(
         `${value.slice(0, 3)}-${value.slice(3, 7)}-${value.slice(7)}`
@@ -143,7 +140,7 @@ function EnterPhoneNumComponent() {
       })
       .then((response) => {
         console.log(response);
-        navigate("/ssobbi");
+        window.location.href = process.env.REACT_APP_KAKAO_URL;
       })
       .catch((error) => {
         console.log(error);
@@ -156,7 +153,7 @@ function EnterPhoneNumComponent() {
           <TermOfUseComponent />
         </ModalComponent>
       )}
-      <SubmitBtn style={{ opacity: "0" }} />
+      <SubmitBtn style={{ opacity: "0" }}>쏘삐 시작하기</SubmitBtn>
       <div>
         <Title>이용약관</Title>
         <InputsWrapper>
