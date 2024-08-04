@@ -140,6 +140,7 @@ function MobCreatePage() {
 
   useEffect(() => {
     const apiUrl = process.env.REACT_APP_BASE_URL + `/records/daily/${today}`;
+    setConsumptions([]);
     axios
       .get(apiUrl, {
         headers: {
@@ -159,7 +160,7 @@ function MobCreatePage() {
               key: idx,
               id: idx,
               category: itm.category,
-              amount: convertStringNum(itm.amount),
+              amount: itm.amount,
               focus: false,
               isLast: idx === arr.length - 1,
             }));
@@ -208,7 +209,11 @@ function MobCreatePage() {
 
         <HappinessRateComponent />
         <ContentComponent />
-        <ConsumptionComponent setTargetAmount={setTargetAmount} />
+        <ConsumptionComponent
+          setTargetAmount={setTargetAmount}
+          consumptions={consumptions}
+          setConsumptions={setConsumptions}
+        />
         <SubmitBtn onClick={writeBtnClick}>{updateWording}</SubmitBtn>
         <MobMenuBarComponent menu={"note"} />
       </NoCenterVertical>

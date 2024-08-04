@@ -87,7 +87,9 @@ const AmountInput = styled.input`
 function ConsumptionInputComponent(props) {
   const setConsumptions = useSetRecoilState(consumptionIndexState);
   const [categoryInput, setCategoryInput] = useState(props.category);
-  const [amountInput, setAmountInput] = useState(props.amount);
+  const [amountInput, setAmountInput] = useState(
+    convertStringNum(props.amount)
+  );
   const [isFocus, setIsFocus] = useState(false);
   const categoryRef = useRef("");
   const priceRef = useRef("");
@@ -216,3 +218,8 @@ function ConsumptionInputComponent(props) {
 }
 
 export default ConsumptionInputComponent;
+
+function convertStringNum(onlyNumber) {
+  const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
+  return formattedNumber;
+}

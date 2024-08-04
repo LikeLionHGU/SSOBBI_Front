@@ -89,7 +89,8 @@ export const GlobalStyle = createGlobalStyle`
         }
         .mobile-page {
             display: block;
-            background-color: #F8FCF9;
+            background: var(--mobile_bg, linear-gradient(280deg, #F7F7F7 56.16%, #EBF9F0 146.1%));
+            /* background-color: #F8FCF9; */
         }
     }
 `;

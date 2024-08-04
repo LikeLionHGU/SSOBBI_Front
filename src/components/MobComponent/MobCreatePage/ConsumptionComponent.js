@@ -16,13 +16,13 @@ const Title = styled.p`
 
 function ConsumptionComponent(props) {
   const userInfo = useRecoilValue(userData);
-  const [consumptions, setConsumptions] = useRecoilState(consumptionIndexState);
+  // const [consumptions, setConsumptions] = useRecoilState(consumptionIndexState);
   const userToken = useRecoilValue(tokenState);
   const [options, setOptions] = useState(null);
   const [keyCounter, setKeyCounter] = useState(1); // id 1씩 증가시키기 위한 useState
 
   function handleAddBtnClick() {
-    setConsumptions((prev) => [
+    props.datasetConsumptions((prev) => [
       ...prev.map((itm) => ({ ...itm, focus: false, isLast: false })),
       {
         key: keyCounter + 1,
@@ -59,9 +59,8 @@ function ConsumptionComponent(props) {
   return (
     <div>
       <Title>{userInfo.name}님의 소비를 입력해주세요</Title>
-      {consumptions.map((itm) => (
+      {props.consumptions.map((itm) => (
         <>
-          <p>{itm.amount}</p>
           <ConsumptionInputComponent
             key={itm.id}
             id={itm.id}
