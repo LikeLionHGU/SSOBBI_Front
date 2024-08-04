@@ -135,15 +135,16 @@ function Calender({ setApiDate }) {
         }
       )
       .then((response) => {
-        const totalOverConsumptionCount = response.data
-          .totalOverConsumptionCount
-          ? response.data.totalOverConsumptionCount
-          : null;
+        const totalOverConsumptionCount =
+          response.data.totalOverConsumptionCount !== undefined &&
+          response.data.totalOverConsumptionCount !== null
+            ? response.data.totalOverConsumptionCount
+            : null;
         setData(totalOverConsumptionCount);
-        console.log(
-          "totalOverConsumptionCount확인 : ",
-          response.data.totalOverConsumptionCount
-        );
+        // console.log(
+        //   "totalOverConsumptionCount확인 : ",
+        //   response.data.totalOverConsumptionCount
+        // );
       })
       .catch((error) => {
         console.log(error);
@@ -214,7 +215,7 @@ function Calender({ setApiDate }) {
           return <>{html}</>;
         }}
       />
-      {selectedDate && data && (
+      {selectedDate && data !== undefined && (
         <>
           <SSOBBIBox>
             {data === 0 ? (
