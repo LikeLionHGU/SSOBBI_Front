@@ -82,14 +82,11 @@ export default function FirstAmountComponent(props) {
   function handleSubmitBtnClick() {
     const apiUrl =
       process.env.REACT_APP_BASE_URL + "/category/monthly/TargetAmount";
-    const newArr = categoryAmount.map((itm) => ({
+    const arr = categoryAmount.map((itm) => ({
       category: itm.name,
       amount: convertToInt(itm.consumption),
     }));
-    props.setShowComponent(3);
-    props.setIsRunning(true);
-    props.setHandleProgress({ direction: "go", point: 66.6 });
-    // console.log(newArr);
+    const newArr = { requests: arr };
     axios
       .post(apiUrl, newArr, {
         headers: {
@@ -98,8 +95,10 @@ export default function FirstAmountComponent(props) {
         },
       })
       .then((response) => {
-        console.log(response);
         // props.setShowComponent(3);
+        props.setShowComponent(3);
+        props.setIsRunning(true);
+        props.setHandleProgress({ direction: "go", point: 100 });
       })
       .catch((error) => {
         console.log(error);
@@ -107,7 +106,7 @@ export default function FirstAmountComponent(props) {
   }
   return (
     <>
-      <StyledBtn style={{ opacity: "0" }} />
+      <StyledBtn style={{ opacity: "0" }}>확인</StyledBtn>
       <Wrapper>
         <InputWrapper>
           <Title>

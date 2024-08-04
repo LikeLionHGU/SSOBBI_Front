@@ -151,7 +151,7 @@ export default function IncomeInputComponent(props) {
         console.log(response);
         props.setIsRunning(true);
         props.setShowComponent(2);
-        props.setHandleProgress({ direction: "go", point: 33.3 });
+        props.setHandleProgress({ direction: "go", point: 50 });
         const array = response.data.userCategoryAndAmounts;
         const newArr = array.map((itm) => ({
           ...itm,
@@ -166,7 +166,7 @@ export default function IncomeInputComponent(props) {
   }
   return (
     <>
-      <StyledBtn style={{ opacity: "0" }}></StyledBtn>
+      <StyledBtn style={{ opacity: "0" }}>확인</StyledBtn>
       <Wrapper>
         <InputWrapper>
           <Title>
