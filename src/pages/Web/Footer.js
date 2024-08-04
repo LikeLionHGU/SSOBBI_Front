@@ -61,15 +61,25 @@ export default function Footer() {
             감정적 소비를 넘어 합리적 쏘삐를 지향합니다. 대한민국 소비의 지향점,
             쏘삐
           </Text>
-          <Horizontal
-            style={{
-              justifyContent: "flex-start",
-              marginTop: "100px",
-            }}
+          <a
+            href="https://www.instagram.com/sspbbi_official?igsh=ZnBpcjUwcTJqNHVq&utm_source=qr"
+            style={{ textDecoration: "none", width: "100px" }}
           >
-            <BsInstagram style={{ color: "white", marginRight: "15px" }} />
-            <Insta>@SSOBBI</Insta>
-          </Horizontal>
+            <Horizontal
+              style={{
+                justifyContent: "flex-start",
+                marginTop: "100px",
+              }}
+            >
+              <BsInstagram
+                style={{
+                  color: "white",
+                  marginRight: "15px",
+                }}
+              />
+              <Insta>@SSOBBI</Insta>
+            </Horizontal>
+          </a>
         </NoCenterVertical>
       </NoCenterHorizontal>
     </Box>
