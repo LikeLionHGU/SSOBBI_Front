@@ -91,7 +91,11 @@ const Vertical = styled.div`
 
 function ConsumptionIndexComponent(props) {
   const [categoryInput, setCategoryInput] = useState(props.category); // 카테고리 inputValue useState
-  const [priceInput, setPriceInput] = useState(convertStringNum(props.amount)); // 가격 inputValue useState
+  const [priceInput, setPriceInput] = useState(
+    Number.isInteger(props.amount)
+      ? convertStringNum(props.amount)
+      : props.amount
+  ); // 가격 inputValue useState
   const [isFocus, setIsFocus] = useState(false); // 카테고리 focus 관리
   const [isPriceEnter, setIsPriceEnter] = useState(false); // 가격 입력 유무 관리 recoil
   const categoryRef = useRef("");

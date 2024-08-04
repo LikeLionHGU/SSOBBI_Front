@@ -96,7 +96,9 @@ function ConsumptionInputComponent(props) {
   const setConsumptions = useSetRecoilState(consumptionIndexState);
   const [categoryInput, setCategoryInput] = useState(props.category);
   const [amountInput, setAmountInput] = useState(
-    convertStringNum(props.amount)
+    Number.isInteger(props.amount)
+      ? convertStringNum(props.amount)
+      : props.amount
   );
   const [isFocus, setIsFocus] = useState(false);
   const categoryRef = useRef("");
@@ -145,9 +147,7 @@ function ConsumptionInputComponent(props) {
   }
 
   function handleRmvBtnClick() {
-    setConsumptions((prev) =>
-      prev.filter((item) => item.category !== props.category)
-    );
+    setConsumptions((prev) => prev.filter((item) => item.id !== props.id));
   }
 
   useEffect(() => {

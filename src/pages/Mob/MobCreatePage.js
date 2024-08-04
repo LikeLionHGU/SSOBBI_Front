@@ -68,12 +68,19 @@ const SubmitBtn = styled.button`
   }
 `;
 
+const ErrorMessage = styled.p`
+  font-family: "SUITMedium";
+  font-size: 16px;
+  color: red;
+`;
+
 function MobCreatePage() {
   const userToken = useRecoilValue(tokenState);
   const [id, setId] = useState(null);
   const navigate = useNavigate();
   const [updateWording, setUpdateWording] = useState(null);
   const [targetAmount, setTargetAmount] = useState(null);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [happinessRate, setHappinessRate] = useRecoilState(happinessRateState);
   const [content, setContent] = useRecoilState(contentState);
   const [consumptions, setConsumptions] = useRecoilState(consumptionIndexState);
@@ -85,10 +92,10 @@ function MobCreatePage() {
       (itm) => itm.category !== "" && itm.amount !== 0
     ).length;
 
-    // if (dataLength === 0 && showErrorMessage === false) {
-    //   setShowErrorMessage(true);
-    //   return;
-    // }
+    if (dataLength === 0 && showErrorMessage === false) {
+      setShowErrorMessage(true);
+      return;
+    }
 
     if (dataLength !== 0) {
       setConsumptions((prev) =>
@@ -217,6 +224,9 @@ function MobCreatePage() {
           consumptions={consumptions}
           setConsumptions={setConsumptions}
         />
+        {showErrorMessage && (
+          <ErrorMessage>소비항목이 정말 없나요?</ErrorMessage>
+        )}
         <SubmitBtn onClick={writeBtnClick}>{updateWording}</SubmitBtn>
         <MobMenuBarComponent menu={"note"} />
       </Vertical>
