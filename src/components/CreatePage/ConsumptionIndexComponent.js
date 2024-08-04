@@ -8,8 +8,7 @@ import RmvBtnImg from "../../imgs/RemoveBtnImg.svg";
 
 const CategoryInput = styled.input`
   &:focus {
-    outline: none;
-    border: 1px solid rgba(42, 166, 99, 1);
+    outline: 1px solid rgba(42, 166, 99, 1);
   }
   width: 115px;
   height: 60px;
@@ -58,8 +57,7 @@ const PriceInput = styled.input`
   box-shadow: 0px 12px 34px 0px rgba(0, 0, 0, 0.08),
     0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
   &:focus {
-    outline: none;
-    border: 1px solid rgba(42, 166, 99, 1);
+    outline: 1px solid rgba(42, 166, 99, 1);
   }
 `;
 
