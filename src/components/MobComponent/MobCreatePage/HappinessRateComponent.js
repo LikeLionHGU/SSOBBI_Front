@@ -76,7 +76,7 @@ function HappinessRateComponent() {
   return (
     <div>
       <Title>{userInfo.name}님의 행복지수를 알려주세요</Title>
-      <Horizontal>
+      <Horizontal style={{ justifyContent: "flex-start" }}>
         <HappyInputWrapper>
           <HappinessInput
             type="range"

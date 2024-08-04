@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import {
-  consumptionIndexState,
-  tokenState,
-  userData,
-} from "../../../store/atom";
+import { tokenState, userData } from "../../../store/atom";
 import ConsumptionInputComponent from "./ConsumptionInputComponent";
 import axios from "axios";
 
@@ -22,7 +18,7 @@ function ConsumptionComponent(props) {
   const [keyCounter, setKeyCounter] = useState(1); // id 1씩 증가시키기 위한 useState
 
   function handleAddBtnClick() {
-    props.datasetConsumptions((prev) => [
+    props.setConsumptions((prev) => [
       ...prev.map((itm) => ({ ...itm, focus: false, isLast: false })),
       {
         key: keyCounter + 1,
@@ -55,7 +51,7 @@ function ConsumptionComponent(props) {
       .catch((error) => {
         console.log(error);
       });
-  }, [userToken, props]);
+  }, [userToken]);
   return (
     <div>
       <Title>{userInfo.name}님의 소비를 입력해주세요</Title>

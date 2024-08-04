@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NoCenterVertical } from "../../styles/CommunalStyle";
+import { Vertical } from "../../styles/CommunalStyle";
 import HappinessRateComponent from "../../components/MobComponent/MobCreatePage/HappinessRateComponent";
 import styled from "styled-components";
 import MobMenuBarComponent from "./MobMenuBarComponent";
@@ -24,7 +24,6 @@ const MobileV = styled.div`
   align-items: center;
   justify-content: center;
   padding-bottom: 70px;
-  /* height: 100vh; */
 `;
 
 const Logo = styled.img`
@@ -45,10 +44,15 @@ const Title = styled.p`
 const SubmitBtn = styled.button`
   position: fixed;
   display: flex;
-  padding: 14px 19px;
+  width: 94px;
+  height: 40px;
+  padding: 12px 14px;
+  justify-content: center;
   align-items: center;
-  right: 28%; /*부모의 50%*/
-  bottom: 10%;
+  gap: 14px;
+  flex-shrink: 0;
+  right: -5%;
+  bottom: 90px;
   background-color: #2aa663;
   border-radius: 24px;
   border: none;
@@ -56,8 +60,6 @@ const SubmitBtn = styled.button`
   transform: translateX(-50%);
   color: white;
   font-size: 14px;
-  font-weight: 600;
-  gap: 8px;
   cursor: pointer;
   &:hover {
     box-shadow: 0 0 0 1px transparent, 0 0 0 4px transparent,
@@ -184,11 +186,12 @@ function MobCreatePage() {
   }, [userToken, setHappinessRate, setContent, setConsumptions, today]);
   return (
     <MobileV>
-      <NoCenterVertical
+      <Vertical
         style={{
           justifyContent: "flex-start",
           marginTop: "40px",
           width: "375px",
+          position: "relative",
         }}
       >
         <NoCenterHorizontal>
@@ -216,17 +219,12 @@ function MobCreatePage() {
         />
         <SubmitBtn onClick={writeBtnClick}>{updateWording}</SubmitBtn>
         <MobMenuBarComponent menu={"note"} />
-      </NoCenterVertical>
+      </Vertical>
     </MobileV>
   );
 }
 
 export default MobCreatePage;
-
-function convertStringNum(onlyNumber) {
-  const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
-  return formattedNumber;
-}
 
 function convertToInt(numberString) {
   const numberWithoutCommas = numberString.replace(/,/g, "");

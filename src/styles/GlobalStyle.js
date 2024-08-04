@@ -91,6 +91,7 @@ export const GlobalStyle = createGlobalStyle`
             display: block;
             background: var(--mobile_bg, linear-gradient(280deg, #F7F7F7 56.16%, #EBF9F0 146.1%));
             /* background-color: #F8FCF9; */
+            height:100vh;
         }
     }
 `;

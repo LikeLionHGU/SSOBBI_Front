@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { Horizontal, Vertical } from "../../../styles/CommunalStyle";
+import { Horizontal } from "../../../styles/CommunalStyle";
 import { useSetRecoilState } from "recoil";
 import { consumptionIndexState } from "../../../store/atom";
 import AddBtnImg from "../../../imgs/AddBtnImg.svg";
@@ -9,7 +9,7 @@ import RmvBtnImg from "../../../imgs/RemoveBtnImg.svg";
 const ManageBtn = styled.button`
   width: 44px;
   height: 42px;
-  border-radius: 20px;
+  border-radius: 16px;
   border: 1px solid
     ${(props) => (props.id === "addBtn" ? "#2AA663" : "#939393")};
   background: #fff;
@@ -84,6 +84,14 @@ const AmountInput = styled.input`
   margin-left: 6px;
 `;
 
+const Vertical = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+`;
+
 function ConsumptionInputComponent(props) {
   const setConsumptions = useSetRecoilState(consumptionIndexState);
   const [categoryInput, setCategoryInput] = useState(props.category);
@@ -146,7 +154,7 @@ function ConsumptionInputComponent(props) {
     handleInputsChange();
   }, [categoryInput, amountInput, handleInputsChange]);
   return (
-    <Horizontal style={{ marginBottom: "12px" }}>
+    <Horizontal style={{ marginBottom: "12px", justifyContent: "flex-start" }}>
       <Vertical style={{ position: "relative" }}>
         <CategoryInput
           placeholder="카테고리"
