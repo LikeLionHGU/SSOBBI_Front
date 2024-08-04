@@ -60,9 +60,41 @@ const CircleBox = styled.div`
   background-color: ${({ color }) => color};
   margin-top: ${({ margin }) => margin};
 `;
+
+const HappinessInput = styled.input`
+  -webkit-appearance: none; /* Remove default styling */
+  appearance: none;
+  width: 90%; /* Full width */
+  height: 7px; /* Height of the slider */
+  background: linear-gradient(
+    to right,
+    rgba(184, 255, 217, 1),
+    rgba(42, 166, 99, 1)
+  ); /* Background color of the slider */
+  border-radius: 5px; /* Rounded corners */
+  outline: none; /* Remove outline */
+  /* opacity: 0.7; Transparency */
+  transition: opacity 0.2s; /* Transition for hover effect */
+  cursor: pointer;
+  border: none;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Remove default styling */
+    appearance: none;
+    width: 10px; /* Thumb width */
+    height: 10px; /* Thumb height */
+    border-radius: 50%; /* Circular thumb */
+    border: 1px solid rgba(63, 200, 126, 1);
+    background: rgba(240, 255, 247, 1); /* Thumb color */
+    cursor: pointer; /* Pointer cursor on hover */
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5); /* Thumb shadow */
+  }
+`;
 //ToDo: api 추가 개발 시 데이터 받아와서 연결 새롭게 하기
 function WeekMonthStstisticsComponent({ weekData, monthData }) {
   const [isMonthly, setIsMonthly] = useState(false);
+  const weekHappyRate = weekData.happinessRate;
+  const monthHappyRate = monthData.happinessRate;
   const circledatas = [
     {
       size: "37px",
@@ -150,7 +182,23 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
           />
         </ToggleContainer>
       </Horizontal>
-      <HappyBox>{isMonthly ? "이번달 행복지수" : "이번주 행복지수"}</HappyBox>
+      <HappyBox>
+        {isMonthly ? (
+          <HappinessInput
+            value={monthHappyRate}
+            type="range"
+            min="0"
+            max="100"
+          />
+        ) : (
+          <HappinessInput
+            value={weekHappyRate}
+            type="range"
+            min="0"
+            max="100"
+          />
+        )}
+      </HappyBox>
       <Horizontal>
         <Box>
           {isMonthly ? (
