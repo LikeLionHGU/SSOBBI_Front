@@ -268,10 +268,10 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
               ) : (
                 <span
                   style={{
-                    fontSize: "18px",
+                    fontSize: "12px",
                     color: "#19844A",
-                    marginTop: "37px",
-                    marginBottom: "43px",
+                    marginTop: "20px",
+                    marginBottom: "20px",
                   }}
                 >
                   과소비 내역이 없습니다!
@@ -306,10 +306,10 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
               ) : (
                 <span
                   style={{
-                    fontSize: "18px",
+                    fontSize: "12px",
                     color: "#19844A",
-                    marginTop: "37px",
-                    marginBottom: "43px",
+                    marginTop: "20px",
+                    marginBottom: "20px",
                   }}
                 >
                   과소비 내역이 없습니다!
