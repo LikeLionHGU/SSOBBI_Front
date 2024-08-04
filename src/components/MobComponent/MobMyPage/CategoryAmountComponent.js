@@ -48,9 +48,9 @@ const Unit = styled.span`
 `;
 
 const ManageBtn = styled.button`
-  width: 60px;
-  height: 60px;
-  border-radius: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
   border: 1px solid
     ${(props) => (props.id === "addBtn" ? "#2AA663" : "#939393")};
   background: #fff;
