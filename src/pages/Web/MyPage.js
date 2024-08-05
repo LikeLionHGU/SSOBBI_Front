@@ -72,6 +72,7 @@ function MyPage() {
   const [isMinimumCategory, setIsMinimumCategory] = useState(false);
   const [keyCounter, setKeyCounter] = useState(1); // id 1씩 증가시키기 위한 useState
   const [isIncludeZero, setIsIncludeZero] = useState(false);
+  const [monthIncome, setMonthIncome] = useState("");
 
   function handleAmountBtnClick() {
     setIsUpdating(true);
@@ -202,7 +203,10 @@ function MyPage() {
             <NoCenterVertical style={{ alignItems: "flex-start" }}>
               <ScrollContainer>
                 <ProfileComponent userInfo={userInfo} />
-                <MonthIncomeComponent userInfo={userInfo} />
+                <MonthIncomeComponent
+                  userInfo={userInfo}
+                  setMonthIncome={setMonthIncome}
+                />
                 <div style={{ paddingBottom: "120px" }}>
                   <div
                     style={{
@@ -222,6 +226,7 @@ function MyPage() {
                           setIsMinimumCategory={setIsMinimumCategory}
                           isLast={itm.isLast}
                           handleAddBtnClick={handleAddBtnClick}
+                          monthIncome={monthIncome}
                         />
                       ))}
                     </div>

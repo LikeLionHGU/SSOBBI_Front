@@ -70,6 +70,7 @@ function CategoryAmountComponent({
   setIsMinimumCategory,
   isLast,
   handleAddBtnClick,
+  monthIncome,
 }) {
   const [category, setCategory] = useState(null);
   const [price, setPrice] = useState(convertStringNum(null));
@@ -122,13 +123,34 @@ function CategoryAmountComponent({
     const onlyNumber = value.replace(/[^0-9]/g, "");
     const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
     setPrice(formattedNumber);
-    setAmount((prev) =>
-      prev.map((itm) =>
-        itm.category === data.category
-          ? { ...itm, amount: formattedNumber }
-          : itm
-      )
+
+    const arr = amount.map((itm) =>
+      itm.category === category ? { ...itm, amount: formattedNumber } : itm
     );
+    const sum = arr.reduce(
+      (acc, itm) =>
+        itm.category === "기타" ? acc : acc + convertToInt(itm.amount),
+      0
+    );
+
+    const newArr = arr.map((itm) =>
+      itm.category === "기타"
+        ? {
+            ...itm,
+            amount: convertStringNum(monthIncome - sum),
+          }
+        : itm
+    );
+
+    setAmount(newArr);
+
+    // setAmount((prev) =>
+    //   prev.map((itm) =>
+    //     itm.category === data.category
+    //       ? { ...itm, amount: formattedNumber }
+    //       : itm
+    //   )
+    // );
   }
   useEffect(() => {
     setCategory(data.category);
@@ -173,4 +195,10 @@ export default CategoryAmountComponent;
 function convertStringNum(onlyNumber) {
   const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
   return formattedNumber;
+}
+
+function convertToInt(numberString) {
+  const numberWithoutCommas = numberString.replace(/,/g, "");
+  const number = parseInt(numberWithoutCommas, 10);
+  return number;
 }
