@@ -59,7 +59,7 @@ const InputBtnWrapper = styled.div`
   width: 100%;
 `;
 
-function MonthIncomeComponent({ userInfo }) {
+function MonthIncomeComponent({ userInfo, setMonthIncome }) {
   const [income, setIncome] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
   const userToken = useRecoilValue(tokenState);
@@ -69,6 +69,7 @@ function MonthIncomeComponent({ userInfo }) {
     const newArr = { income: convertToInt(income) };
     const apiUrl = process.env.REACT_APP_BASE_URL + "/user/monthly/income";
     console.log(newArr);
+    setMonthIncome(convertToInt(income));
     axios
       .post(apiUrl, newArr, {
         headers: {
@@ -101,6 +102,7 @@ function MonthIncomeComponent({ userInfo }) {
         },
       })
       .then((response) => {
+        setMonthIncome(response.data.income);
         const formattedNumber = new Intl.NumberFormat().format(
           response.data.income
         );
@@ -109,6 +111,7 @@ function MonthIncomeComponent({ userInfo }) {
       .catch((error) => {
         console.log(error);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isUpdating, userToken]);
   return (
     <Vertical style={{ alignItems: "flex-start" }}>

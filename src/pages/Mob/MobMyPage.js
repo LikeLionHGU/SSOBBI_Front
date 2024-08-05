@@ -40,6 +40,7 @@ const Title = styled.p`
 
 const Title2 = styled.p`
   font-family: "SUITLight";
+  font-size: 18px;
 `;
 
 const TitleAndInputWrapper = styled.div`
@@ -72,6 +73,7 @@ function MobMyPage() {
   const userToken = useRecoilValue(tokenState);
   const [amount, setAmount] = useState([]);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isClick, setIsClick] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const [isMinimumCategory, setIsMinimumCategory] = useState(false);
 
@@ -94,6 +96,7 @@ function MobMyPage() {
   }
 
   function handleLoadBtnClick() {
+    setIsClick(true);
     const apiUrl =
       process.env.REACT_APP_BASE_URL + "/category/monthly/TargetAmount";
 
@@ -170,7 +173,11 @@ function MobMyPage() {
           </Horizontal>
         </NoCenterHorizontal>
         <ProfileComponent />
-        <IncomeComponent />
+        <IncomeComponent
+          isUpdating={isUpdating}
+          isClick={isClick}
+          setIsClick={setIsClick}
+        />
         <TitleAndInputWrapper>
           <Title2>카테고리별 목표금액</Title2>
           <div

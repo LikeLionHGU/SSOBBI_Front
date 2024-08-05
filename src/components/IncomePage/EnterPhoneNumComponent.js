@@ -5,6 +5,7 @@ import TermOfUseComponent from "./TermOfUseComponent";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { tokenState } from "../../store/atom";
+import TermOfUse2Component from "./TermOfUse2Component";
 
 const Title = styled.p`
   font-family: "SUITMedium";
@@ -88,7 +89,8 @@ function EnterPhoneNumComponent() {
   const phoneNumRef = useRef("");
   const [phoneNum, setPhoneNum] = useState("");
   const [showBtn, setShowBtn] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [showModal1, setShowModal1] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
   const userToken = useRecoilValue(tokenState);
 
   function handleCheckboxChange(e) {
@@ -148,9 +150,14 @@ function EnterPhoneNumComponent() {
   }
   return (
     <>
-      {showModal && (
-        <ModalComponent closeModal={() => setShowModal(false)}>
+      {showModal1 && (
+        <ModalComponent closeModal={() => setShowModal1(false)}>
           <TermOfUseComponent />
+        </ModalComponent>
+      )}
+      {showModal2 && (
+        <ModalComponent closeModal={() => setShowModal2(false)}>
+          <TermOfUse2Component />
         </ModalComponent>
       )}
       <SubmitBtn style={{ opacity: "0" }}>쏘삐 시작하기</SubmitBtn>
@@ -179,7 +186,7 @@ function EnterPhoneNumComponent() {
               onChange={handleCheckboxChange}
             />
             <span>(필수) 이용약관</span>
-            <span className="info" onClick={() => setShowModal(true)}>
+            <span className="info" onClick={() => setShowModal1(true)}>
               보기
             </span>
           </InputSpanWrapper>
@@ -191,7 +198,7 @@ function EnterPhoneNumComponent() {
               onChange={handleCheckboxChange}
             />
             <span>(필수) 개인정보 처리방침</span>
-            <span className="info" onClick={() => setShowModal(true)}>
+            <span className="info" onClick={() => setShowModal2(true)}>
               보기
             </span>
           </InputSpanWrapper>
