@@ -63,12 +63,13 @@ const Box = styled.div`
   justify-content: center;
   background-color: white;
   font-size: 12px;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
 `;
 const HappyBox = styled.div`
   width: 318px;
   height: 160px;
   border-radius: 20px;
-  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
   display: flex;
   flex-direction: column;
   align-items: center;

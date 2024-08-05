@@ -113,7 +113,7 @@ function MonthComponent({ monthlyData, month, onDetailCPChange }) {
                   fontWeight: "bold",
                 }}
               >
-                {monthlyData.totalOverConsumptionAmount.toLocaleString()}
+                {monthlyData?.totalOverConsumptionAmount.toLocaleString()}
               </span>
               {"   "}원
             </p>
@@ -136,7 +136,7 @@ function MonthComponent({ monthlyData, month, onDetailCPChange }) {
           이번달 과소비 항목 TOP4
           {monthlyData?.topFourOverConsumptionCategories?.length > 0 ? (
             <Horizontal>
-              {monthlyData.topFourOverConsumptionCategories.map(
+              {monthlyData?.topFourOverConsumptionCategories.map(
                 (item, index) => {
                   const circleData = circledatas[index];
                   return (
