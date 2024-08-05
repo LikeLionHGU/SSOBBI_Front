@@ -84,7 +84,7 @@ function CheckComponent({ category, consumption, targetAmount }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <Horizontal style={{ justifyContent: "flex-start" }}>
+    <Horizontal style={{ justifyContent: "flex-start", marginBottom: "16px" }}>
       <StyledBtn id={category} onClick={handleCheckBox} checked={inputCheck}>
         <img src={inputCheck ? CheckOverImg : NoCheckOverImg} alt="check" />
       </StyledBtn>
