@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NoCenterVertical } from "../../styles/CommunalStyle";
+import { Vertical } from "../../styles/CommunalStyle";
 import HappinessRateComponent from "../../components/MobComponent/MobCreatePage/HappinessRateComponent";
 import styled from "styled-components";
 import MobMenuBarComponent from "./MobMenuBarComponent";
@@ -24,7 +24,6 @@ const MobileV = styled.div`
   align-items: center;
   justify-content: center;
   padding-bottom: 70px;
-  /* height: 100vh; */
 `;
 
 const Logo = styled.img`
@@ -45,10 +44,15 @@ const Title = styled.p`
 const SubmitBtn = styled.button`
   position: fixed;
   display: flex;
-  padding: 14px 19px;
+  width: 94px;
+  height: 40px;
+  padding: 12px 14px;
+  justify-content: center;
   align-items: center;
-  right: 28%; /*부모의 50%*/
-  bottom: 10%;
+  gap: 14px;
+  flex-shrink: 0;
+  right: -5%;
+  bottom: 90px;
   background-color: #2aa663;
   border-radius: 24px;
   border: none;
@@ -56,8 +60,6 @@ const SubmitBtn = styled.button`
   transform: translateX(-50%);
   color: white;
   font-size: 14px;
-  font-weight: 600;
-  gap: 8px;
   cursor: pointer;
   &:hover {
     box-shadow: 0 0 0 1px transparent, 0 0 0 4px transparent,
@@ -66,12 +68,19 @@ const SubmitBtn = styled.button`
   }
 `;
 
+const ErrorMessage = styled.p`
+  font-family: "SUITMedium";
+  font-size: 16px;
+  color: red;
+`;
+
 function MobCreatePage() {
   const userToken = useRecoilValue(tokenState);
   const [id, setId] = useState(null);
   const navigate = useNavigate();
   const [updateWording, setUpdateWording] = useState(null);
   const [targetAmount, setTargetAmount] = useState(null);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [happinessRate, setHappinessRate] = useRecoilState(happinessRateState);
   const [content, setContent] = useRecoilState(contentState);
   const [consumptions, setConsumptions] = useRecoilState(consumptionIndexState);
@@ -83,10 +92,10 @@ function MobCreatePage() {
       (itm) => itm.category !== "" && itm.amount !== 0
     ).length;
 
-    // if (dataLength === 0 && showErrorMessage === false) {
-    //   setShowErrorMessage(true);
-    //   return;
-    // }
+    if (dataLength === 0 && showErrorMessage === false) {
+      setShowErrorMessage(true);
+      return;
+    }
 
     if (dataLength !== 0) {
       setConsumptions((prev) =>
@@ -100,7 +109,10 @@ function MobCreatePage() {
               return {
                 category: itm.category,
                 targetAmount: target.amount,
-                amount: convertToInt(itm.amount),
+                amount:
+                  typeof itm.amount === "string"
+                    ? convertToInt(itm.amount)
+                    : itm.amount,
               };
             }
             return itm;
@@ -140,6 +152,7 @@ function MobCreatePage() {
 
   useEffect(() => {
     const apiUrl = process.env.REACT_APP_BASE_URL + `/records/daily/${today}`;
+    setConsumptions([]);
     axios
       .get(apiUrl, {
         headers: {
@@ -159,7 +172,7 @@ function MobCreatePage() {
               key: idx,
               id: idx,
               category: itm.category,
-              amount: convertStringNum(itm.amount),
+              amount: itm.amount,
               focus: false,
               isLast: idx === arr.length - 1,
             }));
@@ -183,11 +196,12 @@ function MobCreatePage() {
   }, [userToken, setHappinessRate, setContent, setConsumptions, today]);
   return (
     <MobileV>
-      <NoCenterVertical
+      <Vertical
         style={{
           justifyContent: "flex-start",
           marginTop: "40px",
           width: "375px",
+          position: "relative",
         }}
       >
         <NoCenterHorizontal>
@@ -208,20 +222,22 @@ function MobCreatePage() {
 
         <HappinessRateComponent />
         <ContentComponent />
-        <ConsumptionComponent setTargetAmount={setTargetAmount} />
+        <ConsumptionComponent
+          setTargetAmount={setTargetAmount}
+          consumptions={consumptions}
+          setConsumptions={setConsumptions}
+        />
+        {showErrorMessage && (
+          <ErrorMessage>소비항목이 정말 없나요?</ErrorMessage>
+        )}
         <SubmitBtn onClick={writeBtnClick}>{updateWording}</SubmitBtn>
         <MobMenuBarComponent menu={"note"} />
-      </NoCenterVertical>
+      </Vertical>
     </MobileV>
   );
 }
 
 export default MobCreatePage;
-
-function convertStringNum(onlyNumber) {
-  const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
-  return formattedNumber;
-}
 
 function convertToInt(numberString) {
   const numberWithoutCommas = numberString.replace(/,/g, "");

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Horizontal } from "../../../styles/CommunalStyle";
 import { useRecoilValue } from "recoil";
 import { userData } from "../../../store/atom";
+import { useEffect } from "react";
 
 const Title = styled.p`
   color: ${(props) => props.theme.colors.COLORBlack};
@@ -52,16 +53,58 @@ const TagBox = styled.div`
   margin: 2px;
 `;
 
+const HappinessInput = styled.input`
+  -webkit-appearance: none; /* Remove default styling */
+  appearance: none;
+  width: 90%; /* Full width */
+  height: 7px; /* Height of the slider */
+  background: linear-gradient(
+    to right,
+    rgba(184, 255, 217, 1),
+    rgba(42, 166, 99, 1)
+  ); /* Background color of the slider */
+  border-radius: 5px; /* Rounded corners */
+  outline: none; /* Remove outline */
+  /* opacity: 0.7; Transparency */
+  transition: opacity 0.2s; /* Transition for hover effect */
+  cursor: pointer;
+  border: none;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Remove default styling */
+    appearance: none;
+    width: 10px; /* Thumb width */
+    height: 10px; /* Thumb height */
+    border-radius: 50%; /* Circular thumb */
+    border: 1px solid rgba(63, 200, 126, 1);
+    background: rgba(240, 255, 247, 1); /* Thumb color */
+    cursor: pointer; /* Pointer cursor on hover */
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.5); /* Thumb shadow */
+  }
+`;
+
 const colors = ["#BEFEDB", "#C4FAF7", "#BDEFFF", "#C1FFAC"];
 function DayStatisticsComponent({ dayData }) {
   const userInfo = useRecoilValue(userData);
+  const dailyHappyRate = dayData.happinessRate;
   return (
     <>
       <Title>
         {userInfo.name}님의{" "}
         <span style={{ fontFamily: "SUITMedium" }}>오늘 소비 기록 </span>
       </Title>
-      <HappyBox>오늘의 행복지수</HappyBox>
+      <HappyBox>
+        {dailyHappyRate === null ? (
+          "오늘의 행복지수를 입력해주세요"
+        ) : (
+          <HappinessInput
+            value={dailyHappyRate}
+            type="range"
+            min="0"
+            max="100"
+          />
+        )}
+      </HappyBox>
       <Horizontal>
         <Box>
           오늘 과소비 건수

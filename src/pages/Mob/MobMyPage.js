@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {
   Horizontal,
   NoCenterHorizontal,
-  NoCenterVertical,
+  Vertical,
 } from "../../styles/CommunalStyle";
 import LogoImg from "../../imgs/Logo.png";
 import ProfileComponent from "../../components/MobComponent/MobMyPage/ProfileComponent";
@@ -38,10 +38,89 @@ const Title = styled.p`
   margin: 0;
 `;
 
+const Title2 = styled.p`
+  font-family: "SUITLight";
+`;
+
+const TitleAndInputWrapper = styled.div`
+  width: 319px;
+  margin-top: 32px;
+`;
+
+const AmountUpdateBtn = styled.button`
+  position: fixed;
+  right: 8%;
+  bottom: 90px;
+  display: inline-flex;
+  padding: 12px 14px;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  background: #2aa663;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+  border: none;
+  border-radius: 24px;
+  font-family: "SUITLight";
+  font-size: 17px;
+  color: white;
+  margin-left: 28px;
+  margin-bottom: 7px;
+  cursor: pointer;
+`;
+
 function MobMyPage() {
   const userToken = useRecoilValue(tokenState);
   const [amount, setAmount] = useState([]);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isMinimumCategory, setIsMinimumCategory] = useState(false);
+
+  function handleAddBtnClick() {
+    const data = [
+      ...amount.map((itm) => ({ ...itm, isLast: false })),
+      { category: "", amount: 0, isLast: true },
+    ];
+
+    console.log(data);
+    setAmount((prev) => [
+      ...prev.map((itm) => ({ ...itm, isLast: false })),
+      { category: "", amount: 0, isLast: true },
+    ]);
+    setIsMinimumCategory(false);
+  }
+
+  function handleAmountBtnClick() {
+    setIsUpdating(true);
+  }
+
+  function handleLoadBtnClick() {
+    const apiUrl =
+      process.env.REACT_APP_BASE_URL + "/category/monthly/TargetAmount";
+
+    const data = amount
+      .filter((itm) => itm.category !== "" && itm.amount !== 0)
+      .map((itm) => ({
+        category: itm.category,
+        amount: convertToInt(itm.amount),
+      }));
+
+    const newArr = { requests: data };
+    console.log(newArr);
+    axios
+      .post(apiUrl, newArr, {
+        headers: {
+          Authorization: "Bearer " + userToken,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        if (response) setIsUpdating(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   useEffect(() => {
     const apiUrl =
       process.env.REACT_APP_BASE_URL + "/category/monthly/TargetAmount";
@@ -67,7 +146,7 @@ function MobMyPage() {
   }, [isUpdating]);
   return (
     <MobileV>
-      <NoCenterVertical
+      <Vertical
         style={{
           justifyContent: "flex-start",
           marginTop: "40px",
@@ -91,25 +170,40 @@ function MobMyPage() {
         </NoCenterHorizontal>
         <ProfileComponent />
         <IncomeComponent />
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          {amount.map((itm) => (
-            <CategoryAmountComponent
-              data={itm}
-              isUpdating={isUpdating}
-              amount={amount}
-              setAmount={setAmount}
-              isLast={itm.isLast}
-            />
-          ))}
-        </div>
+        <TitleAndInputWrapper>
+          <Title2>카테고리별 목표금액</Title2>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            {amount.map((itm) => (
+              <CategoryAmountComponent
+                data={itm}
+                isUpdating={isUpdating}
+                amount={amount}
+                setAmount={setAmount}
+                isLast={itm.isLast}
+                setIsMinimumCategory={setIsMinimumCategory}
+                handleAddBtnClick={handleAddBtnClick}
+              />
+            ))}
+          </div>
+        </TitleAndInputWrapper>
+        {!isUpdating && (
+          <AmountUpdateBtn onClick={handleAmountBtnClick}>
+            수정하기
+          </AmountUpdateBtn>
+        )}
+        {isUpdating && (
+          <AmountUpdateBtn onClick={handleLoadBtnClick}>
+            저장하기
+          </AmountUpdateBtn>
+        )}
         <MobMenuBarComponent menu={"profile"} />
-      </NoCenterVertical>
+      </Vertical>
     </MobileV>
   );
 }
@@ -119,4 +213,10 @@ export default MobMyPage;
 function convertStringNum(onlyNumber) {
   const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
   return formattedNumber;
+}
+
+function convertToInt(numberString) {
+  const numberWithoutCommas = numberString.replace(/,/g, "");
+  const number = parseInt(numberWithoutCommas, 10);
+  return number;
 }
