@@ -61,7 +61,7 @@ const Box = styled.div`
 `;
 const HappyBox = styled.div`
   width: 1190px;
-  height: 210px;
+  height: 190px;
   border-radius: 20px;
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -289,7 +289,13 @@ function CalenderPage() {
                   setApiMonth={setApiMonth}
                 />
               </NoCenterHorizontal>
-              <SubTitle style={{ marginLeft: "30px" }}>
+              <SubTitle
+                style={{
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                  marginLeft: "30px",
+                }}
+              >
                 {userInfo.name}님의 {selectedMonth}월{" "}
                 <span style={{ fontFamily: "SUITMedium", marginLeft: "5px" }}>
                   {" "}
@@ -307,7 +313,7 @@ function CalenderPage() {
                   </TooltipComponent>
                 </div>
               </SubTitle>
-              <HappyBox style={{ marginLeft: "30px" }}>
+              <HappyBox style={{ marginLeft: "30px", marginBottom: "30px" }}>
                 <ScatterChartsComponent happinessRateData={happinessRate} />
               </HappyBox>
             </Vertical>

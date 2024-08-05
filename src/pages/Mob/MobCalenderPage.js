@@ -339,7 +339,7 @@ function MobCalenderPage() {
                   </TooltipComponent>
                 </div>
               </SubTitle>
-              <HappyBox style={{ marginLeft: "30px" }}>
+              <HappyBox style={{ marginLeft: "30px", marginBottom: "20px" }}>
                 <ScatterChartsComponent happinessRateData={happinessRate} />
               </HappyBox>
             </Vertical>

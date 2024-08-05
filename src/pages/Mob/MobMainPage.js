@@ -131,6 +131,7 @@ function MobMainPage() {
           <Vertical
             style={{
               paddingBottom: "20px",
+              marginBottom: "20px",
             }}
           >
             <DayStatisticsComponent dayData={dailyData} />
