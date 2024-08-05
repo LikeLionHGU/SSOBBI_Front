@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { firstCategoryState, tokenState, userData } from "../../store/atom";
@@ -73,13 +73,35 @@ const Unit = styled.span`
   right: 21px;
 `;
 
+const ErrorMessage = styled.p`
+  color: red;
+  text-align: center;
+  font-family: "SUITLight";
+  font-size: 20px;
+`;
+
 export default function FirstAmountComponent(props) {
   const [categoryAmount, setCategoryAmount] =
     useRecoilState(firstCategoryState);
   const userInfo = useRecoilValue(userData);
   const userToken = useRecoilValue(tokenState);
+  const [isIncludeZero, setIsIncludeZero] = useState(false);
 
   function handleSubmitBtnClick() {
+    const checkData = categoryAmount.map((itm) => {
+      if (itm.consumption === 0 || itm.consumption === "0") {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    if (checkData.includes(true)) {
+      setIsIncludeZero(true);
+      return;
+    }
+
+    setIsIncludeZero(false);
     const apiUrl =
       process.env.REACT_APP_BASE_URL + "/category/monthly/TargetAmount";
     const arr = categoryAmount.map((itm) => ({
@@ -131,6 +153,9 @@ export default function FirstAmountComponent(props) {
             />
           </>
         ))}
+        {isIncludeZero && (
+          <ErrorMessage>목표금액은 0원일 수 없습니다</ErrorMessage>
+        )}
       </Wrapper>
       <StyledBtn onClick={handleSubmitBtnClick}>다음</StyledBtn>
     </>
