@@ -51,20 +51,19 @@ const SubmitBtn = styled.button`
   align-items: center;
   gap: 14px;
   flex-shrink: 0;
-  right: -5%;
   bottom: 90px;
   background-color: #2aa663;
   border-radius: 24px;
   border: none;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
-  transform: translateX(-50%);
+  transform: translateX(120%);
   color: white;
   font-size: 14px;
   cursor: pointer;
   &:hover {
-    box-shadow: 0 0 0 1px transparent, 0 0 0 4px transparent,
-      0 6px 16px rgba(0, 0, 0, 0.12) !important; /*그림자가 세개지만 마지막것만 표시된다.*/
-    transform: translateX(-50%) scale(1.04);
+    /* box-shadow: 0 0 0 1px transparent, 0 0 0 4px transparent,
+      0 6px 16px rgba(0, 0, 0, 0.12) !important; 그림자가 세개지만 마지막것만 표시된다. */
+    /* transform: translateX(-50%) scale(1.04); */
   }
 `;
 

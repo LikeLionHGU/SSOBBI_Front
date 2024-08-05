@@ -62,8 +62,8 @@ const StyledBtn = styled.button`
   font-size: 20px;
   cursor: pointer;
   position: fixed;
-  bottom: 150px;
-  right: 30px;
+  bottom: 90px;
+  transform: translateX(120%);
 `;
 
 const Logo = styled.img`

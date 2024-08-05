@@ -188,12 +188,12 @@ function ConsumptionIndexComponent(props) {
               if (e.relatedTarget === null || !isSelectTag) {
                 setIsFocus(false);
 
-                var isOptionData = false;
-                // eslint-disable-next-line array-callback-return
-                props.options.map((itm) => {
-                  if (categoryInput === itm) isOptionData = true;
-                });
-                if (!isOptionData) setCategoryInput("");
+                // var isOptionData = false;
+                // // eslint-disable-next-line array-callback-return
+                // props.options.map((itm) => {
+                //   if (categoryInput === itm) isOptionData = true;
+                // });
+                // if (!isOptionData) setCategoryInput("");
               }
             }}
             value={categoryInput}

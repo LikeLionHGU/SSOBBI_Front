@@ -127,10 +127,22 @@ function CreatePage() {
               return {
                 category: itm.category,
                 targetAmount: target.amount,
-                amount: convertToInt(itm.amount),
+                amount:
+                  typeof itm.amount === "string"
+                    ? convertToInt(itm.amount)
+                    : itm.amount,
+              };
+            } else {
+              const etc = targetAmount.find((item) => item.category === "기타");
+              return {
+                category: "기타",
+                targetAmount: etc ? etc.amount : 0,
+                amount:
+                  typeof itm.amount === "string"
+                    ? convertToInt(itm.amount)
+                    : itm.amount,
               };
             }
-            return itm;
           })
       );
       if (id !== null) {
@@ -229,6 +241,7 @@ function CreatePage() {
               focus: false,
               isLast: idx === arr.length - 1,
             }));
+            setKeyCounter(data.consumptions.length + 1);
           } else {
             newArr = [
               {

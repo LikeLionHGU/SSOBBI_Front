@@ -21,6 +21,7 @@ import MobCreatePage from "./pages/Mob/MobCreatePage";
 import MobMyPage from "./pages/Mob/MobMyPage";
 import MobLandingPage from "./pages/Mob/MobLandingPage";
 import MobOverConsumptionPage from "./pages/Mob/MobOverConsumptionPage";
+import MobIncomePage from "./pages/Mob/MobIncomePage";
 
 const router = createBrowserRouter([
   {
@@ -85,6 +86,9 @@ const router = createBrowserRouter([
       <AuthWrapper>
         <div className="default-page">
           <IncomePage />
+        </div>
+        <div className="mobile-page">
+          <MobIncomePage />
         </div>
       </AuthWrapper>
     ),

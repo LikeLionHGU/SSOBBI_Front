@@ -1,14 +1,14 @@
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { firstCategoryState, tokenState, userData } from "../../store/atom";
+import { firstCategoryState, tokenState, userData } from "../../../store/atom";
 import TargetAmountComponent from "./TargetAmountComponent";
 import axios from "axios";
 
 const StyledInput = styled.input`
-  width: 371px;
-  height: 59px;
-  border-radius: 20px;
+  width: 280px;
+  height: 48px;
+  border-radius: 14px;
   &:focus {
     outline: 1px solid var(--70, #3fc87e);
   }
@@ -17,7 +17,7 @@ const StyledInput = styled.input`
     0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
   border: none;
   font-family: "SUITLight";
-  font-size: 20px;
+  font-size: 18px;
   padding-left: 30px;
   margin: 20px 0;
   opacity: 0.5;
@@ -25,7 +25,7 @@ const StyledInput = styled.input`
 
 const Title = styled.p`
   font-family: "SUITLight";
-  font-size: 20px;
+  font-size: 18px;
   margin: 0;
   > span {
     font-family: "SUITMedium";
@@ -63,12 +63,13 @@ const StyledBtn = styled.button`
   &:hover {
     transform: translateY(0px) scale(1.05);
   }
+  margin-top: 40px;
 `;
 
 const Unit = styled.span`
   position: absolute;
   font-family: "SUITLight";
-  font-size: 20px;
+  font-size: 18px;
   top: 37%;
   right: 21px;
 `;
@@ -109,7 +110,6 @@ export default function FirstAmountComponent(props) {
   }
   return (
     <>
-      <StyledBtn style={{ opacity: "0" }}>확인</StyledBtn>
       <Wrapper>
         <InputWrapper>
           <Title>
@@ -131,8 +131,8 @@ export default function FirstAmountComponent(props) {
             />
           </>
         ))}
+        <StyledBtn onClick={handleSubmitBtnClick}>다음</StyledBtn>
       </Wrapper>
-      <StyledBtn onClick={handleSubmitBtnClick}>다음</StyledBtn>
     </>
   );
 }

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { firstCategoryState, tokenState, userData } from "../../store/atom";
+import { firstCategoryState, tokenState, userData } from "../../../store/atom";
 import styled from "styled-components";
 import axios from "axios";
 
 const Title = styled.p`
   font-family: "SUITLight";
-  font-size: 20px;
+  font-size: 18px;
   margin: 0;
   > span {
     font-family: "SUITMedium";
@@ -14,8 +14,8 @@ const Title = styled.p`
 `;
 
 const StyledInput = styled.input`
-  width: 371px;
-  height: 59px;
+  width: 280px;
+  height: 48px;
   border-radius: 20px;
   &:focus {
     outline: 1px solid var(--70, #3fc87e);
@@ -25,7 +25,7 @@ const StyledInput = styled.input`
     0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
   border: none;
   font-family: "SUITLight";
-  font-size: 20px;
+  font-size: 18px;
   padding-left: 30px;
   margin: 20px 0;
 `;
@@ -69,7 +69,7 @@ const Wrapper = styled.div`
 const Unit = styled.span`
   position: absolute;
   font-family: "SUITLight";
-  font-size: 20px;
+  font-size: 18px;
   top: 37%;
   right: 21px;
 `;
@@ -126,12 +126,11 @@ export default function IncomeInputComponent(props) {
   }
   return (
     <>
-      <StyledBtn style={{ opacity: "0" }}>확인</StyledBtn>
       <Wrapper>
+        <Title>
+          {userInfo.name}님의 <span>한달 수입</span>
+        </Title>
         <InputWrapper>
-          <Title>
-            {userInfo.name}님의 <span>한달 수입</span>
-          </Title>
           <div style={{ position: "relative" }}>
             <StyledInput
               value={props.inputValue}
@@ -140,11 +139,15 @@ export default function IncomeInputComponent(props) {
             />
             <Unit>원</Unit>
           </div>
+          <StyledBtn
+            onClick={handleBtnClick}
+            disabled={!showBtn}
+            showBtn={showBtn}
+          >
+            확인
+          </StyledBtn>
         </InputWrapper>
       </Wrapper>
-      <StyledBtn onClick={handleBtnClick} disabled={!showBtn} showBtn={showBtn}>
-        확인
-      </StyledBtn>
     </>
   );
 }
