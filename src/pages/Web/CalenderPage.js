@@ -91,7 +91,7 @@ function CalenderPage() {
   );
   const [detailCP, setDetailCP] = useState(false);
   const [dailyData, setDailyData] = useState(null);
-  const [monthlyData, setMonthlyData] = useState(null);
+  const [monthlyData, setMonthlyData] = useState("");
   const [happinessRate, setHappinessRate] = useState(null);
   const [showTooltip, setShowTooltip] = useState(false);
   const [overspentData, setOverspentData] = useState(null);

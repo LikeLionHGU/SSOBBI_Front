@@ -21,14 +21,15 @@ const Title = styled.p`
 const HappyBox = styled.div`
   font-family: "SUITLight";
   font-size: 12px;
-  width: 320px;
+  width: 300px;
   height: 71px;
   border-radius: 20px;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   background-color: white;
+  padding-left: 20px;
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
 `;
 const Box = styled.div`
@@ -186,19 +187,47 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
       </Horizontal>
       <HappyBox>
         {isMonthly ? (
-          <HappinessInput
-            value={monthHappyRate}
-            type="range"
-            min="0"
-            max="100"
-          />
+          <>
+            <p style={{ marginTop: "5px", marginBottom: "5px" }}>
+              {" "}
+              이달의 행복지수
+            </p>
+            <HappinessInput
+              value={monthHappyRate}
+              type="range"
+              min="0"
+              max="100"
+            />
+            <p
+              style={{
+                margin: 0,
+                marginLeft: `${monthHappyRate * 2.5}px`,
+              }}
+            >
+              {monthHappyRate} %
+            </p>
+          </>
         ) : (
-          <HappinessInput
-            value={weekHappyRate}
-            type="range"
-            min="0"
-            max="100"
-          />
+          <>
+            <p style={{ marginTop: "5px", marginBottom: "5px" }}>
+              {" "}
+              이번주의 행복지수
+            </p>
+            <HappinessInput
+              value={weekHappyRate}
+              type="range"
+              min="0"
+              max="100"
+            />
+            <p
+              style={{
+                margin: 0,
+                marginLeft: `${weekHappyRate * 2.5}px`,
+              }}
+            >
+              {weekHappyRate} %
+            </p>
+          </>
         )}
       </HappyBox>
       <Horizontal>

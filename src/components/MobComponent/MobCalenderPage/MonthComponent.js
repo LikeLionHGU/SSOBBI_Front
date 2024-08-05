@@ -4,14 +4,15 @@ import { Horizontal } from "../../../styles/CommunalStyle";
 const HappyBox = styled.div`
   font-family: "SUITLight";
   font-size: 12px;
-  width: 320px;
+  width: 300px;
   height: 71px;
   border-radius: 20px;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   background-color: white;
+  padding-left: 20px;
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
 `;
 const Box = styled.div`
@@ -123,13 +124,24 @@ function MonthComponent({ monthlyData, month, onDetailCPChange }) {
       <HappyBox>
         {monthlyData?.happinessRate !== null ? (
           <>
+            <p style={{ marginTop: "5px", marginBottom: "5px" }}>
+              {" "}
+              {month}월의 행복지수
+            </p>
             <HappinessInput
               value={monthlyData.happinessRate}
               type="range"
               min="0"
               max="100"
             />
-            <p>{monthlyData?.happinessRate}</p>
+            <p
+              style={{
+                margin: 0,
+                marginLeft: `${monthlyData.happinessRate * 2.5}px`,
+              }}
+            >
+              {monthlyData?.happinessRate} %
+            </p>
           </>
         ) : (
           <div>행복지수 데이터가 없습니다.</div>
