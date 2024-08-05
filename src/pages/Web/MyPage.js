@@ -141,7 +141,7 @@ function MyPage() {
 
   return (
     amount && (
-      <Horizontal style={{ height: "100vh" }}>
+      <Horizontal style={{ height: "100vh", overflow: "hidden" }}>
         <MenuBarComponent menu={"profile"} />
         <NoCenterVertical
           style={{
