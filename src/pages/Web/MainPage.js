@@ -32,9 +32,10 @@ const Logo = styled.img`
 `;
 
 const Box = styled.div`
-  width: 820px;
+  width: 825px;
   height: 113px;
-  margin-top: 50px;
+  margin-top: 30px;
+  margin-left: 5px;
   border-radius: 20px;
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -126,10 +127,7 @@ function MainPage() {
           </NoCenterHorizontal>
           <NoCenterHorizontal
             style={{
-              height: "800px",
-              overflowY: "scroll",
-              marginBottom: "20px",
-              paddingTop: "20px",
+              marginTop: "30px",
             }}
           >
             <NoCenterVertical

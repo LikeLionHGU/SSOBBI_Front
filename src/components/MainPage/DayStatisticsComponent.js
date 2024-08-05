@@ -9,6 +9,7 @@ const Title = styled.p`
   color: ${(props) => props.theme.colors.COLORBlack};
   font-family: "SUITLight";
   font-size: 20px;
+  margin-left: 10px;
 `;
 
 const Box = styled.div`

@@ -12,14 +12,15 @@ const ToggleContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin-left: 16px;
-  margin-top: 14px;
+  margin-top: 4px;
 `;
 
 const Title = styled.p`
   color: ${(props) => props.theme.colors.COLORBlack};
   font-family: "SUITLight";
   font-size: 20px;
-  margin-top: 36px;
+  margin-top: 18px;
+  margin-left: 10px;
 `;
 
 const Box = styled.div`
