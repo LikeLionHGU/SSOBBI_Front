@@ -4,7 +4,7 @@ import { Horizontal } from "../../styles/CommunalStyle";
 import CheckOverImg from "../../imgs/CheckOver.svg";
 import NoCheckOverImg from "../../imgs/NoCheckOver.svg";
 import { consumptionIndexState } from "../../store/atom";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 
 const CategoryInput = styled.input`
   &:focus {
@@ -14,10 +14,10 @@ const CategoryInput = styled.input`
   height: 60px;
   text-align: center;
   border-radius: 10px;
-  border: none;
   box-shadow: 0px 12px 34px 0px rgba(0, 0, 0, 0.08),
     0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
-  border: ${(props) => (props.checked === true ? "1px solid red" : "none")};
+  border: none;
+  outline: ${(props) => (props.checked === true ? "1px solid red" : "none")};
   margin-left: 16px;
   margin-right: 16px;
   font-family: "SUITLight";
@@ -44,15 +44,16 @@ const StyledBtn = styled.button`
   width: 60px;
   height: 60px;
   background: ${(props) => (props.checked === true ? "red" : "#FFFFFF")};
-  border: ${(props) => (props.checked === true ? "none" : "1px solid black")};
+  outline: ${(props) => (props.checked === true ? "none" : "1px solid black")};
   border-radius: 20px;
+  border: none;
 `;
 
 function CheckComponent({ category, consumption, targetAmount }) {
-  // eslint-disable-next-line no-unused-vars
-  const [consumptions, setConsumptions] = useRecoilState(consumptionIndexState);
+  const setConsumptions = useSetRecoilState(consumptionIndexState);
   const [inputCheck, setInputCheck] = useState(true);
-  function handleCheckBox(e) {
+
+  function handleCheckBox() {
     setInputCheck((prev) => !prev);
     setConsumptions((prev) =>
       prev.map((itm) =>
@@ -63,11 +64,15 @@ function CheckComponent({ category, consumption, targetAmount }) {
     );
   }
   useEffect(() => {
-    consumption > targetAmount ? setInputCheck(true) : setInputCheck(false);
+    if (consumption > targetAmount / 30) {
+      setInputCheck(true);
+    } else {
+      setInputCheck(false);
+    }
     setConsumptions((prev) =>
       prev.map((itm) => {
         if (itm.category === category) {
-          if (consumption > targetAmount) {
+          if (consumption > targetAmount / 30) {
             return { ...itm, isOverConsumption: true };
           } else {
             return { ...itm, isOverConsumption: false };
@@ -81,10 +86,7 @@ function CheckComponent({ category, consumption, targetAmount }) {
   return (
     <Horizontal style={{ justifyContent: "flex-start" }}>
       <StyledBtn id={category} onClick={handleCheckBox} checked={inputCheck}>
-        <img
-          src={inputCheck === true ? CheckOverImg : NoCheckOverImg}
-          alt="check"
-        />
+        <img src={inputCheck ? CheckOverImg : NoCheckOverImg} alt="check" />
       </StyledBtn>
       <CategoryInput value={category} checked={inputCheck} readOnly />
       <PriceInput

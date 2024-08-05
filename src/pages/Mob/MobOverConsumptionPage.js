@@ -105,6 +105,7 @@ function MobOverConsumptionPage() {
   const userToken = useRecoilValue(tokenState);
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+
   function handleBtnClick() {
     const searchParams = new URLSearchParams(location.search);
     const id = searchParams.get("id");
