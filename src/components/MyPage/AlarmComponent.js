@@ -12,6 +12,7 @@ import {
 import TermOfUseComponent from "../IncomePage/TermOfUseComponent";
 import CompletePhoneComponent from "./CompletePhoneComponent";
 import CancelPhone from "./CancelPhone";
+import TermOfUse2Component from "../IncomePage/TermOfUse2Component";
 
 const Wrapper = styled.div`
   display: flex;
@@ -128,6 +129,7 @@ function AlarmComponent({ userInfo }) {
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
+  const [isInfoModalOpen2, setIsInfoModalOpen2] = useState(false);
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -265,8 +267,11 @@ function AlarmComponent({ userInfo }) {
                     checked={checks.terms2}
                     onClick={() => handleCheckBoxClick("terms2")}
                   />{" "}
-                  (필수) 이용약관
-                  <InfoModal onClick={() => setIsInfoModalOpen(true)}>
+                  (필수) 개인정보동의
+                  <InfoModal
+                    onClick={() => setIsInfoModalOpen2(true)}
+                    style={{ marginLeft: "65px" }}
+                  >
                     보기
                   </InfoModal>
                 </NoCenterHorizontal>
@@ -336,6 +341,11 @@ function AlarmComponent({ userInfo }) {
       {isInfoModalOpen && (
         <ModalComponent closeModal={() => setIsInfoModalOpen(false)}>
           <TermOfUseComponent />
+        </ModalComponent>
+      )}
+      {isInfoModalOpen2 && (
+        <ModalComponent closeModal={() => setIsInfoModalOpen2(false)}>
+          <TermOfUse2Component />
         </ModalComponent>
       )}
     </Wrapper>
