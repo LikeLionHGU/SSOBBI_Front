@@ -55,10 +55,9 @@ const InputBtnWrapper = styled.div`
   position: relative;
 `;
 
-function IncomeComponent() {
+function IncomeComponent({ isUpdating, isClick, setIsClick }) {
   const userInfo = useRecoilValue(userData);
   const [income, setIncome] = useState(null);
-  const [isUpdating, setIsUpdating] = useState(false);
   const userToken = useRecoilValue(tokenState);
   const incomeRef = useRef("");
 
@@ -75,7 +74,6 @@ function IncomeComponent() {
         },
       })
       .then((response) => {
-        if (response) setIsUpdating(false);
         console.log(response);
       })
       .catch((error) => {
@@ -108,6 +106,29 @@ function IncomeComponent() {
         console.log(error);
       });
   }, [isUpdating, userToken]);
+
+  useEffect(() => {
+    if (isUpdating && isClick) {
+      const newArr = { income: convertToInt(income) };
+      const apiUrl = process.env.REACT_APP_BASE_URL + "/user/monthly/income";
+      console.log(newArr);
+      axios
+        .post(apiUrl, newArr, {
+          headers: {
+            Authorization: "Bearer " + userToken,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          setIsClick(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isClick, isUpdating]);
   return (
     <div style={{ width: "319px", marginTop: "32px" }}>
       <Title>{userInfo.name}님의 한달 수입</Title>
@@ -120,20 +141,6 @@ function IncomeComponent() {
             ref={incomeRef}
           />
           <Unit>원</Unit>
-
-          {/* {isUpdating === false && (
-          <UpdateBtn
-            onClick={() => {
-              setIsUpdating(true);
-              incomeRef.current.focus();
-            }}
-          >
-            수정하기
-          </UpdateBtn>
-        )}
-        {isUpdating === true && (
-          <UpdateBtn onClick={handleSubmitBtnClick}>저장하기</UpdateBtn>
-        )} */}
         </InputBtnWrapper>
       </NoCenterVertical>
     </div>
