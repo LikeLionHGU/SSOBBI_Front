@@ -60,7 +60,7 @@ const ScrollContainer = styled.div`
   overflow-y: scroll;
   height: 700px;
   padding-left: 33px;
-  padding-right: 180px;
+  padding-right: 144px;
   width: 707px;
 `;
 
