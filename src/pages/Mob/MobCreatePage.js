@@ -109,7 +109,10 @@ function MobCreatePage() {
               return {
                 category: itm.category,
                 targetAmount: target.amount,
-                amount: convertToInt(itm.amount),
+                amount:
+                  typeof itm.amount === "string"
+                    ? convertToInt(itm.amount)
+                    : itm.amount,
               };
             }
             return itm;
