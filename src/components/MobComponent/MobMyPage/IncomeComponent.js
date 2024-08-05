@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { NoCenterVertical, Vertical } from "../../../styles/CommunalStyle";
+import { NoCenterVertical } from "../../../styles/CommunalStyle";
 import styled from "styled-components";
 import axios from "axios";
 import { tokenState, userData } from "../../../store/atom";
@@ -22,22 +22,22 @@ const Title = styled.p`
   font-size: 18px;
 `;
 
-const UpdateBtn = styled.button`
-  display: inline-flex;
-  padding: 12px 14px;
-  justify-content: center;
-  align-items: center;
-  gap: 14px;
-  background: #2aa663;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
-  border: none;
-  border-radius: 24px;
-  font-family: "SUITLight";
-  font-size: 17px;
-  color: white;
-  margin-left: 28px;
-  cursor: pointer;
-`;
+// const UpdateBtn = styled.button`
+//   display: inline-flex;
+//   padding: 12px 14px;
+//   justify-content: center;
+//   align-items: center;
+//   gap: 14px;
+//   background: #2aa663;
+//   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+//   border: none;
+//   border-radius: 24px;
+//   font-family: "SUITLight";
+//   font-size: 17px;
+//   color: white;
+//   margin-left: 28px;
+//   cursor: pointer;
+// `;
 
 const Unit = styled.span`
   font-family: "SUITLight";
@@ -62,6 +62,7 @@ function IncomeComponent() {
   const userToken = useRecoilValue(tokenState);
   const incomeRef = useRef("");
 
+  // eslint-disable-next-line no-unused-vars
   function handleSubmitBtnClick() {
     const newArr = { income: convertToInt(income) };
     const apiUrl = process.env.REACT_APP_BASE_URL + "/user/monthly/income";

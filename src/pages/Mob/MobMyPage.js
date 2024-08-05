@@ -72,6 +72,7 @@ function MobMyPage() {
   const userToken = useRecoilValue(tokenState);
   const [amount, setAmount] = useState([]);
   const [isUpdating, setIsUpdating] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [isMinimumCategory, setIsMinimumCategory] = useState(false);
 
   function handleAddBtnClick() {

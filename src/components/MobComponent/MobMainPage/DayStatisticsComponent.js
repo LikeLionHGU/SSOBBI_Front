@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Horizontal } from "../../../styles/CommunalStyle";
 import { useRecoilValue } from "recoil";
 import { userData } from "../../../store/atom";
-import { useEffect } from "react";
 
 const Title = styled.p`
   color: ${(props) => props.theme.colors.COLORBlack};

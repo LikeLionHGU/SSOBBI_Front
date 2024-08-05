@@ -3,12 +3,15 @@ import axios from "axios";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { tokenState, userData } from "../../store/atom";
 import styled from "styled-components";
-import ModalComponent from "./ModalComponent";
+import ModalComponent from "../IncomePage/ModalComponent";
 import AlarmImg from "../../imgs/alarmCheck.png";
 import {
   NoCenterHorizontal,
   NoCenterVertical,
 } from "../../styles/CommunalStyle";
+import TermOfUseComponent from "../IncomePage/TermOfUseComponent";
+import CompletePhoneComponent from "./CompletePhoneComponent";
+import CancelPhone from "./CancelPhone";
 
 const Wrapper = styled.div`
   display: flex;
@@ -105,6 +108,12 @@ const InputField = styled.input`
   width: 200px;
   margin-top: 6px;
 `;
+const InfoModal = styled.span`
+  margin-left: 93px;
+  color: gray;
+  border-bottom: 0.5px solid gray;
+  cursor: pointer;
+`;
 
 function AlarmComponent({ userInfo }) {
   const setUserInfo = useSetRecoilState(userData);
@@ -118,6 +127,7 @@ function AlarmComponent({ userInfo }) {
     terms2: false,
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -246,6 +256,9 @@ function AlarmComponent({ userInfo }) {
                     onClick={() => handleCheckBoxClick("terms1")}
                   />{" "}
                   (필수) 이용약관
+                  <InfoModal onClick={() => setIsInfoModalOpen(true)}>
+                    보기
+                  </InfoModal>
                 </NoCenterHorizontal>
                 <NoCenterHorizontal style={{ marginBottom: "50px" }}>
                   <CheckBox
@@ -253,6 +266,9 @@ function AlarmComponent({ userInfo }) {
                     onClick={() => handleCheckBoxClick("terms2")}
                   />{" "}
                   (필수) 이용약관
+                  <InfoModal onClick={() => setIsInfoModalOpen(true)}>
+                    보기
+                  </InfoModal>
                 </NoCenterHorizontal>
 
                 <NoCenterVertical
@@ -311,10 +327,15 @@ function AlarmComponent({ userInfo }) {
       {isModalOpen && (
         <ModalComponent closeModal={closeModal}>
           {alarm ? (
-            <p>알림톡 신청이 취소되었어요!</p>
+            <CancelPhone closeModal={closeModal} />
           ) : (
-            <p>알림톡 신청이 완료되었어요!</p>
+            <CompletePhoneComponent closeModal={closeModal} />
           )}
+        </ModalComponent>
+      )}
+      {isInfoModalOpen && (
+        <ModalComponent closeModal={() => setIsInfoModalOpen(false)}>
+          <TermOfUseComponent />
         </ModalComponent>
       )}
     </Wrapper>

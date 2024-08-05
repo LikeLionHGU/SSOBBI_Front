@@ -4,7 +4,7 @@ import { Horizontal } from "../../../styles/CommunalStyle";
 import CheckOverImg from "../../../imgs/CheckOver.svg";
 import NoCheckOverImg from "../../../imgs/NoCheckOver.svg";
 import { consumptionIndexState } from "../../../store/atom";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 
 const CategoryInput = styled.input`
   &:focus {
@@ -45,8 +45,7 @@ const StyledBtn = styled.button`
 `;
 
 function CheckComponent({ category, consumption, targetAmount }) {
-  // eslint-disable-next-line no-unused-vars
-  const [consumptions, setConsumptions] = useRecoilState(consumptionIndexState);
+  const setConsumptions = useSetRecoilState(consumptionIndexState);
   const [inputCheck, setInputCheck] = useState(true);
   function handleCheckBox(e) {
     setInputCheck((prev) => !prev);
@@ -59,11 +58,13 @@ function CheckComponent({ category, consumption, targetAmount }) {
     );
   }
   useEffect(() => {
-    consumption > targetAmount ? setInputCheck(true) : setInputCheck(false);
+    consumption > targetAmount / 30
+      ? setInputCheck(true)
+      : setInputCheck(false);
     setConsumptions((prev) =>
       prev.map((itm) => {
         if (itm.category === category) {
-          if (consumption > targetAmount) {
+          if (consumption > targetAmount / 30) {
             return { ...itm, isOverConsumption: true };
           } else {
             return { ...itm, isOverConsumption: false };
