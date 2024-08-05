@@ -317,7 +317,7 @@ function CreatePage() {
                 justifyContent: "flex-start",
                 alignItems: "flex-start",
                 height: "100vh",
-                marginRight: "28px;",
+                marginRight: "32px;",
               }}
             >
               <div
