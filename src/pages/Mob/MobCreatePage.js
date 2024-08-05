@@ -61,9 +61,9 @@ const SubmitBtn = styled.button`
   font-size: 14px;
   cursor: pointer;
   &:hover {
-    box-shadow: 0 0 0 1px transparent, 0 0 0 4px transparent,
-      0 6px 16px rgba(0, 0, 0, 0.12) !important; /*그림자가 세개지만 마지막것만 표시된다.*/
-    transform: translateX(-50%) scale(1.04);
+    /* box-shadow: 0 0 0 1px transparent, 0 0 0 4px transparent,
+      0 6px 16px rgba(0, 0, 0, 0.12) !important; 그림자가 세개지만 마지막것만 표시된다. */
+    /* transform: translateX(-50%) scale(1.04); */
   }
 `;
 
