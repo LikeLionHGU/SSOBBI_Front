@@ -14,6 +14,7 @@ const MobileV = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: white;
 `;
 const Title = styled.p`
   color: ${(props) => props.theme.colors.COLORBlack};
@@ -82,10 +83,8 @@ const MobLandingPage = () => {
           </NoCenterHorizontal>
           <LogIn onClick={handleLoginClick}>카카오톡 로그인</LogIn>
         </Horizontal>
-
         <SliderComponent onMoveBox={handleMoveBox} />
         <Block1Component />
-        {/* <Block2Component id={"block2"} /> */}
         <Footer />
       </NoCenterVertical>
     </MobileV>
