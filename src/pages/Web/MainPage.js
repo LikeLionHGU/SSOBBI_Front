@@ -11,7 +11,6 @@ import WeekMonthStstisticsComponent from "../../components/MainPage/WeekMonthSts
 import MenuBarComponent from "../../components/MainPage/MenuBarComponent";
 import {
   Horizontal,
-  Vertical,
   NoCenterHorizontal,
   NoCenterVertical,
 } from "../../styles/CommunalStyle";
@@ -129,14 +128,15 @@ function MainPage() {
             style={{
               height: "800px",
               overflowY: "scroll",
+              marginBottom: "20px",
+              paddingTop: "20px",
             }}
           >
-            <Vertical
+            <NoCenterVertical
               style={{
                 alignItems: "flex-start",
                 marginLeft: "30px",
                 marginRight: "55px",
-                paddingBottom: "20px",
               }}
             >
               <DayStatisticsComponent dayData={dailyData} apiDate={apiDate} />
@@ -149,7 +149,7 @@ function MainPage() {
                 weekData={weeklyData}
                 monthData={monthlyData}
               />
-            </Vertical>
+            </NoCenterVertical>
             <CalenderComponent setApiDate={setApiDate} />
           </NoCenterHorizontal>
         </NoCenterVertical>

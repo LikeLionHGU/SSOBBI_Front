@@ -48,6 +48,9 @@ const ScatterChartsComponent = ({ happinessRateData }) => {
         enabled: false,
         type: "xy",
       },
+      toolbar: {
+        show: false,
+      },
     },
     xaxis: {
       tickAmount: 10,
