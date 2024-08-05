@@ -51,13 +51,12 @@ const SubmitBtn = styled.button`
   align-items: center;
   gap: 14px;
   flex-shrink: 0;
-  right: -5%;
   bottom: 90px;
   background-color: #2aa663;
   border-radius: 24px;
   border: none;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
-  transform: translateX(-50%);
+  transform: translateX(120%);
   color: white;
   font-size: 14px;
   cursor: pointer;

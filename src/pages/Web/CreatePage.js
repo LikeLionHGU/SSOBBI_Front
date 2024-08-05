@@ -129,8 +129,14 @@ function CreatePage() {
                 targetAmount: target.amount,
                 amount: convertToInt(itm.amount),
               };
+            } else {
+              const etc = targetAmount.find((item) => item.category === "기타");
+              return {
+                category: "기타",
+                targetAmount: etc ? etc.amount : 0,
+                amount: convertToInt(itm.amount),
+              };
             }
-            return itm;
           })
       );
       if (id !== null) {

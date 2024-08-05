@@ -181,7 +181,7 @@ export default function IncomeInputComponent(props) {
             <Unit>원</Unit>
           </div>
         </InputWrapper>
-        <Title>
+        <Title style={{ opacity: "0.5" }}>
           {userInfo.name}님의 <span>카테고리별 목표금액</span>
         </Title>
         <div>
@@ -220,7 +220,7 @@ function CategoryAmountInput(props) {
       >
         <CategoryInput value={props.category} readOnly />
         <PriceInput value={props.amount} readOnly />
-        <Unit>원</Unit>
+        <Unit style={{ opacity: "0.5" }}>원</Unit>
       </Horizontal>
     </>
   );

@@ -49,7 +49,6 @@ const TitleAndInputWrapper = styled.div`
 
 const AmountUpdateBtn = styled.button`
   position: fixed;
-  right: 8%;
   bottom: 90px;
   display: inline-flex;
   padding: 12px 14px;
@@ -66,6 +65,7 @@ const AmountUpdateBtn = styled.button`
   margin-left: 28px;
   margin-bottom: 7px;
   cursor: pointer;
+  transform: translateX(120%);
 `;
 
 function MobMyPage() {
