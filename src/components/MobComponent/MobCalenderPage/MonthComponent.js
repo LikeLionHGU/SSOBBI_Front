@@ -12,6 +12,7 @@ const HappyBox = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: white;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
 `;
 const Box = styled.div`
   font-family: "SUITLight";
@@ -27,6 +28,7 @@ const Box = styled.div`
   align-items: center;
   background-color: white;
   font-size: 12px;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
 `;
 const CircleBox = styled.div`
   font-family: "SUITLight";
@@ -119,12 +121,19 @@ function MonthComponent({ monthlyData, month, onDetailCPChange }) {
   return (
     <>
       <HappyBox>
-        <HappinessInput
-          value={monthlyData?.happinessRate}
-          type="range"
-          min="0"
-          max="100"
-        />
+        {monthlyData?.happinessRate !== null ? (
+          <>
+            <HappinessInput
+              value={monthlyData.happinessRate}
+              type="range"
+              min="0"
+              max="100"
+            />
+            <p>{monthlyData?.happinessRate}</p>
+          </>
+        ) : (
+          <div>행복지수 데이터가 없습니다.</div>
+        )}
       </HappyBox>
       <Horizontal>
         <Box>
@@ -139,7 +148,7 @@ function MonthComponent({ monthlyData, month, onDetailCPChange }) {
                   fontWeight: "bold",
                 }}
               >
-                {monthlyData.totalOverConsumptionAmount}
+                {monthlyData.totalOverConsumptionAmount.toLocaleString()}
               </span>
               {"   "}원
             </p>
@@ -148,6 +157,8 @@ function MonthComponent({ monthlyData, month, onDetailCPChange }) {
               style={{
                 fontSize: "12px",
                 color: "#19844A",
+                marginTop: "28px",
+                marginBottom: "28px",
               }}
             >
               과소비 내역이 없습니다.
@@ -180,10 +191,10 @@ function MonthComponent({ monthlyData, month, onDetailCPChange }) {
           ) : (
             <span
               style={{
-                fontSize: "18px",
+                fontSize: "12px",
                 color: "#19844A",
-                marginTop: "40px",
-                marginBottom: "25px",
+                marginTop: "15px",
+                marginBottom: "15px",
               }}
             >
               과소비 내역이 없습니다.

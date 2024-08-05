@@ -48,6 +48,7 @@ const Box = styled.div`
   justify-content: center;
   background-color: white;
   font-size: 12px;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
 `;
 
 function MobMainPage() {

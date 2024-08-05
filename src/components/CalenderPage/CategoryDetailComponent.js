@@ -89,8 +89,6 @@ function CategoryDetailComponent({ userIncome, overspentData }) {
       overspentData[i].target;
   }
 
-  console.log("연규씨가 한 내용 : ", overspentData);
-
   return (
     <>
       <NoCenterHorizontal

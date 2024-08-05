@@ -10,6 +10,7 @@ const Title = styled.p`
   margin-right: 120px;
 `;
 const HappyBox = styled.div`
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
   font-family: "SUITLight";
   font-size: 12px;
   width: 320px;
@@ -23,6 +24,7 @@ const HappyBox = styled.div`
 `;
 const Box = styled.div`
   font-family: "SUITLight";
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
   font-size: 18px;
   width: 150px;
   height: 112px;

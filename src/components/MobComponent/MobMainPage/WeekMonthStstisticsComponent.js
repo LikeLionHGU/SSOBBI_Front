@@ -29,6 +29,7 @@ const HappyBox = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: white;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
 `;
 const Box = styled.div`
   font-family: "SUITLight";
@@ -45,6 +46,7 @@ const Box = styled.div`
   align-items: center;
   background-color: white;
   font-size: 12px;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
 `;
 const CircleBox = styled.div`
   font-family: "SUITLight";
