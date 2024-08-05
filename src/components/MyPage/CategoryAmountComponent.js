@@ -75,7 +75,13 @@ function CategoryAmountComponent({
   const [price, setPrice] = useState(convertStringNum(null));
   function removeBtnClick() {
     if (amount.length > 2) {
-      setAmount((prev) => prev.filter((itm) => itm.category !== data.category));
+      const arr = amount.filter((itm) => itm.id !== data.id);
+      const updatedArr = arr.map((itm, idx, arr) => ({
+        ...itm,
+        isLast: idx === arr.length - 1,
+      }));
+      // setAmount((prev) => prev.filter((itm) => itm.id !== data.id));
+      setAmount(updatedArr);
       setIsMinimumCategory(false);
     } else {
       setIsMinimumCategory(true);
@@ -149,9 +155,14 @@ function CategoryAmountComponent({
         </ManageBtn>
       )}
       {isLast === true && isUpdating === true && (
-        <ManageBtn onClick={handleAddBtnClick} id="addBtn">
-          <img src={AddBtnImg} alt="addImg" id="addBtn" />
-        </ManageBtn>
+        <>
+          <ManageBtn onClick={removeBtnClick} id="rmvBtn">
+            <img src={RmvBtnImg} alt="removeImg" id="rmvBtn" />
+          </ManageBtn>
+          <ManageBtn onClick={handleAddBtnClick} id="addBtn">
+            <img src={AddBtnImg} alt="addImg" id="addBtn" />
+          </ManageBtn>
+        </>
       )}
     </Horizontal>
   );

@@ -84,7 +84,10 @@ export default function FirstAmountComponent(props) {
       process.env.REACT_APP_BASE_URL + "/category/monthly/TargetAmount";
     const arr = categoryAmount.map((itm) => ({
       category: itm.name,
-      amount: convertToInt(itm.consumption),
+      amount:
+        typeof itm.consumption === "string"
+          ? convertToInt(itm.consumption)
+          : itm.consumption,
     }));
     const newArr = { requests: arr };
     axios

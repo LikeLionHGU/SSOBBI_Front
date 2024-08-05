@@ -5,6 +5,7 @@ import {
   happinessRateState,
   contentState,
   tokenState,
+  userData,
 } from "../../store/atom";
 import { IoIosArrowBack } from "react-icons/io";
 import MenuBarComponent from "../../components/MainPage/MenuBarComponent";
@@ -87,6 +88,8 @@ function OverConsumptionPage() {
   const userToken = useRecoilValue(tokenState);
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+  const userInfo = useRecoilValue(userData);
+
   function handleBtnClick() {
     const searchParams = new URLSearchParams(location.search);
     const id = searchParams.get("id");
@@ -168,8 +171,8 @@ function OverConsumptionPage() {
               <IoIosArrowBack />
             </BackBtn>
             <p style={{ marginTop: "16px" }}>
-              쏘삐가 생각하는 OO님의 <span>과소비 내역</span>이 맞는지
-              확인해주세요
+              쏘삐가 생각하는 {userInfo.name}님의 <span>과소비 내역</span>이
+              맞는지 확인해주세요
             </p>
             <div className="container">
               <TooltipComponent infoText="hello world">

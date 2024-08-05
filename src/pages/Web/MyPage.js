@@ -32,10 +32,12 @@ const AmountUpdateBtn = styled.button`
   margin-left: 28px;
   margin-bottom: 7px;
   cursor: pointer;
+  width: 90px;
 `;
 
 const ErrorMessage = styled.p`
   color: red;
+  text-align: center;
 `;
 
 const Title = styled.p`
@@ -58,7 +60,8 @@ const ScrollContainer = styled.div`
   overflow-y: scroll;
   height: 700px;
   padding-left: 33px;
-  padding-right: 210px;
+  padding-right: 180px;
+  width: 707px;
 `;
 
 function MyPage() {
@@ -67,31 +70,51 @@ function MyPage() {
   const [isUpdating, setIsUpdating] = useState(false);
   const [amount, setAmount] = useState([]);
   const [isMinimumCategory, setIsMinimumCategory] = useState(false);
+  const [keyCounter, setKeyCounter] = useState(1); // id 1씩 증가시키기 위한 useState
+  const [isIncludeZero, setIsIncludeZero] = useState(false);
 
   function handleAmountBtnClick() {
     setIsUpdating(true);
   }
 
   function handleAddBtnClick() {
-    const data = [
-      ...amount.map((itm) => ({ ...itm, isLast: false })),
-      { category: "", amount: 0, isLast: true },
-    ];
-
-    console.log(data);
     setAmount((prev) => [
       ...prev.map((itm) => ({ ...itm, isLast: false })),
-      { category: "", amount: 0, isLast: true },
+      {
+        category: "",
+        amount: 0,
+        isLast: true,
+        id: keyCounter + 1,
+        key: keyCounter + 1,
+      },
     ]);
     setIsMinimumCategory(false);
+    setIsIncludeZero(false);
+    setKeyCounter((prev) => prev + 1);
   }
 
   function handleLoadBtnClick() {
     const apiUrl =
       process.env.REACT_APP_BASE_URL + "/category/monthly/TargetAmount";
 
+    const checkData = amount.map((itm) => {
+      if (itm.amount === 0 || itm.amount === "0") {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    if (checkData.includes(true)) {
+      setIsIncludeZero(true);
+      return;
+    }
+    setIsIncludeZero(false);
+
     const data = amount
-      .filter((itm) => itm.category !== "" && itm.amount !== 0)
+      .filter(
+        (itm) => itm.category !== "" && itm.amount !== "0" && itm.amount !== 0
+      )
       .map((itm) => ({
         category: itm.category,
         amount: convertToInt(itm.amount),
@@ -130,8 +153,11 @@ function MyPage() {
           category: itm.category,
           amount: convertStringNum(itm.amount),
           isLast: idx === arr.length - 1,
+          id: idx,
+          key: idx,
         }));
         setAmount(data);
+        setKeyCounter(data.length + 1);
       })
       .catch((error) => {
         console.log(error);
@@ -177,41 +203,48 @@ function MyPage() {
               <ScrollContainer>
                 <ProfileComponent userInfo={userInfo} />
                 <MonthIncomeComponent userInfo={userInfo} />
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "flex-end",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <div>
-                    {amount.map((itm) => (
-                      <CategoryAmountComponent
-                        data={itm}
-                        isUpdating={isUpdating}
-                        amount={amount}
-                        setAmount={setAmount}
-                        setIsMinimumCategory={setIsMinimumCategory}
-                        isLast={itm.isLast}
-                        handleAddBtnClick={handleAddBtnClick}
-                      />
-                    ))}
+                <div style={{ paddingBottom: "120px" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "flex-end",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <div>
+                      {amount.map((itm) => (
+                        <CategoryAmountComponent
+                          data={itm}
+                          isUpdating={isUpdating}
+                          amount={amount}
+                          setAmount={setAmount}
+                          setIsMinimumCategory={setIsMinimumCategory}
+                          isLast={itm.isLast}
+                          handleAddBtnClick={handleAddBtnClick}
+                        />
+                      ))}
+                    </div>
+                    {!isUpdating && (
+                      <AmountUpdateBtn onClick={handleAmountBtnClick}>
+                        수정하기
+                      </AmountUpdateBtn>
+                    )}
+                    {isUpdating && (
+                      <AmountUpdateBtn onClick={handleLoadBtnClick}>
+                        저장하기
+                      </AmountUpdateBtn>
+                    )}
                   </div>
-                  {!isUpdating && (
-                    <AmountUpdateBtn onClick={handleAmountBtnClick}>
-                      수정하기
-                    </AmountUpdateBtn>
+                  {isMinimumCategory && (
+                    <ErrorMessage>
+                      카테고리는 최소 2개 이상 있어야합니다
+                    </ErrorMessage>
                   )}
-                  {isUpdating && (
-                    <AmountUpdateBtn onClick={handleLoadBtnClick}>
-                      저장하기
-                    </AmountUpdateBtn>
+                  {isIncludeZero && (
+                    <ErrorMessage>목표금액은 0원일 수 없습니다</ErrorMessage>
                   )}
                 </div>
-                {isMinimumCategory && (
-                  <ErrorMessage>카테고리는 최소 2개 이상 있어야함</ErrorMessage>
-                )}
               </ScrollContainer>
             </NoCenterVertical>
             <NoCenterVertical style={{ marginLeft: "56px" }}>
