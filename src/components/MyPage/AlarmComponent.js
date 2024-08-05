@@ -10,6 +10,8 @@ import {
   NoCenterVertical,
 } from "../../styles/CommunalStyle";
 import TermOfUseComponent from "../IncomePage/TermOfUseComponent";
+import CompletePhoneComponent from "./CompletePhoneComponent";
+import CancelPhone from "./CancelPhone";
 
 const Wrapper = styled.div`
   display: flex;
@@ -325,9 +327,9 @@ function AlarmComponent({ userInfo }) {
       {isModalOpen && (
         <ModalComponent closeModal={closeModal}>
           {alarm ? (
-            <p>알림톡 신청이 취소되었어요!</p>
+            <CancelPhone closeModal={closeModal} />
           ) : (
-            <p>알림톡 신청이 완료되었어요!</p>
+            <CompletePhoneComponent closeModal={closeModal} />
           )}
         </ModalComponent>
       )}
