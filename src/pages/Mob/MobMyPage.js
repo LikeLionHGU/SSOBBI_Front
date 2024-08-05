@@ -40,6 +40,7 @@ const Title = styled.p`
 
 const Title2 = styled.p`
   font-family: "SUITLight";
+  font-size: 18px;
 `;
 
 const TitleAndInputWrapper = styled.div`

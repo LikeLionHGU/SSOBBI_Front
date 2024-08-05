@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { tokenState, userData } from "../../../store/atom";
+import { tokenState, userData, UserTokenState } from "../../../store/atom";
 import { Horizontal, NoCenterVertical } from "../../../styles/CommunalStyle";
 import axios from "axios";
 import UpdateImg from "../../../imgs/PencilFill.svg";
@@ -19,9 +19,22 @@ const InfoWrapper = styled.div`
   display: flex;
   flex-direction: row;
 
-  > div > div > span {
-    font-family: "SUITLight";
-    font-size: 16px;
+  > div > div > div {
+    width: 75%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    > span {
+      font-family: "SUITLight";
+      font-size: 16px;
+    }
+    > .logout {
+      font-family: "SUITLight";
+      font-size: 16px;
+      color: gray;
+      cursor: pointer;
+      border-bottom: 1px solid gray;
+    }
   }
 `;
 
@@ -55,6 +68,8 @@ function ProfileComponent() {
   const [isUpdating, setIsUpdating] = useState(false);
   const userToken = useRecoilValue(tokenState);
   const phoneNumRef = useRef("");
+  const setUserToken = useSetRecoilState(UserTokenState);
+  const setToken = useSetRecoilState(tokenState);
   const handleBtnClick = () => {
     setIsUpdating(true);
     phoneNumRef.current.focus();
@@ -105,6 +120,13 @@ function ProfileComponent() {
     }
   };
 
+  const logoutClickHandler = () => {
+    localStorage.removeItem("recoil-persist");
+    setUserToken(null);
+    setToken(null);
+    setUserToken({ isLoggedIn: false });
+  };
+
   return (
     <div>
       <Title>마이페이지</Title>
@@ -116,7 +138,12 @@ function ProfileComponent() {
           <NoCenterVertical
             style={{ alignItems: "flex-start", marginLeft: "21px" }}
           >
-            <span>{userInfo.name}</span>
+            <div>
+              <span>{userInfo.name}</span>
+              <span className="logout" onClick={logoutClickHandler}>
+                로그아웃
+              </span>
+            </div>
             {userInfo.phoneNumber ? (
               <div>
                 <StyledInput
