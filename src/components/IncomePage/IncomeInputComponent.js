@@ -3,7 +3,6 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { firstCategoryState, tokenState, userData } from "../../store/atom";
 import styled from "styled-components";
 import axios from "axios";
-import { Horizontal } from "../../styles/CommunalStyle";
 
 const Title = styled.p`
   font-family: "SUITLight";
@@ -64,6 +63,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  margin-top: 28px;
 `;
 
 const Unit = styled.span`
@@ -73,46 +73,6 @@ const Unit = styled.span`
   top: 37%;
   right: 21px;
 `;
-
-const CategoryInput = styled.input`
-  width: 115px;
-  height: 60px;
-  text-align: center;
-  border-radius: 20px;
-  border: none;
-  box-shadow: 0px 12px 34px 0px rgba(0, 0, 0, 0.08),
-    0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
-  margin-right: 16px;
-  font-family: "SUITLight";
-  font-size: 20px;
-  &:focus {
-    outline: none;
-  }
-  opacity: 0.5;
-`;
-
-const PriceInput = styled.input`
-  text-align: center;
-  width: 270px;
-  height: 60px;
-  border-radius: 20px;
-  border: none;
-  box-shadow: 0px 12px 34px 0px rgba(0, 0, 0, 0.08),
-    0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
-  font-family: "SUITLight";
-  font-size: 20px;
-  &:focus {
-    outline: none;
-  }
-  opacity: 0.5;
-`;
-
-const dummy = [
-  { category: "식비", amount: "0" },
-  { category: "문화", amount: "0" },
-  { category: "교통비", amount: "0" },
-  { category: "기타", amount: "0" },
-];
 
 export default function IncomeInputComponent(props) {
   const userInfo = useRecoilValue(userData);
@@ -181,14 +141,6 @@ export default function IncomeInputComponent(props) {
             <Unit>원</Unit>
           </div>
         </InputWrapper>
-        <Title style={{ opacity: "0.5" }}>
-          {userInfo.name}님의 <span>카테고리별 목표금액</span>
-        </Title>
-        <div>
-          {dummy.map((itm) => (
-            <CategoryAmountInput category={itm.category} amount={itm.amount} />
-          ))}
-        </div>
       </Wrapper>
       <StyledBtn onClick={handleBtnClick} disabled={!showBtn} showBtn={showBtn}>
         확인
@@ -206,22 +158,4 @@ function convertToInt(numberString) {
 function convertStringNum(onlyNumber) {
   const formattedNumber = new Intl.NumberFormat().format(onlyNumber);
   return formattedNumber;
-}
-
-function CategoryAmountInput(props) {
-  return (
-    <>
-      <Horizontal
-        style={{
-          marginTop: "14px",
-          justifyContent: "flex-start",
-          position: "relative",
-        }}
-      >
-        <CategoryInput value={props.category} readOnly />
-        <PriceInput value={props.amount} readOnly />
-        <Unit style={{ opacity: "0.5" }}>원</Unit>
-      </Horizontal>
-    </>
-  );
 }
