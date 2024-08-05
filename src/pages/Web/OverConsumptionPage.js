@@ -148,7 +148,7 @@ function OverConsumptionPage() {
   return (
     <Horizontal style={{ height: "100vh", alignItems: "flex-start" }}>
       {showModal && (
-        <ModalComponent>
+        <ModalComponent closeModal={() => navigate("/ssobbi")}>
           <CompleteModalComponent closeModal={() => navigate("/ssobbi")} />
         </ModalComponent>
       )}
