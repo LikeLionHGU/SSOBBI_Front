@@ -75,10 +75,18 @@ function CategoryAmountComponent({
   isLast,
   handleAddBtnClick,
   monthIncome,
+  setIsIncludeEtcCategory,
 }) {
   const [category, setCategory] = useState(null);
   const [price, setPrice] = useState(convertStringNum(null));
   function removeBtnClick() {
+    if (data.category === "기타") {
+      setIsIncludeEtcCategory(true);
+      return;
+    } else {
+      setIsIncludeEtcCategory(false);
+    }
+
     if (amount.length > 2) {
       setAmount((prev) => prev.filter((itm) => itm.category !== data.category));
       setIsMinimumCategory(false);
@@ -87,6 +95,13 @@ function CategoryAmountComponent({
     }
   }
   function handleCategoryChange(e) {
+    if (data.category === "기타") {
+      setIsIncludeEtcCategory(true);
+      return;
+    } else {
+      setIsIncludeEtcCategory(false);
+    }
+
     const newCategory = e.target.value;
     setCategory(newCategory);
 
@@ -116,6 +131,7 @@ function CategoryAmountComponent({
   }
 
   function handlePriceChange(e) {
+    setIsIncludeEtcCategory(false);
     const { value } = e.target;
     // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
     const onlyNumber = value.replace(/[^0-9]/g, "");

@@ -135,7 +135,7 @@ function CreatePage() {
             } else {
               const etc = targetAmount.find((item) => item.category === "기타");
               return {
-                category: itm.category,
+                category: "기타",
                 targetAmount: etc ? etc.amount : 0,
                 amount:
                   typeof itm.amount === "string"

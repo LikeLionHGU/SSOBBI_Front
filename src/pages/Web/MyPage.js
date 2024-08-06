@@ -73,6 +73,7 @@ function MyPage() {
   const [keyCounter, setKeyCounter] = useState(1); // id 1씩 증가시키기 위한 useState
   const [isIncludeZero, setIsIncludeZero] = useState(false);
   const [monthIncome, setMonthIncome] = useState("");
+  const [isIncludeEtcCategory, setIsIncludeEtcCategory] = useState(false);
 
   function handleAmountBtnClick() {
     setIsUpdating(true);
@@ -91,10 +92,12 @@ function MyPage() {
     ]);
     setIsMinimumCategory(false);
     setIsIncludeZero(false);
+    setIsIncludeEtcCategory(false);
     setKeyCounter((prev) => prev + 1);
   }
 
   function handleLoadBtnClick() {
+    setIsIncludeEtcCategory(false);
     const apiUrl =
       process.env.REACT_APP_BASE_URL + "/category/monthly/TargetAmount";
 
@@ -227,6 +230,7 @@ function MyPage() {
                           isLast={itm.isLast}
                           handleAddBtnClick={handleAddBtnClick}
                           monthIncome={monthIncome}
+                          setIsIncludeEtcCategory={setIsIncludeEtcCategory}
                         />
                       ))}
                     </div>
@@ -248,6 +252,11 @@ function MyPage() {
                   )}
                   {isIncludeZero && (
                     <ErrorMessage>목표금액은 0원일 수 없습니다</ErrorMessage>
+                  )}
+                  {isIncludeEtcCategory && (
+                    <ErrorMessage>
+                      기타 카테고리는 수정, 삭제할 수 없습니다
+                    </ErrorMessage>
                   )}
                 </div>
               </ScrollContainer>
