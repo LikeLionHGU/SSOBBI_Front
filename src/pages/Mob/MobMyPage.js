@@ -84,6 +84,7 @@ function MobMyPage() {
   const [isMinimumCategory, setIsMinimumCategory] = useState(false);
   const [monthIncome, setMonthIncome] = useState("");
   const [isIncludeZero, setIsIncludeZero] = useState(false);
+  const [isIncludeEtcCategory, setIsIncludeEtcCategory] = useState(false);
 
   function handleAddBtnClick() {
     const data = [
@@ -98,6 +99,7 @@ function MobMyPage() {
     ]);
     setIsMinimumCategory(false);
     setIsIncludeZero(false);
+    setIsIncludeEtcCategory(false);
   }
 
   function handleAmountBtnClick() {
@@ -105,6 +107,7 @@ function MobMyPage() {
   }
 
   function handleLoadBtnClick() {
+    setIsIncludeEtcCategory(false);
     setIsClick(true);
 
     const checkData = amount.map((itm) => {
@@ -222,6 +225,7 @@ function MobMyPage() {
                 setIsMinimumCategory={setIsMinimumCategory}
                 handleAddBtnClick={handleAddBtnClick}
                 monthIncome={monthIncome}
+                setIsIncludeEtcCategory={setIsIncludeEtcCategory}
               />
             ))}
           </div>
@@ -242,6 +246,9 @@ function MobMyPage() {
         )}
         {isIncludeZero && (
           <ErrorMessage>목표금액은 0원일 수 없습니다</ErrorMessage>
+        )}
+        {isIncludeEtcCategory && (
+          <ErrorMessage>기타 카테고리는 수정, 삭제할 수 없습니다</ErrorMessage>
         )}
       </Vertical>
     </MobileV>
