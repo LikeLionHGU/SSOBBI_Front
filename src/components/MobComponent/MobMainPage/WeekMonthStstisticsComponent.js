@@ -121,7 +121,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
       size: "15px",
       bcolor: "#C1FFAC",
       font: "4px",
-      margin: "50px",
+      margin: "30px",
     },
   ];
 

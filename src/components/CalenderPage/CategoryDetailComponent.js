@@ -77,17 +77,18 @@ const sizes = [
 ];
 
 function CategoryDetailComponent({ userIncome, overspentData }) {
-  overspentData.sort(function (a, b) {
+  overspentData?.sort(function (a, b) {
     return b.target - a.target;
   });
 
-  for (var i = 0; i < overspentData.length; i++) {
+  for (var i = 0; i < overspentData?.length; i++) {
     overspentData[i].targetWidth =
       (90 * (overspentData.length - i)) / overspentData.length;
     overspentData[i].consumptionWidth =
       (overspentData[i].targetWidth * overspentData[i].consumption) /
       overspentData[i].target;
   }
+  console.log("연규오빠 데이터 확인: ", overspentData);
 
   return (
     <>

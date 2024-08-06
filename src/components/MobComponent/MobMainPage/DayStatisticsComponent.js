@@ -9,6 +9,12 @@ const Title = styled.p`
   font-size: 18px;
   margin-right: 120px;
 `;
+const TitleText = styled.p`
+  color: ${(props) => props.theme.colors.COLORBlack};
+  font-family: "SUITLight";
+  font-size: 12px;
+  margin-bottom: 10px;
+`;
 const HappyBox = styled.div`
   font-family: "SUITLight";
   font-size: 12px;
@@ -123,10 +129,10 @@ function DayStatisticsComponent({ dayData }) {
       </HappyBox>
       <Horizontal>
         <Box>
-          오늘 과소비 건수
+          <TitleText>오늘 과소비 건수</TitleText>
           {dayData.totalOverConsumptionCount ||
           dayData.totalOverConsumptionCount === 0 ? (
-            <p>
+            <p style={{ marginBottom: "30px" }}>
               <span
                 style={{
                   fontSize: "20px",
@@ -153,26 +159,50 @@ function DayStatisticsComponent({ dayData }) {
           )}
         </Box>
         <Box>
-          오늘 과소비 항목
+          <TitleText>오늘 과소비 항목</TitleText>
           {dayData.overConsumptionCategories?.length > 0 ? (
-            <>
-              <Horizontal
-                style={{ width: "130px", flexWrap: "wrap", marginTop: "15px" }}
-              >
-                {dayData.overConsumptionCategories.map((item, index) => (
-                  <TagBox key={index} color={colors[index % colors.length]}>
-                    # {item}
-                  </TagBox>
-                ))}
-              </Horizontal>
-            </>
+            dayData.overConsumptionCategories?.length <= 2 ? (
+              <>
+                <Horizontal
+                  style={{
+                    width: "130px",
+                    flexWrap: "wrap",
+                    marginTop: "10px",
+                    marginBottom: "30px",
+                  }}
+                >
+                  {dayData.overConsumptionCategories.map((item, index) => (
+                    <TagBox key={index} color={colors[index % colors.length]}>
+                      # {item}
+                    </TagBox>
+                  ))}
+                </Horizontal>
+              </>
+            ) : (
+              <>
+                <Horizontal
+                  style={{
+                    width: "130px",
+                    flexWrap: "wrap",
+                    marginTop: "5px",
+                    marginBottom: "10px",
+                  }}
+                >
+                  {dayData.overConsumptionCategories.map((item, index) => (
+                    <TagBox key={index} color={colors[index % colors.length]}>
+                      # {item}
+                    </TagBox>
+                  ))}
+                </Horizontal>
+              </>
+            )
           ) : (
             <p
               style={{
                 fontSize: "11px",
                 color: "#19844A",
-                marginTop: "20px",
-                marginBottom: "20px",
+                marginTop: "15px",
+                marginBottom: "35px",
               }}
             >
               과소비 내역이 없습니다!
