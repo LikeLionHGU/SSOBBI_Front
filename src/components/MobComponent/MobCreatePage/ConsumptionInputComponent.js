@@ -17,8 +17,10 @@ const ManageBtn = styled.button`
     0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
   cursor: pointer;
   margin-left: 16px;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
   &:hover {
   }
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
 
   > img {
     width: 16px;
@@ -55,6 +57,7 @@ const CategoryInput = styled.input`
   &:focus {
     outline: 1px solid rgba(42, 166, 99, 1);
   }
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
 `;
 
 const StyledOption = styled.div`
@@ -84,6 +87,7 @@ const AmountInput = styled.input`
     outline: 1px solid rgba(42, 166, 99, 1);
   }
   margin-left: 6px;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
 `;
 
 const Vertical = styled.div`

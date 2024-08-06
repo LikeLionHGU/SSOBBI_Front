@@ -20,6 +20,7 @@ const StyledTextarea = styled.textarea`
   font-family: "SUITLight";
   font-size: 14px;
   padding: 24px;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
 `;
 
 function ContentComponent() {

@@ -18,6 +18,7 @@ const InfoWrapper = styled.div`
   background: var(--White, #fcfffe);
   display: flex;
   flex-direction: row;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
 
   > div > div > div {
     width: 75%;
@@ -61,6 +62,7 @@ const StyledInput = styled.input`
   width: 150px;
   border-bottom: ${(props) =>
     props.readOnly ? "1px solid black" : "2px solid #2AA663"};
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
 `;
 
 function ProfileComponent() {
