@@ -1,3 +1,30 @@
+# 건강한 소비 습관 도우미, SSOBBI 
+![표지 (2)](https://github.com/user-attachments/assets/9136eac2-93f1-4d92-a1cf-8cb2a790b128)
+<br>
+
+## 📌 멋쟁이 사자처럼 12기 중앙 해커톤 주제
+<p align="justify">IT 기술을 활용하여 현대인의 건강 (wellness) 문제를 해결할 수 있는 서비스</p>
+<h4>집중한 포인트 🌟 재정적 WELLNESS 🌟</h4>
+<br>
+
+## 💻 프로젝트 소개
+<p align="justify">
+  현대인의 감정적 소비를 분석하고 건강한 소비 습관 형성을 돕는 서비스
+</p>
+
+## 🗓️ 개발 기간
+<p align="justify">24.07.14일 ~ 24.08.06일</p>
+
+## ✨ SSOBBI FrontEnd 개발자 소개✨
+|  Leehannaa   |     sungyu0309     |
+|   :--------:   |    :--------:    |
+|   <a href="https://github.com/LeeHannaa"><img src="https://github.com/LikeLionHGU/12th-frontend/blob/main/img/%EC%9D%B4%ED%95%9C%EB%82%98.png?raw=true" width="150" height="100"></a>  |  <a href="https://github.com/sungyu0309"><img src="https://avatars.githubusercontent.com/u/151641474?v=4" width="150" height="100"></a>    |
+
+### 🖥️ 배포 주소
+[SSOBBI로 건강한 소비 습관 형성하자!](https://ssobbi.netlify.app/)
+
+<br><br>
+
 ## 개발 가이드라인
 
 ### 이슈 작성
