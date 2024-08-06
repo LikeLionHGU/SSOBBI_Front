@@ -49,7 +49,8 @@ const Logo = styled.img`
 `;
 
 const Box = styled.div`
-  width: 830px;
+  font-family: "SUITLight";
+  width: 790px;
   height: 125px;
   border-radius: 20px;
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
@@ -58,6 +59,7 @@ const Box = styled.div`
   align-items: center;
   justify-content: center;
   background-color: #fcfffe;
+  padding: 20px;
 `;
 const HappyBox = styled.div`
   width: 1190px;
@@ -270,7 +272,13 @@ function CalenderPage() {
                   />
                   {dailyData?.content ? (
                     <>
-                      <p style={{ marginTop: "30px", marginBottom: "5px" }}>
+                      <p
+                        style={{
+                          marginTop: "30px",
+                          marginBottom: "5px",
+                          fontFamily: "SUITLight",
+                        }}
+                      >
                         {apiMonth} 하루 과소비 일기
                       </p>
                       <Box>{dailyData.content}</Box>

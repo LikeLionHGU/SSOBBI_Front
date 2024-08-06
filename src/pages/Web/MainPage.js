@@ -32,7 +32,8 @@ const Logo = styled.img`
 `;
 
 const Box = styled.div`
-  width: 825px;
+  font-family: "SUITLight";
+  width: 785px;
   height: 113px;
   margin-top: 30px;
   margin-left: 5px;
@@ -43,6 +44,7 @@ const Box = styled.div`
   align-items: center;
   justify-content: center;
   background-color: #fcfffe;
+  padding: 20px;
 `;
 
 function MainPage() {
