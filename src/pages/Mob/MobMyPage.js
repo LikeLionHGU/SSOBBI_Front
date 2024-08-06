@@ -69,12 +69,16 @@ const AmountUpdateBtn = styled.button`
   transform: translateX(120%);
 `;
 
+const ErrorMessage = styled.p`
+  color: red;
+  text-align: center;
+`;
+
 function MobMyPage() {
   const userToken = useRecoilValue(tokenState);
   const [amount, setAmount] = useState([]);
   const [isUpdating, setIsUpdating] = useState(false);
   const [isClick, setIsClick] = useState(false);
-  // eslint-disable-next-line no-unused-vars
   const [isMinimumCategory, setIsMinimumCategory] = useState(false);
 
   function handleAddBtnClick() {
@@ -211,6 +215,9 @@ function MobMyPage() {
           </AmountUpdateBtn>
         )}
         <MobMenuBarComponent menu={"profile"} />
+        {isMinimumCategory && (
+          <ErrorMessage>카테고리는 최소 2개 이상 있어야합니다</ErrorMessage>
+        )}
       </Vertical>
     </MobileV>
   );
