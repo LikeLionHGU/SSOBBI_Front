@@ -69,13 +69,21 @@ const AmountUpdateBtn = styled.button`
   transform: translateX(120%);
 `;
 
+const ErrorMessage = styled.p`
+  color: red;
+  text-align: center;
+  font-family: "SUITLight";
+  font-size: 16px;
+`;
+
 function MobMyPage() {
   const userToken = useRecoilValue(tokenState);
   const [amount, setAmount] = useState([]);
   const [isUpdating, setIsUpdating] = useState(false);
   const [isClick, setIsClick] = useState(false);
-  // eslint-disable-next-line no-unused-vars
   const [isMinimumCategory, setIsMinimumCategory] = useState(false);
+  const [monthIncome, setMonthIncome] = useState("");
+  const [isIncludeZero, setIsIncludeZero] = useState(false);
 
   function handleAddBtnClick() {
     const data = [
@@ -89,6 +97,7 @@ function MobMyPage() {
       { category: "", amount: 0, isLast: true },
     ]);
     setIsMinimumCategory(false);
+    setIsIncludeZero(false);
   }
 
   function handleAmountBtnClick() {
@@ -97,6 +106,21 @@ function MobMyPage() {
 
   function handleLoadBtnClick() {
     setIsClick(true);
+
+    const checkData = amount.map((itm) => {
+      if (itm.amount === 0 || itm.amount === "0") {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    if (checkData.includes(true)) {
+      setIsIncludeZero(true);
+      return;
+    }
+    setIsIncludeZero(false);
+
     const apiUrl =
       process.env.REACT_APP_BASE_URL + "/category/monthly/TargetAmount";
 
@@ -177,6 +201,7 @@ function MobMyPage() {
           isUpdating={isUpdating}
           isClick={isClick}
           setIsClick={setIsClick}
+          setMonthIncome={setMonthIncome}
         />
         <TitleAndInputWrapper>
           <Title2>카테고리별 목표금액</Title2>
@@ -196,6 +221,7 @@ function MobMyPage() {
                 isLast={itm.isLast}
                 setIsMinimumCategory={setIsMinimumCategory}
                 handleAddBtnClick={handleAddBtnClick}
+                monthIncome={monthIncome}
               />
             ))}
           </div>
@@ -211,6 +237,12 @@ function MobMyPage() {
           </AmountUpdateBtn>
         )}
         <MobMenuBarComponent menu={"profile"} />
+        {isMinimumCategory && (
+          <ErrorMessage>카테고리는 최소 2개 이상 있어야합니다</ErrorMessage>
+        )}
+        {isIncludeZero && (
+          <ErrorMessage>목표금액은 0원일 수 없습니다</ErrorMessage>
+        )}
       </Vertical>
     </MobileV>
   );
