@@ -38,7 +38,7 @@ const Logo = styled.img`
 `;
 
 const Box = styled.div`
-  width: 318px;
+  width: 289px;
   height: 71px;
   margin-top: 16px;
   border-radius: 20px;
