@@ -138,7 +138,7 @@ function MobMainPage() {
           >
             <DayStatisticsComponent dayData={dailyData} />
             <Box>
-              {dailyData.content
+              {dailyData?.content
                 ? dailyData.content
                 : "오늘의 일기를 남겨주세요!"}
             </Box>
