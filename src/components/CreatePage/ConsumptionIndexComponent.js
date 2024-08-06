@@ -19,7 +19,7 @@ const CategoryInput = styled.input`
     0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
 `;
 
-const StyledSelect = styled.select`
+const StyledSelect = styled.div`
   position: absolute;
   top: 65px;
   width: 166px;
@@ -33,9 +33,11 @@ const StyledSelect = styled.select`
   }
   z-index: 1;
   left: -8px;
+  background-color: white;
+  overflow: scroll;
 `;
 
-const StyledOption = styled.option`
+const StyledOption = styled.div`
   margin: 16px;
   padding-bottom: 16px;
   border-bottom: 1px solid black;
@@ -102,8 +104,9 @@ function ConsumptionIndexComponent(props) {
   const priceRef = useRef("");
   const setConsumptionIndex = useSetRecoilState(consumptionIndexState);
 
-  function handleSelectChange(e) {
-    setCategoryInput(e.target.value);
+  function handleSelectChange(e, itm) {
+    e.stopPropagation(); // 이벤트 전파 막기
+    setCategoryInput(itm);
     setIsFocus(false);
     priceRef.current.focus();
   }
@@ -199,10 +202,14 @@ function ConsumptionIndexComponent(props) {
             value={categoryInput}
           ></CategoryInput>
           {isFocus && (
-            <StyledSelect id="search" size="4" onChange={handleSelectChange}>
+            <StyledSelect id="search" size="4">
               {!categoryInput && // 포커스 돼있을때만
                 props.options.map((itm) => (
-                  <StyledOption key={itm} value={itm}>
+                  <StyledOption
+                    key={itm}
+                    value={itm}
+                    onClick={(e) => handleSelectChange(e, itm)}
+                  >
                     {itm}
                   </StyledOption>
                 ))}
@@ -212,7 +219,11 @@ function ConsumptionIndexComponent(props) {
                     itm.toLowerCase().includes(categoryInput.toLowerCase())
                   )
                   .map((itm) => (
-                    <StyledOption key={itm} value={itm}>
+                    <StyledOption
+                      key={itm}
+                      value={itm}
+                      onClick={(e) => handleSelectChange(e, itm)}
+                    >
                       {itm}
                     </StyledOption>
                   ))}
