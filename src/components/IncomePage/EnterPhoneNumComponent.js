@@ -10,6 +10,11 @@ import TermOfUse2Component from "./TermOfUse2Component";
 const Title = styled.p`
   font-family: "SUITMedium";
   font-size: 20px;
+
+  > span {
+    color: red;
+    font-size: 25px;
+  }
 `;
 
 const InputsWrapper = styled.div`
@@ -160,7 +165,9 @@ function EnterPhoneNumComponent() {
       )}
       <SubmitBtn style={{ opacity: "0" }}>쏘삐 시작하기</SubmitBtn>
       <div>
-        <Title>이용약관</Title>
+        <Title>
+          이용약관 <span>*</span>
+        </Title>
         <InputsWrapper>
           <InputSpanWrapper
             style={{
