@@ -51,7 +51,7 @@ const SubmitBtn = styled.button`
   align-items: center;
   gap: 14px;
   flex-shrink: 0;
-  bottom: 90px;
+  bottom: 140px;
   background-color: #2aa663;
   border-radius: 24px;
   border: none;
