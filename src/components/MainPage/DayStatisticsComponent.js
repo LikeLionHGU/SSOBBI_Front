@@ -12,9 +12,15 @@ const Title = styled.p`
   margin-left: 10px;
 `;
 
-const Box = styled.div`
+const TitleText = styled.p`
+  color: ${(props) => props.theme.colors.COLORBlack};
   font-family: "SUITLight";
   font-size: 18px;
+  margin-bottom: 4px;
+`;
+
+const Box = styled.div`
+  font-family: "SUITLight";
   width: 260px;
   height: 192px;
   margin-right: 25px;
@@ -76,7 +82,7 @@ function DayStatisticsComponent({ dayData, apiDate }) {
       </Title>
       <Horizontal>
         <Box>
-          오늘의 행복지수
+          <TitleText>오늘의 행복지수</TitleText>
           <GaugeComponent
             type="semicircle"
             arc={{
@@ -99,9 +105,14 @@ function DayStatisticsComponent({ dayData, apiDate }) {
           />
         </Box>
         <Box>
-          오늘 과소비 건수
+          <TitleText>오늘 과소비 건수</TitleText>
           <p
-            style={{ fontSize: "35px", fontWeight: "bold", marginTop: "20px" }}
+            style={{
+              fontSize: "35px",
+              fontWeight: "bold",
+              marginTop: "20px",
+              marginBottom: "24px",
+            }}
           >
             {dayData.totalOverConsumptionCount ||
             dayData.totalOverConsumptionCount === 0 ? (
@@ -126,25 +137,49 @@ function DayStatisticsComponent({ dayData, apiDate }) {
           </p>
         </Box>
         <Box>
-          오늘 과소비 항목
+          <TitleText>오늘 과소비 항목</TitleText>
           {dayData.overConsumptionCategories?.length > 0 ? (
-            <>
-              <Horizontal
-                style={{ width: "200px", flexWrap: "wrap", marginTop: "15px" }}
-              >
-                {dayData.overConsumptionCategories.map((item, index) => (
-                  <TagBox key={index} color={colors[index % colors.length]}>
-                    # {item}
-                  </TagBox>
-                ))}
-              </Horizontal>
-            </>
+            dayData.overConsumptionCategories?.length <= 2 ? (
+              <>
+                <Horizontal
+                  style={{
+                    width: "200px",
+                    flexWrap: "wrap",
+                    marginTop: "34px",
+                    marginBottom: "34px",
+                  }}
+                >
+                  {dayData.overConsumptionCategories.map((item, index) => (
+                    <TagBox key={index} color={colors[index % colors.length]}>
+                      # {item}
+                    </TagBox>
+                  ))}
+                </Horizontal>
+              </>
+            ) : (
+              <>
+                {" "}
+                <Horizontal
+                  style={{
+                    width: "200px",
+                    flexWrap: "wrap",
+                    marginTop: "18px",
+                  }}
+                >
+                  {dayData.overConsumptionCategories.map((item, index) => (
+                    <TagBox key={index} color={colors[index % colors.length]}>
+                      # {item}
+                    </TagBox>
+                  ))}
+                </Horizontal>
+              </>
+            )
           ) : (
             <p
               style={{
                 fontSize: "18px",
-                marginTop: "37px",
-                marginBottom: "43px",
+                marginTop: "40px",
+                marginBottom: "55px",
                 color: "#19844A",
               }}
             >

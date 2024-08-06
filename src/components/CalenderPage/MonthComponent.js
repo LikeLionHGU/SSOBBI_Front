@@ -17,6 +17,12 @@ const Box = styled.div`
   align-items: center;
   background-color: #fcfffe;
 `;
+const TitleText = styled.p`
+  color: ${(props) => props.theme.colors.COLORBlack};
+  font-family: "SUITLight";
+  font-size: 18px;
+  margin-bottom: 4px;
+`;
 const CircleBox = styled.div`
   font-family: "SUITLight";
   font-size: ${({ font }) => font};
@@ -43,7 +49,7 @@ const DetailBT = styled.div`
   align-items: center;
   color: white;
   background-color: ${(props) => props.theme.colors.COLOR70};
-  margin-top: 22px;
+  margin-top: 10px;
   cursor: pointer;
 `;
 
@@ -52,25 +58,25 @@ const circledatas = [
     size: "80px",
     bcolor: "#ACFFD2",
     font: "16px",
-    margin: "15px",
+    margin: "13px",
   },
   {
     size: "50px",
     bcolor: "#ACFFFA",
     font: "10px",
-    margin: "43px",
+    margin: "41px",
   },
   {
     size: "65px",
     bcolor: "#ACEBFF",
     font: "12px",
-    margin: "10px",
+    margin: "8px",
   },
   {
     size: "31px",
     bcolor: "#C1FFAC",
     font: "8px",
-    margin: "52px",
+    margin: "50px",
   },
 ];
 
@@ -79,7 +85,7 @@ function MonthComponent({ monthlyData, month, onDetailCPChange }) {
     <>
       <Horizontal>
         <Box>
-          {month}월의 행복지수
+          <TitleText>{month}월의 행복지수</TitleText>
           <GaugeComponent
             type="semicircle"
             arc={{
@@ -102,10 +108,17 @@ function MonthComponent({ monthlyData, month, onDetailCPChange }) {
           />
         </Box>
         <Box>
-          {month}월의 과소비 금액
+          <TitleText>{month}월의 과소비 금액</TitleText>
           {monthlyData?.totalOverConsumptionAmount ||
           monthlyData?.totalOverConsumptionAmount === 0 ? (
-            <p style={{ fontSize: "30px", fontWeight: "bold" }}>
+            <p
+              style={{
+                fontSize: "30px",
+                fontWeight: "bold",
+                marginTop: "35px",
+                marginBottom: "35px",
+              }}
+            >
               <span
                 style={{
                   fontSize: "40px",
@@ -133,38 +146,47 @@ function MonthComponent({ monthlyData, month, onDetailCPChange }) {
         <Box
           style={{ marginRight: "0px", paddingTop: "20px", height: "172px" }}
         >
-          이번달 과소비 항목 TOP4
           {monthlyData?.topFourOverConsumptionCategories?.length > 0 ? (
-            <Horizontal>
-              {monthlyData?.topFourOverConsumptionCategories.map(
-                (item, index) => {
-                  const circleData = circledatas[index];
-                  return (
-                    <CircleBox
-                      key={index}
-                      color={circleData.bcolor}
-                      width={circleData.size}
-                      height={circleData.size}
-                      font={circleData.font}
-                      margin={circleData.margin}
-                    >
-                      {item.category}
-                    </CircleBox>
-                  );
-                }
-              )}
-            </Horizontal>
+            <>
+              <TitleText style={{ marginTop: "10px" }}>
+                이번달 과소비 항목 TOP4
+              </TitleText>
+              <Horizontal style={{ marginTop: "10px" }}>
+                {monthlyData?.topFourOverConsumptionCategories.map(
+                  (item, index) => {
+                    const circleData = circledatas[index];
+                    return (
+                      <CircleBox
+                        key={index}
+                        color={circleData.bcolor}
+                        width={circleData.size}
+                        height={circleData.size}
+                        font={circleData.font}
+                        margin={circleData.margin}
+                      >
+                        {item.category}
+                      </CircleBox>
+                    );
+                  }
+                )}
+              </Horizontal>
+            </>
           ) : (
-            <span
-              style={{
-                fontSize: "18px",
-                color: "#19844A",
-                marginTop: "40px",
-                marginBottom: "25px",
-              }}
-            >
-              과소비 내역이 없습니다.
-            </span>
+            <>
+              <TitleText style={{ marginTop: "10px" }}>
+                이번달 과소비 항목 TOP4
+              </TitleText>
+              <span
+                style={{
+                  fontSize: "18px",
+                  color: "#19844A",
+                  marginTop: "51px",
+                  marginBottom: "30px",
+                }}
+              >
+                과소비 내역이 없습니다.
+              </span>
+            </>
           )}
           <DetailBT onClick={onDetailCPChange}>
             {month}월 카테고리별 소비금액 확인하기

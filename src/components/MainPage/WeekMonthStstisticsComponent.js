@@ -14,7 +14,12 @@ const ToggleContainer = styled.div`
   margin-left: 16px;
   margin-top: 4px;
 `;
-
+const TitleText = styled.p`
+  color: ${(props) => props.theme.colors.COLORBlack};
+  font-family: "SUITLight";
+  font-size: 18px;
+  margin-bottom: 4px;
+`;
 const Title = styled.p`
   color: ${(props) => props.theme.colors.COLORBlack};
   font-family: "SUITLight";
@@ -141,7 +146,11 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
       </NoCenterHorizontal>
       <Horizontal>
         <Box>
-          {isMonthly ? "이번달 행복지수" : "이번주 행복지수"}
+          {isMonthly ? (
+            <TitleText>이번달 행복지수</TitleText>
+          ) : (
+            <TitleText>이번주 행복지수</TitleText>
+          )}
           <GaugeComponent
             type="semicircle"
             arc={{
@@ -174,12 +183,13 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
         <Box>
           {isMonthly ? (
             <>
-              이번달 과소비 비율
+              <TitleText>이번달 과소비 비율</TitleText>
               <p
                 style={{
                   fontSize: "35px",
                   fontWeight: "bold",
-                  marginTop: "20px",
+                  marginTop: "10px",
+                  marginBottom: "24px",
                 }}
               >
                 {monthData?.overConsumptionRate ? (
@@ -198,10 +208,10 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
                     <p
                       style={{
                         marginBottom: "-30px",
-                        marginLeft: "30%",
                         fontSize: "12px",
                         color: "#19844A",
                         margin: 0,
+                        marginLeft: "40px",
                       }}
                     >
                       ({monthData.totalOverConsumptionCount}건 /
@@ -217,12 +227,13 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
             </>
           ) : (
             <>
-              이번주 과소비 비율
+              <TitleText>이번주 과소비 비율</TitleText>
               <p
                 style={{
                   fontSize: "35px",
                   fontWeight: "bold",
-                  marginTop: "20px",
+                  marginTop: "10px",
+                  marginBottom: "24px",
                 }}
               >
                 {weekData.overConsumptionRate ? (
@@ -241,10 +252,10 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
                     <p
                       style={{
                         marginBottom: "-30px",
-                        marginLeft: "30%",
                         fontSize: "12px",
                         color: "#19844A",
                         margin: 0,
+                        marginLeft: "40px",
                       }}
                     >
                       ({weekData.totalOverConsumptionCount}건 /
