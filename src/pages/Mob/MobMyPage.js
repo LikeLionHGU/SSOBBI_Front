@@ -135,9 +135,34 @@ function MobMyPage() {
       }));
 
     const newArr = { requests: data };
+
+    const sum = newArr.requests.reduce(
+      (acc, itm) => (itm.category === "기타" ? acc : acc + itm.amount),
+      0
+    );
+
+    const newArr2 = newArr.requests.map((itm) =>
+      itm.category === "기타"
+        ? {
+            ...itm,
+            amount: convertStringNum(monthIncome - sum),
+          }
+        : itm
+    );
+    const newArr3 = newArr.requests.map((itm) =>
+      itm.category === "기타"
+        ? {
+            ...itm,
+            amount: monthIncome - sum,
+          }
+        : itm
+    );
+
+    setAmount(newArr2);
+    const newArr4 = { requests: newArr3 };
     console.log(newArr);
     axios
-      .post(apiUrl, newArr, {
+      .post(apiUrl, newArr4, {
         headers: {
           Authorization: "Bearer " + userToken,
           "Content-Type": "application/json",
