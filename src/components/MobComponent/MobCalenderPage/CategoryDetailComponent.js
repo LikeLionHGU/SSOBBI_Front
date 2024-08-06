@@ -77,6 +77,17 @@ const sizes = [
 ];
 
 function CategoryDetailComponent({ userIncome, overspentData }) {
+  overspentData.sort(function (a, b) {
+    return b.target - a.target;
+  });
+
+  for (var i = 0; i < overspentData.length; i++) {
+    overspentData[i].targetWidth =
+      (90 * (overspentData.length - i)) / overspentData.length;
+    overspentData[i].consumptionWidth =
+      (overspentData[i].targetWidth * overspentData[i].consumption) /
+      overspentData[i].target;
+  }
   return (
     <>
       <NoCenterHorizontal
@@ -90,8 +101,8 @@ function CategoryDetailComponent({ userIncome, overspentData }) {
         }}
       >
         {overspentData?.map((item, index) => {
-          const targetPercentage = (item.target / userIncome) * 800;
-          const consumptionPercentage = item.consumption / targetPercentage;
+          const targetPercentage = item.targetWidth;
+          const consumptionPercentage = item.consumptionWidth;
           return (
             <Box>
               <TagCircle
