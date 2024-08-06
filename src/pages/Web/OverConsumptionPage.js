@@ -15,7 +15,7 @@ import {
   Vertical,
   NoCenterVertical,
 } from "../../styles/CommunalStyle";
-import CalenderComponent from "../../components/CreatePage/CalenderComponent";
+import CalenderComponent from "../../components/OverConsumptionPage/CalenderComponent";
 import CheckComponent from "../../components/OverConsumptionPage/CheckComponent";
 import TooltipComponent from "../../components/OverConsumptionPage/TooltipComponent";
 import styled from "styled-components";

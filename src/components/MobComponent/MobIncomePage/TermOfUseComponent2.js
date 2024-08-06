@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { Vertical } from "../../styles/CommunalStyle";
+import { Vertical } from "../../../styles/CommunalStyle";
 
 const Title = styled.p`
   color: var(--Black, #0c0c0c);
   text-align: center;
   font-family: "SUITLight";
-  font-size: 30px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -15,7 +15,7 @@ const Title = styled.p`
 
 const InfoWrapper = styled.div`
   width: 90%;
-  height: 400px;
+  height: 150px;
   padding: 10px 30px;
   justify-content: center;
   align-items: center;
@@ -23,11 +23,12 @@ const InfoWrapper = styled.div`
   flex-shrink: 0;
   font-family: "SUITLight";
   overflow: scroll;
-  border-radius: 20px;
+  border-radius: 14px;
   background: #f2f6f4;
   text-align: left;
+  overflow: scroll;
 `;
-function TermOfUse2Component() {
+function TermOfUseComponent2() {
   return (
     <Vertical>
       <Title>SSOBBI 개인정보약관</Title>
@@ -53,8 +54,7 @@ function TermOfUse2Component() {
   );
 }
 
-export default TermOfUse2Component;
-
+export default TermOfUseComponent2;
 const info1 = "1. **개인정보의 수집 및 이용 목적**";
 const info2 = " - 알림톡 서비스 제공 및 관리";
 const info3 = "2. **수집하는 개인정보의 항목**";

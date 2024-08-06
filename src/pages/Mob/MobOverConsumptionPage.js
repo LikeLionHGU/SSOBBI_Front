@@ -59,7 +59,7 @@ const StyledBtn = styled.button`
   border: none;
   color: white;
   font-family: "SUITLight";
-  font-size: 20px;
+  font-size: 17px;
   cursor: pointer;
   position: fixed;
   bottom: 90px;
@@ -85,7 +85,7 @@ const BackBtn = styled.button`
   width: 30px;
   height: 30px;
   border: none;
-  background-color: white;
+  background-color: #f8fcf9;
   margin-right: 20px;
   cursor: pointer;
   margin-bottom: 5px;

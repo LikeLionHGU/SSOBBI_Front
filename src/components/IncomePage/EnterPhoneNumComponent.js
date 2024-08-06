@@ -88,7 +88,6 @@ function EnterPhoneNumComponent() {
   const [isC2Checked, setIsC2Checked] = useState(false);
   const phoneNumRef = useRef("");
   const [phoneNum, setPhoneNum] = useState("");
-  const [showBtn, setShowBtn] = useState(false);
   const [showModal1, setShowModal1] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const userToken = useRecoilValue(tokenState);
@@ -127,7 +126,6 @@ function EnterPhoneNumComponent() {
         `${value.slice(0, 3)}-${value.slice(3, 7)}-${value.slice(7)}`
       );
     }
-    setShowBtn(value.length === 11);
   }
 
   function handleSubmitBtn() {
@@ -213,8 +211,8 @@ function EnterPhoneNumComponent() {
       </div>
       <SubmitBtn
         onClick={handleSubmitBtn}
-        disabled={!showBtn}
-        showBtn={showBtn}
+        disabled={!(isC1Checked && isC2Checked)}
+        showBtn={isC1Checked && isC2Checked}
       >
         쏘삐 시작하기
       </SubmitBtn>
