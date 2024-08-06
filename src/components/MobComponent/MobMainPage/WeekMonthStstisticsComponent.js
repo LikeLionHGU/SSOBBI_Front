@@ -161,7 +161,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
                   marginLeft: "-4px",
                 }}
               >
-                월간보기
+                월간
               </Horizontal>
             }
             checkedIcon={
@@ -173,7 +173,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
                   marginLeft: "4px",
                 }}
               >
-                주간보기
+                주간
               </Horizontal>
             }
             //   boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
@@ -187,26 +187,31 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
       </Horizontal>
       <HappyBox>
         {isMonthly ? (
-          <>
-            <p style={{ marginTop: "5px", marginBottom: "5px" }}>
-              {" "}
-              이달의 행복지수
-            </p>
-            <HappinessInput
-              value={monthHappyRate}
-              type="range"
-              min="0"
-              max="100"
-            />
-            <p
-              style={{
-                margin: 0,
-                marginLeft: `${monthHappyRate * 2.5}px`,
-              }}
-            >
-              {monthHappyRate} %
-            </p>
-          </>
+          monthHappyRate === null ? (
+            "이달의 행복지수 정보가 없습니다 🥺"
+          ) : (
+            <>
+              <p style={{ marginTop: "5px", marginBottom: "5px" }}>
+                이달의 행복지수
+              </p>
+              <HappinessInput
+                value={monthHappyRate}
+                type="range"
+                min="0"
+                max="100"
+              />
+              <p
+                style={{
+                  margin: 0,
+                  marginLeft: `${monthHappyRate * 2.5}px`,
+                }}
+              >
+                {monthHappyRate} %
+              </p>
+            </>
+          )
+        ) : weekHappyRate === null ? (
+          "이번주의 행복지수 정보가 없습니다 🥺"
         ) : (
           <>
             <p style={{ marginTop: "5px", marginBottom: "5px" }}>
@@ -235,86 +240,86 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
           {isMonthly ? (
             <>
               이번달 과소비 비율
-              <p
-                style={{
-                  fontSize: "20px",
-                  fontWeight: "bold",
-                }}
-              >
-                {monthData?.overConsumptionRate ? (
-                  <>
-                    <span
-                      style={{
-                        fontSize: "20px",
-                        fontFamily: "SUITExtraBold",
-                        fontWeight: "bold",
-                        color: "#19844A",
-                      }}
-                    >
-                      {monthData.overConsumptionRate}
-                    </span>{" "}
-                    %
-                    <p
-                      style={{
-                        marginBottom: "-30px",
-                        marginLeft: "30%",
-                        fontSize: "8px",
-                        color: "#19844A",
-                        margin: 0,
-                      }}
-                    >
-                      ({monthData.totalOverConsumptionCount}건 /
-                      {monthData.totalConsumptionCount}건)
-                    </p>
-                  </>
-                ) : (
-                  <span style={{ fontSize: "12px", color: "#19844A" }}>
-                    과소비 내역이 없습니다!
-                  </span>
-                )}
-              </p>
+              {monthData?.overConsumptionRate ? (
+                <>
+                  <span
+                    style={{
+                      fontSize: "20px",
+                      fontFamily: "SUITExtraBold",
+                      fontWeight: "bold",
+                      color: "#19844A",
+                    }}
+                  >
+                    {monthData.overConsumptionRate}
+                  </span>{" "}
+                  %
+                  <p
+                    style={{
+                      marginBottom: "-30px",
+                      marginLeft: "30%",
+                      fontSize: "8px",
+                      color: "#19844A",
+                      margin: 0,
+                    }}
+                  >
+                    ({monthData.totalOverConsumptionCount}건 /
+                    {monthData.totalConsumptionCount}건)
+                  </p>
+                </>
+              ) : (
+                <span
+                  style={{
+                    fontSize: "11px",
+                    color: "#19844A",
+                    marginTop: "20px",
+                    marginBottom: "20px",
+                  }}
+                >
+                  과소비 내역이 없습니다!
+                </span>
+              )}
             </>
           ) : (
             <>
               이번주 과소비 비율
-              <p
-                style={{
-                  fontSize: "20px",
-                  fontWeight: "bold",
-                }}
-              >
-                {weekData.overConsumptionRate ? (
-                  <>
-                    <span
-                      style={{
-                        fontSize: "20px",
-                        fontFamily: "SUITExtraBold",
-                        fontWeight: "bold",
-                        color: "#19844A",
-                      }}
-                    >
-                      {weekData.overConsumptionRate}
-                    </span>{" "}
-                    %
-                    <p
-                      style={{
-                        marginBottom: "-30px",
-                        marginLeft: "30%",
-                        fontSize: "8px",
-                        color: "#19844A",
-                        margin: 0,
-                      }}
-                    >
-                      ({weekData.totalOverConsumptionCount}건 /
-                      {weekData.totalConsumptionCount}건)
-                    </p>
-                  </>
-                ) : (
-                  <span style={{ fontSize: "12px", color: "#19844A" }}>
-                    과소비 내역이 없습니다!
-                  </span>
-                )}
-              </p>
+              {weekData.overConsumptionRate ? (
+                <>
+                  <span
+                    style={{
+                      fontSize: "20px",
+                      fontFamily: "SUITExtraBold",
+                      fontWeight: "bold",
+                      color: "#19844A",
+                    }}
+                  >
+                    {weekData.overConsumptionRate}
+                  </span>{" "}
+                  %
+                  <p
+                    style={{
+                      marginBottom: "-30px",
+                      marginLeft: "30%",
+                      fontSize: "8px",
+                      color: "#19844A",
+                      margin: 0,
+                    }}
+                  >
+                    ({weekData.totalOverConsumptionCount}건 /
+                    {weekData.totalConsumptionCount}건)
+                  </p>
+                </>
+              ) : (
+                <span
+                  style={{
+                    fontSize: "11px",
+                    color: "#19844A",
+                    marginTop: "20px",
+                    marginBottom: "20px",
+                  }}
+                >
+                  과소비 내역이 없습니다!
+                </span>
+              )}
             </>
           )}
         </Box>
@@ -347,9 +352,9 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
               ) : (
                 <span
                   style={{
-                    fontSize: "12px",
+                    fontSize: "11px",
                     color: "#19844A",
-                    marginTop: "20px",
+                    marginTop: "12px",
                     marginBottom: "20px",
                   }}
                 >
@@ -385,9 +390,9 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
               ) : (
                 <span
                   style={{
-                    fontSize: "12px",
+                    fontSize: "11px",
                     color: "#19844A",
-                    marginTop: "20px",
+                    marginTop: "12px",
                     marginBottom: "20px",
                   }}
                 >

@@ -91,7 +91,7 @@ function MonthComponent({ monthlyData, month, onDetailCPChange }) {
               type: "arrow",
               animationDelay: 0,
             }}
-            value={monthlyData?.happinessRate}
+            value={monthlyData?.happinessRate ? monthlyData?.happinessRate : 0}
             style={{ height: "120px", width: "250px" }}
             marginInPercent={{
               top: 0.12,
