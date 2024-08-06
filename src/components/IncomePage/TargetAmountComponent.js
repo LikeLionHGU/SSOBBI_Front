@@ -51,35 +51,6 @@ function TargetAmountComponent(props) {
   const [priceInputValue, setPriceInputValue] = useState(props.amount);
   const [categoryInputValue, setCategoryInputValue] = useState(props.category);
 
-  function handleCategoryChange(e) {
-    const newCategory = e.target.value;
-
-    props.setTargetAmount((prev) => {
-      // Update the existing category if found
-      let categoryExists = false;
-      const updatedAmount = prev.map((itm) => {
-        if (itm.name === categoryInputValue) {
-          categoryExists = true;
-          return {
-            ...itm,
-            name: newCategory,
-          };
-        }
-        return itm;
-      });
-
-      if (!categoryExists) {
-        updatedAmount.push({
-          name: newCategory,
-          consumption: 0,
-        });
-      }
-
-      return updatedAmount;
-    });
-    setCategoryInputValue(newCategory);
-  }
-
   function handlePriceInputChange(e) {
     const { value } = e.target;
     // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
@@ -123,10 +94,7 @@ function TargetAmountComponent(props) {
           position: "relative",
         }}
       >
-        <CategoryInput
-          value={categoryInputValue}
-          onChange={handleCategoryChange}
-        />
+        <CategoryInput value={categoryInputValue} readOnly />
         <PriceInput value={priceInputValue} onChange={handlePriceInputChange} />
         <Unit>원</Unit>
       </Horizontal>
