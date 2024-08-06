@@ -5,6 +5,7 @@ import TermOfUseComponent from "./TermOfUseComponent";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { tokenState } from "../../../store/atom";
+import TermOfUseComponent2 from "./TermOfUseComponent2";
 
 const Wrapper = styled.div`
   display: flex;
@@ -96,6 +97,7 @@ function EnterPhoneNumComponent() {
   const [phoneNum, setPhoneNum] = useState("");
   const [showBtn, setShowBtn] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
   const userToken = useRecoilValue(tokenState);
 
   function handleCheckboxChange(e) {
@@ -160,6 +162,11 @@ function EnterPhoneNumComponent() {
           <TermOfUseComponent />
         </ModalComponent>
       )}
+      {showModal2 && (
+        <ModalComponent closeModal={() => setShowModal2(false)}>
+          <TermOfUseComponent2 />
+        </ModalComponent>
+      )}
       <Wrapper>
         <Title>이용약관</Title>
         <InputsWrapper>
@@ -197,7 +204,7 @@ function EnterPhoneNumComponent() {
               onChange={handleCheckboxChange}
             />
             <span>(필수) 개인정보 처리방침</span>
-            <span className="info" onClick={() => setShowModal(true)}>
+            <span className="info" onClick={() => setShowModal2(true)}>
               보기
             </span>
           </InputSpanWrapper>
