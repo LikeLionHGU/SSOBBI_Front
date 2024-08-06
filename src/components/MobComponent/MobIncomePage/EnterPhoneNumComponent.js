@@ -16,6 +16,9 @@ const Wrapper = styled.div`
 const Title = styled.p`
   font-family: "SUITMedium";
   font-size: 18px;
+  > span {
+    color: red;
+  }
 `;
 
 const InputsWrapper = styled.div`
@@ -95,7 +98,6 @@ function EnterPhoneNumComponent() {
   const [isC2Checked, setIsC2Checked] = useState(false);
   const phoneNumRef = useRef("");
   const [phoneNum, setPhoneNum] = useState("");
-  const [showBtn, setShowBtn] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const userToken = useRecoilValue(tokenState);
@@ -106,18 +108,15 @@ function EnterPhoneNumComponent() {
       setIsAllChecked(checked);
       setIsC1Checked(checked);
       setIsC2Checked(checked);
-      phoneNumRef.current.focus();
     } else if (id === "condition1") {
       setIsC1Checked(checked);
       if (checked && isC2Checked) {
         setIsAllChecked(true);
-        phoneNumRef.current.focus();
       }
     } else if (id === "condition2") {
       setIsC2Checked(checked);
       if (checked && isC1Checked) {
         setIsAllChecked(true);
-        phoneNumRef.current.focus();
       }
     }
   }
@@ -134,7 +133,6 @@ function EnterPhoneNumComponent() {
         `${value.slice(0, 3)}-${value.slice(3, 7)}-${value.slice(7)}`
       );
     }
-    setShowBtn(value.length === 11);
   }
 
   function handleSubmitBtn() {
@@ -168,7 +166,9 @@ function EnterPhoneNumComponent() {
         </ModalComponent>
       )}
       <Wrapper>
-        <Title>이용약관</Title>
+        <Title>
+          이용약관 <span>*</span>
+        </Title>
         <InputsWrapper>
           <InputSpanWrapper
             style={{
@@ -218,8 +218,8 @@ function EnterPhoneNumComponent() {
         />
         <SubmitBtn
           onClick={handleSubmitBtn}
-          disabled={!showBtn}
-          showBtn={showBtn}
+          disabled={!isC1Checked && isC2Checked}
+          showBtn={isC1Checked && isC2Checked}
         >
           쏘삐 시작하기
         </SubmitBtn>
