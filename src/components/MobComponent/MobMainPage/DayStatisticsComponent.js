@@ -10,17 +10,18 @@ const Title = styled.p`
   margin-right: 120px;
 `;
 const HappyBox = styled.div`
-  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
   font-family: "SUITLight";
   font-size: 12px;
-  width: 320px;
+  width: 300px;
   height: 71px;
   border-radius: 20px;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   background-color: white;
+  padding-left: 20px;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
 `;
 const Box = styled.div`
   font-family: "SUITLight";
@@ -98,12 +99,26 @@ function DayStatisticsComponent({ dayData }) {
         {dailyHappyRate === null ? (
           "오늘의 행복지수를 입력해주세요"
         ) : (
-          <HappinessInput
-            value={dailyHappyRate}
-            type="range"
-            min="0"
-            max="100"
-          />
+          <>
+            <p style={{ marginTop: "5px", marginBottom: "5px" }}>
+              {" "}
+              오늘의 행복지수
+            </p>
+            <HappinessInput
+              value={dailyHappyRate}
+              type="range"
+              min="0"
+              max="100"
+            />
+            <p
+              style={{
+                margin: 0,
+                marginLeft: `${dailyHappyRate * 2.5}px`,
+              }}
+            >
+              {dailyHappyRate} %
+            </p>
+          </>
         )}
       </HappyBox>
       <Horizontal>
