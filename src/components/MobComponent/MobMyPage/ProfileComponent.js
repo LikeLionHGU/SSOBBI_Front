@@ -30,10 +30,12 @@ const InfoWrapper = styled.div`
     }
     > .logout {
       font-family: "SUITLight";
-      font-size: 16px;
+      font-size: 10px;
       color: gray;
       cursor: pointer;
-      border-bottom: 1px solid gray;
+      border: none;
+      margin-top: -10px;
+      margin-right: -40px;
     }
   }
 `;
