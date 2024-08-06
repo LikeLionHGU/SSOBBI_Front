@@ -15,6 +15,7 @@ const MonthIncome = styled.input`
   font-family: "SUITLight";
   font-size: 14px;
   padding-left: 20px;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
 `;
 
 const Title = styled.p`

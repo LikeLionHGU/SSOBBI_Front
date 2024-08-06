@@ -17,6 +17,7 @@ const CategoryInput = styled.input`
     outline: 1px solid rgba(42, 166, 99, 1);
   }
   text-align: center;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
 `;
 
 const PriceInput = styled.input`
@@ -37,6 +38,7 @@ const PriceInput = styled.input`
     outline: 1px solid rgba(42, 166, 99, 1);
   }
   margin-left: 6px;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
 `;
 
 const Unit = styled.span`
@@ -58,6 +60,7 @@ const ManageBtn = styled.button`
     0px 1.503px 32.312px 0px rgba(0, 0, 0, 0.01);
   cursor: pointer;
   margin-left: 16px;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
   &:hover {
   }
 

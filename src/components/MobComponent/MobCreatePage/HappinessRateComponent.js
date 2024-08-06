@@ -18,6 +18,7 @@ const HappyInputWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
 `;
 
 const HappinessInput = styled.input`
@@ -63,6 +64,7 @@ const HappyInput2 = styled.input`
   &:focus {
     outline: 1px solid var(--70, #3fc87e);
   }
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.03);
 `;
 
 function HappinessRateComponent() {
