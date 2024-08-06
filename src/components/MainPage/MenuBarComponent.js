@@ -31,6 +31,7 @@ const MenuText = styled.p`
   color: ${(props) => (props.active ? props.theme.colors.COLOR80 : "#fff")};
   margin: 0;
   margin-top: 8px;
+  font-family: "SUITLight";
 `;
 
 const Icon = styled.div`
