@@ -83,6 +83,7 @@ function MobMyPage() {
   const [isClick, setIsClick] = useState(false);
   const [isMinimumCategory, setIsMinimumCategory] = useState(false);
   const [monthIncome, setMonthIncome] = useState("");
+  const [isIncludeZero, setIsIncludeZero] = useState(false);
 
   function handleAddBtnClick() {
     const data = [
@@ -96,6 +97,7 @@ function MobMyPage() {
       { category: "", amount: 0, isLast: true },
     ]);
     setIsMinimumCategory(false);
+    setIsIncludeZero(false);
   }
 
   function handleAmountBtnClick() {
@@ -104,6 +106,21 @@ function MobMyPage() {
 
   function handleLoadBtnClick() {
     setIsClick(true);
+
+    const checkData = amount.map((itm) => {
+      if (itm.amount === 0 || itm.amount === "0") {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    if (checkData.includes(true)) {
+      setIsIncludeZero(true);
+      return;
+    }
+    setIsIncludeZero(false);
+
     const apiUrl =
       process.env.REACT_APP_BASE_URL + "/category/monthly/TargetAmount";
 
@@ -222,6 +239,9 @@ function MobMyPage() {
         <MobMenuBarComponent menu={"profile"} />
         {isMinimumCategory && (
           <ErrorMessage>카테고리는 최소 2개 이상 있어야합니다</ErrorMessage>
+        )}
+        {isIncludeZero && (
+          <ErrorMessage>목표금액은 0원일 수 없습니다</ErrorMessage>
         )}
       </Vertical>
     </MobileV>

@@ -106,6 +106,7 @@ function IncomeComponent({ isUpdating, isClick, setIsClick, setMonthIncome }) {
       .catch((error) => {
         console.log(error);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isUpdating, userToken]);
 
   useEffect(() => {
