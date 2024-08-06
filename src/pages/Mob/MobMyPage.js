@@ -72,6 +72,8 @@ const AmountUpdateBtn = styled.button`
 const ErrorMessage = styled.p`
   color: red;
   text-align: center;
+  font-family: "SUITLight";
+  font-size: 16px;
 `;
 
 function MobMyPage() {
@@ -80,6 +82,7 @@ function MobMyPage() {
   const [isUpdating, setIsUpdating] = useState(false);
   const [isClick, setIsClick] = useState(false);
   const [isMinimumCategory, setIsMinimumCategory] = useState(false);
+  const [monthIncome, setMonthIncome] = useState("");
 
   function handleAddBtnClick() {
     const data = [
@@ -181,6 +184,7 @@ function MobMyPage() {
           isUpdating={isUpdating}
           isClick={isClick}
           setIsClick={setIsClick}
+          setMonthIncome={setMonthIncome}
         />
         <TitleAndInputWrapper>
           <Title2>카테고리별 목표금액</Title2>
@@ -200,6 +204,7 @@ function MobMyPage() {
                 isLast={itm.isLast}
                 setIsMinimumCategory={setIsMinimumCategory}
                 handleAddBtnClick={handleAddBtnClick}
+                monthIncome={monthIncome}
               />
             ))}
           </div>

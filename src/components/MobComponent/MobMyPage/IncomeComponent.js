@@ -55,7 +55,7 @@ const InputBtnWrapper = styled.div`
   position: relative;
 `;
 
-function IncomeComponent({ isUpdating, isClick, setIsClick }) {
+function IncomeComponent({ isUpdating, isClick, setIsClick, setMonthIncome }) {
   const userInfo = useRecoilValue(userData);
   const [income, setIncome] = useState(null);
   const userToken = useRecoilValue(tokenState);
@@ -101,6 +101,7 @@ function IncomeComponent({ isUpdating, isClick, setIsClick }) {
           response.data.income
         );
         setIncome(formattedNumber);
+        setMonthIncome(response.data.income);
       })
       .catch((error) => {
         console.log(error);
@@ -112,6 +113,7 @@ function IncomeComponent({ isUpdating, isClick, setIsClick }) {
       const newArr = { income: convertToInt(income) };
       const apiUrl = process.env.REACT_APP_BASE_URL + "/user/monthly/income";
       console.log(newArr);
+      setMonthIncome(convertToInt(income));
       axios
         .post(apiUrl, newArr, {
           headers: {
