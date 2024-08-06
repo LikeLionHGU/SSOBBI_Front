@@ -126,7 +126,7 @@ function DayStatisticsComponent({ dayData }) {
           오늘 과소비 건수
           {dayData.totalOverConsumptionCount ||
           dayData.totalOverConsumptionCount === 0 ? (
-            <>
+            <p>
               <span
                 style={{
                   fontSize: "20px",
@@ -138,7 +138,7 @@ function DayStatisticsComponent({ dayData }) {
                 {dayData.totalOverConsumptionCount}
               </span>{" "}
               건
-            </>
+            </p>
           ) : (
             <span
               style={{

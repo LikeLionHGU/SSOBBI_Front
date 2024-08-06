@@ -241,7 +241,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
             <>
               이번달 과소비 비율
               {monthData?.overConsumptionRate ? (
-                <>
+                <p>
                   <span
                     style={{
                       fontSize: "20px",
@@ -265,7 +265,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
                     ({monthData.totalOverConsumptionCount}건 /
                     {monthData.totalConsumptionCount}건)
                   </p>
-                </>
+                </p>
               ) : (
                 <span
                   style={{
@@ -283,7 +283,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
             <>
               이번주 과소비 비율
               {weekData.overConsumptionRate ? (
-                <>
+                <p>
                   <span
                     style={{
                       fontSize: "20px",
@@ -307,7 +307,7 @@ function WeekMonthStstisticsComponent({ weekData, monthData }) {
                     ({weekData.totalOverConsumptionCount}건 /
                     {weekData.totalConsumptionCount}건)
                   </p>
-                </>
+                </p>
               ) : (
                 <span
                   style={{
