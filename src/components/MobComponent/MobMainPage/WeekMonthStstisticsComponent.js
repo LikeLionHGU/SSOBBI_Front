@@ -96,8 +96,8 @@ const HappinessInput = styled.input`
 //ToDo: api 추가 개발 시 데이터 받아와서 연결 새롭게 하기
 function WeekMonthStstisticsComponent({ weekData, monthData }) {
   const [isMonthly, setIsMonthly] = useState(false);
-  const weekHappyRate = weekData.happinessRate;
-  const monthHappyRate = monthData.happinessRate;
+  const weekHappyRate = weekData?.happinessRate ? weekData.happinessRate : 0;
+  const monthHappyRate = monthData?.happinessRate ? monthData.happinessRate : 0;
   const circledatas = [
     {
       size: "37px",
