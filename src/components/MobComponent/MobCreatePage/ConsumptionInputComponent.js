@@ -167,25 +167,25 @@ function ConsumptionInputComponent(props) {
           value={categoryInput}
           onChange={(e) => setCategoryInput(e.target.value)}
           onFocus={() => setIsFocus(true)}
-          // onBlur={(e) => {
-          //   const categorySelects = document.querySelectorAll("select");
-          //   var isSelectTag = false;
+          onBlur={(e) => {
+            const categorySelects = document.querySelectorAll("select");
+            var isSelectTag = false;
 
-          //   for (const select of categorySelects) {
-          //     if (e.relatedTarget === select) isSelectTag = true;
-          //   }
+            for (const select of categorySelects) {
+              if (e.relatedTarget === select) isSelectTag = true;
+            }
 
-          //   if (e.relatedTarget === null || !isSelectTag) {
-          //     setIsFocus(false);
+            if (e.relatedTarget === null || !isSelectTag) {
+              setIsFocus(false);
 
-          //     var isOptionData = false;
-          //     // eslint-disable-next-line array-callback-return
-          //     props.options.map((itm) => {
-          //       if (categoryInput === itm) isOptionData = true;
-          //     });
-          //     if (!isOptionData) setCategoryInput("");
-          //   }
-          // }}
+              var isOptionData = false;
+              // eslint-disable-next-line array-callback-return
+              props.options.map((itm) => {
+                if (categoryInput === itm) isOptionData = true;
+              });
+              if (!isOptionData) setCategoryInput("");
+            }
+          }}
         />
         {isFocus && (
           <StyledSelect id="search" size="4">
