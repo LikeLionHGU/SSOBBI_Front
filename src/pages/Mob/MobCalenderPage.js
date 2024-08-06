@@ -310,6 +310,7 @@ function MobCalenderPage() {
                           marginTop: "30px",
                           marginBottom: "0px",
                           fontSize: "14px",
+                          fontFamily: "SUITLight",
                         }}
                       >
                         {apiMonth} 하루 과소비 일기
