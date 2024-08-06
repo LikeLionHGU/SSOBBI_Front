@@ -121,20 +121,47 @@ function MyPage() {
       )
       .map((itm) => ({
         category: itm.category,
-        amount: convertToInt(itm.amount),
+        amount:
+          typeof itm.amount === "string"
+            ? convertToInt(itm.amount)
+            : itm.amount,
       }));
 
     const newArr = { requests: data };
-    console.log(newArr);
+    const sum = newArr.requests.reduce(
+      (acc, itm) => (itm.category === "기타" ? acc : acc + itm.amount),
+      0
+    );
+
+    const newArr2 = newArr.requests.map((itm) =>
+      itm.category === "기타"
+        ? {
+            ...itm,
+            amount: convertStringNum(monthIncome - sum),
+          }
+        : itm
+    );
+    const newArr3 = newArr.requests.map((itm) =>
+      itm.category === "기타"
+        ? {
+            ...itm,
+            amount: monthIncome - sum,
+          }
+        : itm
+    );
+
+    setAmount(newArr2);
+    const newArr4 = { requests: newArr3 };
+
     axios
-      .post(apiUrl, newArr, {
+      .post(apiUrl, newArr4, {
         headers: {
           Authorization: "Bearer " + userToken,
           "Content-Type": "application/json",
         },
       })
       .then((response) => {
-        console.log(response);
+        console.log("확인할 데이터", response);
         if (response) setIsUpdating(false);
       })
       .catch((error) => {
