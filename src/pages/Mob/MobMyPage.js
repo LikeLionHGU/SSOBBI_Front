@@ -50,7 +50,7 @@ const TitleAndInputWrapper = styled.div`
 
 const AmountUpdateBtn = styled.button`
   position: fixed;
-  bottom: 90px;
+  bottom: 130px;
   display: inline-flex;
   padding: 12px 14px;
   justify-content: center;
