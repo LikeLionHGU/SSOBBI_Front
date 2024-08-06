@@ -97,7 +97,7 @@ function DayStatisticsComponent({ dayData }) {
       </Title>
       <HappyBox>
         {dailyHappyRate === null ? (
-          "오늘의 행복지수를 입력해주세요"
+          "오늘의 행복지수를 입력해주세요 🙌🏻"
         ) : (
           <>
             <p style={{ marginTop: "5px", marginBottom: "5px" }}>
@@ -124,28 +124,33 @@ function DayStatisticsComponent({ dayData }) {
       <Horizontal>
         <Box>
           오늘 과소비 건수
-          <p style={{ fontSize: "20px", fontWeight: "bold" }}>
-            {dayData.totalOverConsumptionCount ||
-            dayData.totalOverConsumptionCount === 0 ? (
-              <>
-                <span
-                  style={{
-                    fontSize: "20px",
-                    fontFamily: "SUITExtraBold",
-                    fontWeight: "bold",
-                    color: "#19844A",
-                  }}
-                >
-                  {dayData.totalOverConsumptionCount}
-                </span>{" "}
-                건
-              </>
-            ) : (
-              <span style={{ fontSize: "12px", color: "#19844A" }}>
-                오늘의 데이터 입력해주세요!
-              </span>
-            )}
-          </p>
+          {dayData.totalOverConsumptionCount ||
+          dayData.totalOverConsumptionCount === 0 ? (
+            <>
+              <span
+                style={{
+                  fontSize: "20px",
+                  fontFamily: "SUITExtraBold",
+                  fontWeight: "bold",
+                  color: "#19844A",
+                }}
+              >
+                {dayData.totalOverConsumptionCount}
+              </span>{" "}
+              건
+            </>
+          ) : (
+            <span
+              style={{
+                fontSize: "11px",
+                color: "#19844A",
+                marginTop: "20px",
+                marginBottom: "20px",
+              }}
+            >
+              오늘의 데이터 입력해주세요!
+            </span>
+          )}
         </Box>
         <Box>
           오늘 과소비 항목
@@ -164,8 +169,10 @@ function DayStatisticsComponent({ dayData }) {
           ) : (
             <p
               style={{
-                fontSize: "12px",
+                fontSize: "11px",
                 color: "#19844A",
+                marginTop: "20px",
+                marginBottom: "20px",
               }}
             >
               과소비 내역이 없습니다!
