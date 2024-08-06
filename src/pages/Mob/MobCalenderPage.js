@@ -168,7 +168,7 @@ function MobCalenderPage() {
     const fetchOverspentData = async () => {
       try {
         const overspent = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/consumptions/${apiMonth}/category`,
+          `${process.env.REACT_APP_BASE_URL}/consumptions/${apiMonth}/category2`,
           {
             headers: {
               Authorization: "Bearer " + userToken,
@@ -176,7 +176,7 @@ function MobCalenderPage() {
           }
         );
         setOverspentData(
-          overspent.data.monthlyConsumptionsAndTargetsByCategory
+          overspent.data.monthlyConsumptionsAndTargetsByCategories
         );
         setUserIncome(overspent.data.userIncome);
         console.log("setOverspentData", overspent.data);
