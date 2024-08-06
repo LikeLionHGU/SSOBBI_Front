@@ -105,6 +105,7 @@ function ConsumptionIndexComponent(props) {
   const setConsumptionIndex = useSetRecoilState(consumptionIndexState);
 
   function handleSelectChange(e, itm) {
+    console.log("AA");
     e.stopPropagation(); // 이벤트 전파 막기
     setCategoryInput(itm);
     setIsFocus(false);
@@ -181,15 +182,18 @@ function ConsumptionIndexComponent(props) {
             onChange={(e) => setCategoryInput(e.target.value)}
             onFocus={() => setIsFocus(true)}
             onBlur={(e) => {
-              const categorySelects = document.querySelectorAll("select");
+              const categorySelects = document.querySelectorAll("div");
               var isSelectTag = false;
+              console.log(e);
 
               for (const select of categorySelects) {
                 if (e.relatedTarget === select) isSelectTag = true;
               }
 
               if (e.relatedTarget === null || !isSelectTag) {
-                setIsFocus(false);
+                // setIsFocus(false);
+                setTimeout(() => setIsFocus(false), 500);
+                // setTimeout(() => setFilled((prev) => (prev += 10)), 500);
 
                 // var isOptionData = false;
                 // // eslint-disable-next-line array-callback-return

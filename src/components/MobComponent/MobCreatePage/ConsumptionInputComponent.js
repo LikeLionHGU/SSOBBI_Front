@@ -168,7 +168,7 @@ function ConsumptionInputComponent(props) {
           onChange={(e) => setCategoryInput(e.target.value)}
           onFocus={() => setIsFocus(true)}
           onBlur={(e) => {
-            const categorySelects = document.querySelectorAll("select");
+            const categorySelects = document.querySelectorAll("div");
             var isSelectTag = false;
 
             for (const select of categorySelects) {
@@ -176,8 +176,7 @@ function ConsumptionInputComponent(props) {
             }
 
             if (e.relatedTarget === null || !isSelectTag) {
-              setIsFocus(false);
-
+              setTimeout(() => setIsFocus(false), 500);
               var isOptionData = false;
               // eslint-disable-next-line array-callback-return
               props.options.map((itm) => {
